@@ -16,9 +16,6 @@ public class LazyFileAppender<E> extends FileAppender<E> {
             boolean result = FileUtil.createMissingParentDirectories(file);
             if (!result) {
                 addError("Failed to create parent directories for [" + file.getAbsolutePath() + "]");
-                System.out.println("Failed to create parent directories for [" + file.getAbsolutePath() + "]");
-            }else{
-                System.out.println("create parent directories for [" + file.getAbsolutePath() + "]");
             }
 
             LazyFileOutputStream lazyFos = new LazyFileOutputStream(file, append);
