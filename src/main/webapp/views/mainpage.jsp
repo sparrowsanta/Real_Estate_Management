@@ -1,12 +1,17 @@
 <!DOCTYPE html>
+<%@ page language="Java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>MainPage</title>
     <!--    <link rel="stylesheet" href="../../resources/bootstrap-4.5.0-dist/css/bootstrap.css">
         <link rel="stylesheet" href="webapp/css/main.css">
         <link rel="stylesheet" href="../src/main/resources/gson-2.3.1.jar">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -19,14 +24,14 @@
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
             crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="../css/main.css"/>
+    <link rel="stylesheet" href="css/main.css" type="text/css">
 </head>
 <body>
 <section>
     <!-- Header -->
     <header>
         <nav class="navbar navbar-custom  navbar-expand-lg" id="mainNavbar">
-            <a class="navbar-brand mx-4 p-0" href="main.html"><img src="../images/home-sign.jpg" width="55" height="55"
+            <a class="navbar-brand mx-4 p-0" href="main.html"><img src="img/home-sign.jpg" width="55" height="55"
                                                                    class="d-inline-block float-left mr-2 align-bottom p-0"
                                                                    alt=""> Real Estate<br>Management
             </a>
@@ -37,7 +42,7 @@
             <div class="collapse navbar-collapse" id="mainmenu">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="mainpage.html">Start</a>
+                        <a class="nav-link" href="mainpage.jsp">Start</a>
                     </li>
                     <li class="nav-item dropdown" id="something">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
@@ -108,7 +113,7 @@
             pharetra vehicula eu non magna. Vivamus quis hendrerit neque. Suspendisse eu arcu purus.
         </div>
         <div class="chart" >
-            <img src="../images/chart.jpeg" width="1080" height="760" align="center">
+            <img src="img/chart.jpeg" width="1080" height="760" align="center">
         </div>
     </section>
 </main>
@@ -121,11 +126,7 @@
 </footer>
 
 
-<script src="../js/jquery.js"></script>
-<script src="../js/popper.min.js"></script>
-<!--
-<script src="../../resources/bootstrap-4.5.0-dist/js/bootstrap.js"></script>
-<script src="../../resources/bootstrap-4.5.0-dist/js/bootstrap.bundle.js"></script>
--->
+<script src="js/jquery.js"></script>
+<script src="js/popper.min.js"></script>
 </body>
 </html>
