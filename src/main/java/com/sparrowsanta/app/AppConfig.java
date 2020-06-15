@@ -29,7 +29,6 @@ public class AppConfig implements WebMvcConfigurer {
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
-
     //Ustawienie dla i18n - definicja ciasteczka dla obsługi języków i defaultowego stanu
     @Bean
     public LocaleResolver localeResolver() {
