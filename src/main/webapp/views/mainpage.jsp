@@ -46,25 +46,25 @@
                     </li>
                     <li class="nav-item dropdown" id="something">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
-                           aria-expanded="false" id="submenu1" aria-haspopup="true">something</a>
+                           aria-expanded="false" id="submenu1" aria-haspopup="true"><spring:message code="homepage.navbar.flats"/></a>
                         <div class="dropdown-menu" aria-labelledby="submenu1">
-                            <a class="dropdown-item" href="#">Something1</a>
-                            <a class="dropdown-item" href="#">Something2</a>
+                            <a class="dropdown-item" href="#"><spring:message code="homepage.navbar.flats.addFlat"/></a>
+                            <a class="dropdown-item" href="#"><spring:message code="homepage.navbar.flats.editFlat"/></a>
                         </div>
                     </li>
                     <li class="nav-item dropdown" id="something2">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
-                           aria-expanded="false">something2</a>
+                           aria-expanded="false"><spring:message code="homepage.navbar.clients"/></a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Something1</a>
-                            <a class="dropdown-item" href="#">Something2</a>
+                            <a class="dropdown-item" href="#"><spring:message code="homepage.navbar.clients.addClient"/></a>
+                            <a class="dropdown-item" href="#"><spring:message code="homepage.navbar.clients.editClient"/></a>
                         </div>
                     </li>
                 </ul>
                 <form class="form-inline" id="searching">
 
                     <input class="form-control" type="search" id="findBar" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-custom" id="findBtn" type="submit">Find</button>
+                    <button class="btn btn-custom" id="findBtn" type="submit"><spring:message code="common.general.find"/></button>
 
                 </form>
             </div>
@@ -128,5 +128,6 @@
 
 <script src="js/jquery.js"></script>
 <script src="js/popper.min.js"></script>
+
 </body>
 </html>
