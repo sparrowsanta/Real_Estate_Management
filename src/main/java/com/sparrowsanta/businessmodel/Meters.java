@@ -1,10 +1,12 @@
 package com.sparrowsanta.businessmodel;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 
 import java.util.Arrays;
-
+@Data
+@AllArgsConstructor
 public class Meters {
     private long id;
     private long flatId;

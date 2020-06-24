@@ -1,11 +1,4 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: kuba
-  Date: 24.06.2020
-  Time: 12:21
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -29,8 +22,8 @@
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
             crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="css/default.css" type="text/css">
     <link rel="stylesheet" href="css/main.css" type="text/css">
-
     <script src="js/jquery.js"></script>
     <script src="js/popper.min.js"></script>
 </head>
