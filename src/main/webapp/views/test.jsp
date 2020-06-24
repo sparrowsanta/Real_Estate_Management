@@ -30,18 +30,20 @@
             crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="css/default.css" type="text/css">
+    <script defer src="css/FA/js/all.js"></script> <!--load all styles -->
+    <link href="css/FA/css/all.css" rel="stylesheet"> <!--load all styles -->
     <title>Real Estate Management</title>
 </head>
 <body>
 
 <button type="button" id="btnModalMeters" class="btn btn-orange btn-lg">
+    <em class="fas fa-tachometer-alt"> </em>
     <spring:message code="common.button.view.meters"/>
 </button>
-<br>
-<button type="button" class="btn btn-orange-outline btn-lg">
-    <spring:message code="common.button.view.meters"/>
+<br><br><br><br><br>
+<button type="button" class="btn btn-orange-outline">
+Test button outline
 </button>
-
 </body>
 <jsp:include page="metersModal.jsp"/>
 <footer class="page-footer font-small blue">

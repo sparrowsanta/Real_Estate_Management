@@ -4,10 +4,11 @@
 
 <div class="container text-center">
     <div class="modal fade " id="ModalMeters" tabindex="-1" role="dialog" aria-labelledby="ModalMeters">
-        <div class="modal-dialog modal-xl mw-100 w-75" role="document">
+        <div class="modal-dialog modal-lg mw-75 w-75" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-dark-blue">
-                    <h4 class="modal-title" id="myModalLabel"><spring:message code="meters.header.text"/></h4>
+                    <h4 class="modal-title" id="myModalLabel"><span><em class="fas fa-tachometer-alt"> </em></span>
+                        <spring:message code="meters.header.text"/></h4>
                     <button class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
@@ -32,12 +33,15 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-orange btn-lg" id="btnShowMetersHistory"><spring:message
-                            code="meters.button.history"/></button>
-                    <button type="button" class="btn btn-orange-outline btn-lg" id="btnBack"><spring:message
-                            code="common.button.back"/></button>
-                    <button type="button" class="btn btn-orange btn-lg" id="btnAddReading"><spring:message
-                            code="meters.button.addreading"/></button>
+                    <button type="button" class="btn btn-orange" id="btnShowMetersHistory">
+                        <em class="fas fa-history"></em>
+                        <spring:message code="meters.button.history"/></button>
+                    <button type="button" class="btn btn-orange-outline" id="btnBack">
+                        <em class="fas fa-step-backward"></em>
+                        <spring:message code="common.button.back"/></button>
+                    <button type="button" class="btn btn-orange" id="btnAddReading">
+                        <em class="fas fa-plus"></em>
+                        <spring:message code="meters.button.addreading"/></button>
                 </div>
             </div>
         </div>
