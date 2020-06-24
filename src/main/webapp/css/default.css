@@ -1,0 +1,47 @@
+.btn-orange {
+    background-color: #FFA62B !important;
+    border-color: #FFA62B !important;
+    cursor: pointer;
+}
+
+.btn-orange:hover {
+    background-color: #c7770b !important;
+    border-color: #c7770b !important;
+}
+
+.btn-orange-outline {
+    background-color: #fff !important;
+    color: #FFA62B !important;
+    border-color: #FFA62B !important;
+    cursor: pointer;
+}
+
+.btn-orange-outline:hover {
+    color: black !important;
+    background-color: #FFA62B !important;
+    border-color: #FFA62B !important;
+}
+
+.bg-orange {
+    background-color: #FFA62B !important;
+    color: black !important;
+}
+
+.bg-dark-blue {
+    background-color: #16697A !important;
+    color: #fff !important;
+}
+
+
+
+.custom-control-label::before,
+.custom-control-label::after {
+    width: 2rem;
+    height: 2rem;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #FFA62B;
+}
+
+
