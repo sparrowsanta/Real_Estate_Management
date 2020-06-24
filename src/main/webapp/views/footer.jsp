@@ -1,11 +1,4 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: kuba
-  Date: 24.06.2020
-  Time: 12:21
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -14,7 +7,7 @@
     <title>Footer</title>
 </head>
 <body>
-<footer class="page-footer font-small blue">
+<footer class="page-footer font-small bg-dark text-white mt-2 pt-2 fixed-bottom">
     <div class="footer-copyright text-center py-3">© 2020 Copyright:
         <a href="https://google.com/"> SparrowSanta</a>
     </div>

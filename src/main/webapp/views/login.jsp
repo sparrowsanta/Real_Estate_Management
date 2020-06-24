@@ -32,6 +32,7 @@
             crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="css/login.css" type="text/css">
+    <link rel="stylesheet" href="css/default.css" type="text/css">
     <title>Real Estate Managment</title>
 </head>
 <header>
