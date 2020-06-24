@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
         buttonShowMetersHistory.on("click", showMetersHistory);
         buttonBack.on("click", backToMetersList);
 
-
         backToMetersList();
 
 
@@ -67,11 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         function createMetersList(data) {
-
-
             metersList.empty();
-
-
             if (data.length > 0) {
                 for (let i = 0; i < data.length; i++) {
                     let newLi = $("<li>");
@@ -85,9 +80,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     let newDiv2 = $("<div>");
                     let newInput = $("<input>");
                     let newLabel = $("<label>");
+                    let newEm = $("<em>");
 
+                    newEm.addClass(getIconForMeter(data[i].meterType));
+                    newH5.append(newEm);
+                    newH5.append(" "+ getMeterType(data[i].meterType));
 
-                    newH5.text(getMeterType(data[i].meterType));
 
                     newP.addClass("pmd-list-subtitle");
                     newP.text(data[i].description);
@@ -109,11 +107,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     newLi.append(newDiv);
                     newLi.append(newDiv2);
                     metersList.append(newLi);
+                    buttonShowMetersHistory.prop('disabled', true)
                     metersList.on('click', 'input[type="checkbox"]', function () {
                         let checkboxes = metersList.find(':checkbox').not($(this));
                         checkboxes.prop('checked', false);
+                        let checked = metersList.find(':checkbox:checked');
+                        if (checked.length === 0) {
+                            buttonShowMetersHistory.prop('disabled', true)
+                        } else {
+                            buttonShowMetersHistory.prop('disabled', false)
+                        }
                     });
-
                 }
 
             } else {
@@ -146,6 +150,22 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
+    function getIconForMeter(meeterType) {
+        switch (meeterType) {
+            case "ELECTRICITY":
+                return "fas fa-bolt";
+            case "WATER_COLD":
+                return "fas fa-snowflake";
+            case "WATER_HOT":
+                return "fas fa-tint";
+            case "HEATING":
+                return "fas fa-temperature-high";
+            case "GAS":
+                return "fas fa-fire-alt";
+            default:
+                return "";
+        }
+    }
 
     }
 );

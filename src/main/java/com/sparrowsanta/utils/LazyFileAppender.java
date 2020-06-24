@@ -9,10 +9,10 @@ import java.io.IOException;
 public class LazyFileAppender<E> extends FileAppender<E> {
 
     @Override
-    public void openFile(String file_name) throws IOException {
+    public void openFile(String fileName) throws IOException {
         lock.lock();
         try {
-            File file = new File(file_name);
+            File file = new File(fileName);
             boolean result = FileUtil.createMissingParentDirectories(file);
             if (!result) {
                 addError("Failed to create parent directories for [" + file.getAbsolutePath() + "]");
