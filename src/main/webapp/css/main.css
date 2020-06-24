@@ -65,5 +65,30 @@ main div {
     color: #12272B;
 }
 
+/* 4 - Main - Flats*/
+.row-border {
+    outline: 2px solid #12272B;
+    margin-bottom: 20px;
+}
+
+.row-border figure {
+    margin: 0px;
+}
+
+.infoP {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.infoRowThree {
+    margin-top: auto;
+    margin-top: 20px;
+    margin-bottom: 2px;
+}
+
+
+
+
+
 
 

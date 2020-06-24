@@ -56,6 +56,7 @@
                     <div class="dropdown-menu" aria-labelledby="submenu1">
                         <a class="dropdown-item" href="#"><spring:message code="homepage.navbar.flats.addFlat"/></a>
                         <a class="dropdown-item" href="#"><spring:message code="homepage.navbar.flats.editFlat"/></a>
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/flats"><spring:message code="homepage.navbar.flats.showFlats"/></a>
                     </div>
                 </li>
                 <li class="nav-item dropdown" id="something2">
