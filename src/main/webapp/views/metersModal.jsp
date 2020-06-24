@@ -34,7 +34,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-orange btn-lg" id="btnShowMetersHistory"><spring:message
                             code="meters.button.history"/></button>
-                    <button type="button" class="btn btn-orange btn-lg" id="btnBack"><spring:message
+                    <button type="button" class="btn btn-orange-outline btn-lg" id="btnBack"><spring:message
                             code="common.button.back"/></button>
                     <button type="button" class="btn btn-orange btn-lg" id="btnAddReading"><spring:message
                             code="meters.button.addreading"/></button>

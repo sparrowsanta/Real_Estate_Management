@@ -44,4 +44,7 @@
 
 </body>
 <jsp:include page="metersModal.jsp"/>
+<footer class="page-footer font-small blue">
+    <jsp:include page="/views/footer.jsp"></jsp:include>
+</footer>
 </html>
