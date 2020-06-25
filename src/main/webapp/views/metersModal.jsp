@@ -14,34 +14,34 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="item active" id="metersListForm">
+                    <div id="metersListForm">
                         <h4><spring:message code="meters.header.list"/></h4>
-                        <ul class="list-group pmd-list pmd-modal-list" id="metersList" style="text-align: left;">
-                        </ul>
-                    </div>
+                        <div class="custom-scrollbar-blue p-2"
+                             style="text-align: left;  height: 600px">
+                            <ul class="list-group pmd-list pmd-modal-list" id="metersList">
+                            </ul>
 
+                        </div>
+                    </div>
                     <div class="item" id="metersHistoryForm">
                         <h4><spring:message code="meters.header.history"/></h4>
 
                     </div>
 
                     <div class="item" id="metersAddReadingsForm">
-                        <h4><spring:message code="meters.header.addreading"/></h4>
+                        <h4><spring:message code="meters.header.addReading"/></h4>
                         <form>
 
                         </form>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-orange" id="btnShowMetersHistory">
-                        <em class="fas fa-history"></em>
-                        <spring:message code="meters.button.history"/></button>
-                    <button type="button" class="btn btn-orange-outline" id="btnBack">
-                        <em class="fas fa-step-backward"></em>
-                        <spring:message code="common.button.back"/></button>
-                    <button type="button" class="btn btn-orange" id="btnAddReading">
+                    <button type="button" class="btn btn-orange" id="btnAddMeter">
                         <em class="fas fa-plus"></em>
-                        <spring:message code="meters.button.addreading"/></button>
+                        <spring:message code="meters.button.addMeeter"/></button>
+                    <button type="button" class="btn btn-orange" id="btnBack">
+                        <em class="fas fa-backward"></em>
+                        <spring:message code="common.button.back"/></button>
                 </div>
             </div>
         </div>
@@ -52,7 +52,12 @@
     <input id="meterGas" type="hidden" value="<spring:message code='common.meterType.gas'/>"/>
     <input id="meterHeat" type="hidden" value="<spring:message code='common.meterType.heat'/>"/>
     <input id="meterUndefined" type="hidden" value="<spring:message code='common.meterType.undefined'/>"/>
-    <input id="noMetersMessage" type="hidden" value="<spring:message code='meters.meter.message.nometers'/>"/>
+    <input id="noMetersMessage" type="hidden" value="<spring:message code='meters.meter.message.noMeters'/>"/>
+    <input id="meterDeleteTooltip" type="hidden" value="<spring:message code='meters.button.deleteMeter'/>"/>
+    <input id="meterHistoryTooltip" type="hidden" value="<spring:message code='meters.button.history'/>"/>
+    <input id="meterAddReadingTooltip" type="hidden" value="<spring:message code='meters.button.addReading'/>"/>
+    <input id="meterEditTooltip" type="hidden" value="<spring:message code='meters.button.editMeeter'/>"/>
+    <input id="lastReadDate" type="hidden" value="<spring:message code='meters.badge.lastRead.tooltip'/>"/>
 </div>
 
 <script type="text/javascript" src="js/metersModal.js"></script>
