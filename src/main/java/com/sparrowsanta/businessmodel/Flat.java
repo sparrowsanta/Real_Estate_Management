@@ -5,6 +5,7 @@ import lombok.*;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class Flat {
     private long id;
     private String name;
@@ -21,5 +22,8 @@ public class Flat {
     private double flatPrice;
     private double expectedIncome;
     private List<Meters> meters;
+    private String picUrl;
+
+
 
 }
