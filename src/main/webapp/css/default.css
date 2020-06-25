@@ -1,3 +1,7 @@
+.bg-main-theme {
+    background-color: #EDE7E3;
+}
+
 .btn-orange {
     background-color: #FFA62B !important;
     border-color: #FFA62B !important;
@@ -27,11 +31,49 @@
     color: black !important;
 }
 
+.btn-dark-blue {
+    color: #fff !important;
+    background-color: #16697A !important;
+    border-color: #16697A !important;
+    cursor: pointer;
+}
+
+.btn-dark-blue:hover {
+    background-color: #054a58 !important;
+    border-color: #054a58 !important;
+}
+
+.btn-dark-blue-outline {
+    background-color: #fff !important;
+    color: #16697A !important;
+    border-color: #16697A !important;
+    cursor: pointer;
+}
+
+.btn-dark-blue-outline:hover {
+    color: #fff !important;
+    background-color: #16697A !important;
+    border-color: #16697A !important;
+}
+
+.btn-mixed-outline {
+    background-color: #fff !important;
+    color: #16697A !important;
+    border-color: #16697A !important;
+    cursor: pointer;
+}
+
+.btn-mixed-outline:hover {
+    color: black !important;
+    background-color: #FFA62B !important;
+    border-color: #FFA62B !important;
+}
+
+
 .bg-dark-blue {
     background-color: #16697A !important;
     color: #fff !important;
 }
-
 
 
 .custom-control-label::before,
@@ -44,4 +86,49 @@
     background-color: #FFA62B;
 }
 
+.custom-scrollbar-orange {
+    height: 200px;
+}
+
+.custom-scrollbar-blue {
+    height: 200px;
+}
+
+
+.custom-scrollbar-orange {
+    overflow-y: scroll;
+}
+
+.custom-scrollbar-blue {
+    overflow-y: scroll;
+}
+
+.custom-scrollbar-orange::-webkit-scrollbar {
+    width: 5px;
+}
+
+.custom-scrollbar-blue::-webkit-scrollbar {
+    width: 5px;
+}
+
+.custom-scrollbar-orange::-webkit-scrollbar-track {
+    background: #eee;
+}
+
+.custom-scrollbar-blue::-webkit-scrollbar-track {
+    background: #eee;
+}
+
+.custom-scrollbar-orange::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: #e5b062;
+    background-image: linear-gradient(to top, #e5b062 0%, #ef8a01 100%);
+}
+
+
+.custom-scrollbar-blue::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: #16697A;
+    background-image: linear-gradient(to top, #529ead 0%, #055768 100%);
+}
 
