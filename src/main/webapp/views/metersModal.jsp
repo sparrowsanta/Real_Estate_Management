@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
+<link rel="stylesheet" href="css/metersHistory.css" type="text/css">
 <div class="container text-center">
     <div class="modal fade " id="ModalMeters" tabindex="-1" role="dialog" aria-labelledby="ModalMeters">
         <div class="modal-dialog modal-lg mw-75 w-75" role="document">
@@ -25,7 +26,14 @@
                     </div>
                     <div class="item" id="metersHistoryForm">
                         <h4><spring:message code="meters.header.history"/></h4>
+                        <h4 id="meterHistoryTitle"></h4>
 
+                        <div class="custom-scrollbar-blue p-2"
+                             style="text-align: left;  height: 600px">
+                        <ul class="timeline" id="meterHistoryList">
+
+                        </ul>
+                        </div>
                     </div>
 
                     <div class="item" id="metersAddReadingsForm">
@@ -58,6 +66,8 @@
     <input id="meterAddReadingTooltip" type="hidden" value="<spring:message code='meters.button.addReading'/>"/>
     <input id="meterEditTooltip" type="hidden" value="<spring:message code='meters.button.editMeeter'/>"/>
     <input id="lastReadDate" type="hidden" value="<spring:message code='meters.badge.lastRead.tooltip'/>"/>
+    <input id="readDateLabel" type="hidden" value="<spring:message code='meters.history.readDate'/>"/>
+    <input id="readValueLabel" type="hidden" value="<spring:message code='meters.history.readValue'/>"/>
 </div>
-
+<jsp:include page="deleteConfirm.jsp"/>
 <script type="text/javascript" src="js/metersModal.js"></script>

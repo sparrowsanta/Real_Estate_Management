@@ -26,6 +26,10 @@
     border-color: #FFA62B !important;
 }
 
+.text-orange {
+    color: #FFA62B !important;
+}
+
 .bg-orange {
     background-color: #FFA62B !important;
     color: black !important;
@@ -58,6 +62,19 @@
 
 .btn-mixed-outline {
     background-color: #fff !important;
+    color: #16697A !important;
+    border-color: #16697A !important;
+    cursor: pointer;
+}
+
+.btn-mixedBgTheme-outline:hover {
+    color: black !important;
+    background-color: #FFA62B !important;
+    border-color: #FFA62B !important;
+}
+
+.btn-mixedBgTheme-outline {
+    background-color: #EDE7E3 !important;
     color: #16697A !important;
     border-color: #16697A !important;
     cursor: pointer;
