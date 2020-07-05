@@ -1,11 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-
-
-
-    //Language settings:
-
-
     let containerDiv = $(".containerDiv")
     containerDiv.empty();
     function showFlatsInformation(flats) {
@@ -42,7 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // FirstCol
             //first row
-            let icon = $("<a href='#'><img class = 'img-thumbnail float-left mr-2' src='img/flat_mini.jpg' width='40' height='40' alt='address'></a>")
+            // let icon = $("<a href='#'><img class = 'img-thumbnail float-left mr-2' src='img/flat_mini.jpg' width='40' height='40' alt='address'></a>")
+            let icon = $("<a href='#'><em class='fas fa-road'></em></a>")
             let infoForIcon2 = $("<h4 id='infoForIcon' class='mt-2'></h4>")
             row.append(rowForInfo);
             infoForIcon2.text(infoForIcon.text())
@@ -133,8 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
             buttonCol.append(b2)
             buttonCol.append(b3)
             buttonCol.append(b4)
-
-
 
         }
     }

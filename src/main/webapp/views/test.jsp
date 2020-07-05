@@ -37,10 +37,9 @@
 <body>
 
 <button type="button" id="btnModalMeters" class="btn btn-orange btn-lg">
-    <em class="fas fa-tachometer-alt"> </em>
-    <spring:message code="common.button.view.meters"/>
+    <spring:message code="meters.button.view.meters"/>
 </button>
-<br><br><br><br><br>
+<br><br><br>
 <button type="button" class="btn btn-orange-outline">
 Test button outline
 </button>

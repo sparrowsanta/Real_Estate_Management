@@ -11,6 +11,8 @@
 <html>
 <head>
     <title>Show Flats</title>
+    <script defer src="css/FA/js/all.js"></script> <!--load all styles -->
+    <link href="css/FA/css/all.css" rel="stylesheet"> <!--load all styles -->
 </head>
 <body>
 <header>
