@@ -2,15 +2,12 @@ package com.sparrowsanta.controllers.flats;
 
 import com.google.gson.Gson;
 import com.sparrowsanta.businessmodel.Flat;
-import com.sparrowsanta.businessmodel.Room;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +21,7 @@ public class ShowFlats {
         return "flats/showFlats";
     }
 
-    @GetMapping("/allFlats")
+    @GetMapping(value = "/allFlats", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     String getAllFlats(HttpServletRequest request) {
         List<Flat> flats = new ArrayList<>();
@@ -40,22 +37,5 @@ public class ShowFlats {
         request.setAttribute("flats", flats);
         return new Gson().toJson(flats);
     }
-    /*
-    private long id;
-    private String name;
-    private String city;
-    private String street;
-    private String flatNumber;
-    private String zipCode;
-    private int roomsNumber;
-    private List<Room> rooms;
-    private int floorNumber;
-    private String flatDescription;
-    private double flatSquareMeters;
-    private int yearOfConstruction;
-    private double flatPrice;
-    private double expectedIncome;
-    private List<Meters> meters;
-    */
 
 }
