@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-        let buttonOpenModalMeters = $("#btnModalMeters");
         let buttonBack = $("#btnBack");
         let buttonAddMeter = $("#btnAddMeter");
         let formMetersList = $("#metersListForm");
@@ -8,19 +7,28 @@ document.addEventListener("DOMContentLoaded", function () {
         let metersList = $('#metersList');
         let meterHistoryList = $('#meterHistoryList');
 
-        buttonOpenModalMeters.on("click", openMetersModal);
+        let currentFlat = -1;
+        let currentMeter = -1;
+
         buttonBack.on("click", backToMetersList);
-        backToMetersList();
+        initModalOpenButtons();
 
-        function addNewReading() {
-            let meterId = $(this).attr("value");
-            console.log("adding readings for meter id: " + meterId);
+        function initModalOpenButtons() {
+            let openButtons = $(".OpenMeters");
+            openButtons.on("click", openMetersModal);
+            console.log(openButtons);
+        }
 
-            formMetersHistory.hide();
-            formMetersList.hide();
-            formMetersAddReading.show();
-            buttonBack.show();
-            buttonAddMeter.hide();
+
+        //    Meters management
+        function openMetersModal() {
+            console.log($(this));
+            currentFlat = $(this).attr("value");
+            console.log(currentFlat);
+            getMeters(currentFlat);
+            $('#ModalMeters').modal();
+            backToMetersList();
+
         }
 
         function backToMetersList() {
@@ -30,34 +38,11 @@ document.addEventListener("DOMContentLoaded", function () {
             buttonBack.hide();
             buttonAddMeter.show();
         }
-        
-        function deleteReading() {
 
-        }
-        
-        function editReading() {
-
-        }
-
-        function showMetersHistory() {
-            let clickedH5 = this.parentElement.parentElement.firstChild.firstChild;
-            let newElem = clickedH5.cloneNode(true);
-            newElem.appendChild(clickedH5.nextSibling.cloneNode(true));
-            console.log(newElem);
-            let meterId = $(this).attr("value");
-            console.log("history for meter id: " + meterId);
-            getMeterHistory(meterId, newElem);
-            formMetersHistory.show();
-            formMetersList.hide();
-            formMetersAddReading.hide();
-            buttonBack.show();
-            buttonAddMeter.hide();
-        }
-
-        function getMeters() {
+        function getMeters(flatId) {
             $.ajax({
                 type: 'get',
-                url: 'getmeters/' + "1",
+                url: 'meters/' + flatId,
                 dataType: 'json',
                 data: {},
             })
@@ -71,88 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         }
 
-        function getMeterHistory(meterId, meterName) {
-
-            $.ajax({
-                type: 'get',
-                url: 'getmeters/history/' + meterId,
-                dataType: 'json',
-                data: {},
-            })
-                .done(function (data) {
-                    createHistoryList(data, meterName);
-                })
-                .fail(function (xhr, status, err) {
-                    console.log(xhr.statusText);
-                    console.log(status);
-                    console.log(err);
-                });
-        }
-
-        function createHistoryList(data, meterName) {
-            let meterHistoryTitle = $('#meterHistoryTitle');
-            meterHistoryTitle.empty();
-            meterHistoryTitle.append(meterName)
-            meterHistoryList.empty();
-
-            if (data.length > 0) {
-                for (let i = 0; i < data.length; i++) {
-                    let newLi = $("<li>");
-                    let newDiv = $("<div>");
-                    let newDiv2 = $("<div>");
-                    let newH2 = $("<h2>");
-                    let newEm = $("<em>");
-                    let newP = $("<p>");
-                    let btnDelete = $("<a>");
-                    let btnDeleteEm = $("<em>");
-                    let btnEdit = $("<a>");
-                    let btnEditEm = $("<em>");
-
-                    newLi.addClass("timeline-item bg-main-theme rounded ml-3 p-4 shadow");
-                    newDiv.addClass("timeline-arrow");
-                    newH2.addClass("h5 mb-0");
-                    newEm.addClass("far fa-calendar-check mr-3");
-                    newP.addClass("text-small mt-2 font-weight-light");
-                    newH2.append(newEm);
-                    newH2.append($("#readDateLabel").val() + ": " + data[i].meterReadingDate.year + "." +
-                        (data[i].meterReadingDate.month > 9 ? data[i].meterReadingDate.month : "0" + data[i].meterReadingDate.month) + "." +
-                        (data[i].meterReadingDate.day > 9 ? data[i].meterReadingDate.day : "0" + data[i].meterReadingDate.day));
-
-                    newP.text($("#readValueLabel").val() + ": " + data[i].readingValue);
-
-                    btnDeleteEm.addClass("fas fa-trash-alt");
-                    btnEditEm.addClass("fas fa-pencil-alt");
-                    btnDelete.addClass("btn btn-xs float-right btn-mixedBgTheme-outline mr-2").attr("data-toggle", "tooltip")
-                        .attr("value", data[i].id).prop('title', $("#meterDeleteTooltip").val()).on("click", deleteReading);
-                    btnEdit.addClass("btn btn-xs float-right btn-mixedBgTheme-outline mr-2").attr("data-toggle", "tooltip")
-                        .attr("value", data[i].id).prop('title', $("#meterEditTooltip").val()).on("click", editReading);
-                    btnEdit.append(btnEditEm);
-                    btnDelete.append(btnDeleteEm);
-
-
-                    newDiv2.append(btnEdit);
-                    newDiv2.append(btnDelete);
-                    newDiv2.append(newH2);
-                    newLi.append(newDiv);
-                    newLi.append(newDiv2);
-                    newLi.append(newP);
-                    meterHistoryList.append(newLi);
-
-                }
-            } else {
-
-
-            }
-        }
-
-
-        function openMetersModal() {
-            getMeters();
-            $('#ModalMeters').modal();
-            backToMetersList();
-
-
-        }
 
         function createMetersList(data) {
             metersList.empty();
@@ -199,7 +102,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     btnDeleteEm.addClass("fas fa-trash-alt");
 
                     btnDelete.addClass("btn btn-xs pull-right btn-mixed-outline mr-2").attr("data-toggle", "tooltip")
-                        .attr("value", data[i].id).prop('title', $("#meterDeleteTooltip").val()).on("click", deleteMeter);
+                        .attr("value", data[i].id).prop('title', $("#meterDeleteTooltip").val()).on("click", function () {
+                        deleteEntity(data[i].description, deleteMeter, data[i].id)
+                    });
                     btnEditMeter.addClass("btn btn-xs pull-right btn-mixed-outline mr-2").attr("data-toggle", "tooltip")
                         .attr("value", data[i].id).prop('title', $("#meterEditTooltip").val()).on("click", editMeter);
                     btnAddReading.addClass("btn btn-xs pull-right btn-mixed-outline mr-2").attr("data-toggle", "tooltip")
@@ -235,12 +140,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 newLi.append(newDiv);
                 metersList.append(newLi);
             }
-        }
-
-        function deleteMeter() {
-            let meterId = $(this).attr("value");
-            console.log("deleting meter id: " + meterId)
-            deleteEntity("Test",test, meterId)
         }
 
         function editMeter() {
@@ -282,11 +181,151 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        function test(idToDelete) {
-            console.log("Działa");
-            console.log(idToDelete);
+        function deleteMeter(meterId) {
+            console.log("Deleting meter id: " + meterId);
+            $.ajax({
+                type: "DELETE",
+                url: 'meters/delete/' + meterId,
+            })
+                .done(function (data) {
+                    getMeters();
+                })
+                .fail(function (xhr, status, err) {
+                    console.log(xhr.statusText);
+                    console.log(status);
+                    console.log(err);
+                });
+        }
 
+
+        function addNewReading() {
+            let meterId = $(this).attr("value");
+            console.log("adding readings for meter id: " + meterId);
+
+            formMetersHistory.hide();
+            formMetersList.hide();
+            formMetersAddReading.show();
+            buttonBack.show();
+            buttonAddMeter.hide();
+        }
+
+        // History managment
+
+        function deleteReading(readingId) {
+            console.log("Deleting reading id: " + readingId)
+            $.ajax({
+                type: "DELETE",
+                url: 'meters/history/delete/' + readingId,
+            })
+                .done(function (data) {
+                    getMeterHistory();
+                })
+                .fail(function (xhr, status, err) {
+                    console.log(xhr.statusText);
+                    console.log(status);
+                    console.log(err);
+                });
 
         }
+
+        function editReading() {
+
+        }
+
+        function showMetersHistory() {
+            let clickedH5 = this.parentElement.parentElement.firstChild.firstChild;
+            let newElem = clickedH5.cloneNode(true);
+            newElem.appendChild(clickedH5.nextSibling.cloneNode(true));
+            let meterId = $(this).attr("value");
+            console.log("history for meter id: " + meterId);
+            getMeterHistory(meterId, newElem);
+            formMetersHistory.show();
+            formMetersList.hide();
+            formMetersAddReading.hide();
+            buttonBack.show();
+            buttonAddMeter.hide();
+        }
+
+
+        function getMeterHistory(meterId, meterName) {
+
+            $.ajax({
+                type: 'get',
+                url: 'meters/history/' + meterId,
+                dataType: 'json',
+                data: {},
+            })
+                .done(function (data) {
+                    createHistoryList(data, meterName);
+                })
+                .fail(function (xhr, status, err) {
+                    console.log(xhr.statusText);
+                    console.log(status);
+                    console.log(err);
+                });
+        }
+
+        function createHistoryList(data, meterName) {
+            let meterHistoryTitle = $('#meterHistoryTitle');
+            if (meterName !== null) {
+                meterHistoryTitle.empty();
+                meterHistoryTitle.append(meterName)
+            }
+            meterHistoryList.empty();
+
+            if (data.length > 0) {
+                for (let i = 0; i < data.length; i++) {
+                    let newLi = $("<li>");
+                    let newDiv = $("<div>");
+                    let newDiv2 = $("<div>");
+                    let newH2 = $("<h2>");
+                    let newEm = $("<em>");
+                    let newP = $("<p>");
+                    let btnDelete = $("<a>");
+                    let btnDeleteEm = $("<em>");
+                    let btnEdit = $("<a>");
+                    let btnEditEm = $("<em>");
+
+                    newLi.addClass("timeline-item bg-main-theme rounded ml-3 p-4 shadow");
+                    newDiv.addClass("timeline-arrow");
+                    newH2.addClass("h5 mb-0");
+                    newEm.addClass("far fa-calendar-check mr-3");
+                    newP.addClass("text-small mt-2 font-weight-light");
+                    newH2.append(newEm);
+                    let readingDate = data[i].meterReadingDate.year + "." +
+                        (data[i].meterReadingDate.month > 9 ? data[i].meterReadingDate.month : "0" + data[i].meterReadingDate.month) + "." +
+                        (data[i].meterReadingDate.day > 9 ? data[i].meterReadingDate.day : "0" + data[i].meterReadingDate.day);
+                    newH2.append($("#readDateLabel").val() + ": " + readingDate);
+
+                    newP.text($("#readValueLabel").val() + ": " + data[i].readingValue);
+
+                    btnDeleteEm.addClass("fas fa-trash-alt");
+                    btnEditEm.addClass("fas fa-pencil-alt");
+                    btnDelete.addClass("btn btn-xs float-right btn-mixedBgTheme-outline mr-2").attr("data-toggle", "tooltip")
+                        .attr("value", data[i].id).prop('title', $("#meterDeleteTooltip").val()).on("click", function () {
+                        deleteEntity("Reading done on: " + readingDate, deleteReading, data[i].id)
+                    });
+                    btnEdit.addClass("btn btn-xs float-right btn-mixedBgTheme-outline mr-2").attr("data-toggle", "tooltip")
+                        .attr("value", data[i].id).prop('title', $("#meterEditTooltip").val()).on("click", editReading);
+                    btnEdit.append(btnEditEm);
+                    btnDelete.append(btnDeleteEm);
+
+
+                    newDiv2.append(btnEdit);
+                    newDiv2.append(btnDelete);
+                    newDiv2.append(newH2);
+                    newLi.append(newDiv);
+                    newLi.append(newDiv2);
+                    newLi.append(newP);
+                    meterHistoryList.append(newLi);
+
+                }
+            } else {
+
+
+            }
+        }
+
+
     }
 );
