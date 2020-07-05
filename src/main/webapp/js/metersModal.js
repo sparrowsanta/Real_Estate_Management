@@ -9,26 +9,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let currentFlat = -1;
         let currentMeter = -1;
+        let currentMeterName = {};
 
         buttonBack.on("click", backToMetersList);
         initModalOpenButtons();
 
+        // Init buttons opening modal for flats
         function initModalOpenButtons() {
             let openButtons = $(".OpenMeters");
             openButtons.on("click", openMetersModal);
             console.log(openButtons);
         }
 
-
         //    Meters management
         function openMetersModal() {
-            console.log($(this));
-            currentFlat = $(this).attr("value");
-            console.log(currentFlat);
+            currentFlat = $(this).attr("value");;
             getMeters(currentFlat);
             $('#ModalMeters').modal();
             backToMetersList();
-
         }
 
         function backToMetersList() {
@@ -83,19 +81,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     let btnAddReadingEm = $("<em>");
                     let btnEditMeterEm = $("<em>");
                     let btnDeleteEm = $("<em>");
-                    let spanPill = $("<span>");
-                    spanPill.addClass("badge bg-dark-blue badge-pill mr-5 float-right");
-                    spanPill.text("2020-01-01").attr("data-toggle", "tooltip").prop('title', $("#lastReadDate").val());
 
                     newEm.addClass(getIconForMeter(data[i].meterType));
                     newH5.append(newEm);
                     newH5.append(" " + getMeterType(data[i].meterType));
-
                     newP.addClass("pmd-list-subtitle");
                     newP.text(data[i].description);
-                    // newP.append(spanPill);
-
-
                     btnHisEm.addClass("fas fa-history");
                     btnAddReadingEm.addClass("fas fa-plus");
                     btnEditMeterEm.addClass("fas fa-pencil-alt");
@@ -147,39 +138,6 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("editing meter id: " + meterId)
         }
 
-        function getMeterType(meeterType) {
-            switch (meeterType) {
-                case "ELECTRICITY":
-                    return $("#meterElectricity").val();
-                case "WATER_COLD":
-                    return $("#meterWaterCold").val();
-                case "WATER_HOT":
-                    return $("#meterWaterHot").val();
-                case "HEATING":
-                    return $("#meterHeat").val();
-                case "GAS":
-                    return $("#meterGas").val();
-                default:
-                    return $("#meterUndefined").val();
-            }
-        }
-
-        function getIconForMeter(meeterType) {
-            switch (meeterType) {
-                case "ELECTRICITY":
-                    return "fas fa-bolt";
-                case "WATER_COLD":
-                    return "fas fa-snowflake";
-                case "WATER_HOT":
-                    return "fas fa-tint";
-                case "HEATING":
-                    return "fas fa-temperature-high";
-                case "GAS":
-                    return "fas fa-fire-alt";
-                default:
-                    return "";
-            }
-        }
 
         function deleteMeter(meterId) {
             console.log("Deleting meter id: " + meterId);
@@ -188,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 url: 'meters/delete/' + meterId,
             })
                 .done(function (data) {
-                    getMeters();
+                    getMeters(currentFlat);
                 })
                 .fail(function (xhr, status, err) {
                     console.log(xhr.statusText);
@@ -209,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
             buttonAddMeter.hide();
         }
 
-        // History managment
+        // History management
 
         function deleteReading(readingId) {
             console.log("Deleting reading id: " + readingId)
@@ -218,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 url: 'meters/history/delete/' + readingId,
             })
                 .done(function (data) {
-                    getMeterHistory();
+                    getMeterHistory(currentMeter, currentMeterName);
                 })
                 .fail(function (xhr, status, err) {
                     console.log(xhr.statusText);
@@ -235,10 +193,13 @@ document.addEventListener("DOMContentLoaded", function () {
         function showMetersHistory() {
             let clickedH5 = this.parentElement.parentElement.firstChild.firstChild;
             let newElem = clickedH5.cloneNode(true);
-            newElem.appendChild(clickedH5.nextSibling.cloneNode(true));
             let meterId = $(this).attr("value");
+            currentMeterName = newElem;
+            currentMeter = meterId;
+            newElem.appendChild(clickedH5.nextSibling.cloneNode(true));
+
             console.log("history for meter id: " + meterId);
-            getMeterHistory(meterId, newElem);
+            getMeterHistory(currentMeter, currentMeterName);
             formMetersHistory.show();
             formMetersList.hide();
             formMetersAddReading.hide();
@@ -320,12 +281,43 @@ document.addEventListener("DOMContentLoaded", function () {
                     meterHistoryList.append(newLi);
 
                 }
-            } else {
-
-
             }
         }
 
+    //    enums translations
+    function getMeterType(meeterType) {
+        switch (meeterType) {
+            case "ELECTRICITY":
+                return $("#meterElectricity").val();
+            case "WATER_COLD":
+                return $("#meterWaterCold").val();
+            case "WATER_HOT":
+                return $("#meterWaterHot").val();
+            case "HEATING":
+                return $("#meterHeat").val();
+            case "GAS":
+                return $("#meterGas").val();
+            default:
+                return $("#meterUndefined").val();
+        }
+    }
+
+    function getIconForMeter(meeterType) {
+        switch (meeterType) {
+            case "ELECTRICITY":
+                return "fas fa-bolt";
+            case "WATER_COLD":
+                return "fas fa-snowflake";
+            case "WATER_HOT":
+                return "fas fa-tint";
+            case "HEATING":
+                return "fas fa-temperature-high";
+            case "GAS":
+                return "fas fa-fire-alt";
+            default:
+                return "";
+        }
+    }
 
     }
 );
