@@ -16,6 +16,7 @@ import java.util.Locale;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.sparrowsanta.controllers")
 public class AppConfig implements WebMvcConfigurer {
+
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         registry.jsp("/views/", ".jsp");
@@ -45,7 +46,6 @@ public class AppConfig implements WebMvcConfigurer {
         interceptor.setParamName("lang");
         registry.addInterceptor(interceptor);
     }
-
     //Ustawienie mapowania dla zasobów statycznych
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

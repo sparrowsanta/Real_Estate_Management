@@ -7,6 +7,7 @@ import lombok.Getter;
 import java.util.Arrays;
 
 @Data
+@AllArgsConstructor
 public class Room {
     private long id;
     private long flatId;
