@@ -36,10 +36,14 @@
 </head>
 <body>
 
-<button type="button" id="btnModalMeters" class="btn btn-orange btn-lg">
-    <spring:message code="meters.button.view.meters"/>
+<button type="button" id="btnModalMeters" class="btn btn-orange btn-lg OpenMeters" value="1">
+    <spring:message code="meters.button.view.meters"/> Flat 1
+</button>
+<button type="button" id="btnModalMeters2" class="btn btn-orange btn-lg OpenMeters" value="2">
+    <spring:message code="meters.button.view.meters"/> Flat 2
 </button>
 <br><br><br>
+
 <button type="button" class="btn btn-orange-outline">
 Test button outline
 </button>

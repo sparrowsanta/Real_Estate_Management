@@ -14,7 +14,7 @@ import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.sparrowsanta.controllers")
+@ComponentScan(basePackages = "com.sparrowsanta")
 public class AppConfig implements WebMvcConfigurer {
 
     @Override
