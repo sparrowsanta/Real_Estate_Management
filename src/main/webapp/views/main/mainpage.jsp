@@ -16,7 +16,7 @@
 <section>
 <%--Header--%>
     <header>
-        <jsp:include page="/views/header.jsp"></jsp:include>
+        <jsp:include page="/views/util/header.jsp"></jsp:include>
     </header>
 </section>
 <main>
@@ -68,7 +68,7 @@
 
 <!-- Footer -->
 <footer class="page-footer font-small blue">
-    <jsp:include page="/views/footer.jsp"></jsp:include>
+    <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>
 </body>
 </html>

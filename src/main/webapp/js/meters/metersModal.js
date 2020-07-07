@@ -3,25 +3,52 @@ document.addEventListener("DOMContentLoaded", function () {
         let buttonAddMeter = $("#btnAddMeter");
         let formMetersList = $("#metersListForm");
         let formMetersHistory = $("#metersHistoryForm");
-        let formMetersAddReading = $("#metersAddReadingsForm");
         let metersList = $('#metersList');
         let meterHistoryList = $('#meterHistoryList');
-
         let currentFlat = -1;
         let currentMeter = -1;
         let currentMeterName = {};
+        let meterTypes = [];
+        let buttonSave = $("#btnSave");
+
+
+
 
         buttonBack.on("click", backToMetersList);
+        initAddMeterButtons();
         initModalOpenButtons();
+
+        $('.required-icon').tooltip({
+            placement: 'left',
+            title: $('#meterTooltipRequiredField').val()
+        });
+
+        // create select with meter types
+        createMeterTypes();
+        $('.js-example-basic-single').select2({
+            placeholder: $("#meterSelectTypePlaceholder").val(),
+            data: meterTypes,
+            escapeMarkup: function (markup) {
+                return markup;
+            }
+        });
+        $('.select2-selection__rendered').hover(function () {
+            $(this).removeAttr('title');
+        });
 
         // Init buttons opening modal for flats
         function initModalOpenButtons() {
-            let openButtons = $(".OpenMeters");
+            let openButtons = $(".openMeters");
             openButtons.on("click", openMetersModal);
-            console.log(openButtons);
+            let containerDiv = $(".containerDiv")
+            containerDiv.bind('DOMSubtreeModified', function(){
+                console.log("Aaaaa")
+                let openButtons = $(".openMeters");
+                openButtons.on("click", openMetersModal);
+            });
+
         }
 
-        //    Meters management
         function openMetersModal() {
             currentFlat = $(this).attr("value");
             getMeters(currentFlat);
@@ -32,7 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
         function backToMetersList() {
             formMetersHistory.hide();
             formMetersList.show();
-            formMetersAddReading.hide();
             buttonBack.hide();
             buttonAddMeter.show();
         }
@@ -40,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
         function getMeters(flatId) {
             $.ajax({
                 type: 'get',
-                url: 'meters/' + flatId,
+                url: 'meters/getAll/' + flatId,
                 dataType: 'json',
                 data: {},
             })
@@ -120,7 +146,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     newLi.append(newDiv2);
                     metersList.append(newLi);
                 }
-
             } else {
                 let newLi = $("<li>");
                 let newDiv = $("<div>");
@@ -134,8 +159,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         function editMeter() {
+            resetErrorsMeter();
+            $('#meterDataTitle').text($('#meterDataTitleEdit').val());
             let meterId = $(this).attr("value");
-            console.log("editing meter id: " + meterId)
+            getMeterById(meterId);
+
         }
 
 
@@ -155,22 +183,46 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         }
 
-
         function addNewReading() {
             let meterId = $(this).attr("value");
-            console.log("adding readings for meter id: " + meterId);
+            // resetReadingErrors();
+            $('#meterReadingDataTitle').text($('#meterReadingDataTitleNew').val());
+            $('#readingDate').val("");
+            $("#readingValue").val('')
+            buttonSave.prop("onclick", null).off("click");
+            buttonSave.on("click", saveNewReading);
+            $('#meterReadingDataModal').modal();
 
-            formMetersHistory.hide();
-            formMetersList.hide();
-            formMetersAddReading.show();
-            buttonBack.show();
-            buttonAddMeter.hide();
         }
 
-        // History management
+    function saveNewReading() {
+        if (checkRequiredFieldsReading() !== true) return;
+        let reading = {};
+        reading.meterId = currentMeter;
+        reading.meterReadingDate = $('#readingDate').val();
+        reading.readingValue = $('#readingValue').val();
+        $.ajax({
+            type: 'post',
+            url: 'meters/reading/add/',
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(reading),
+        })
+            .done(function (data) {
+                $('#meterReadingDataModal').modal('hide');
+                getMeters(currentFlat);
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
+
+
+    // History management
 
         function deleteReading(readingId) {
-            console.log("Deleting reading id: " + readingId)
             $.ajax({
                 type: "DELETE",
                 url: 'meters/history/delete/' + readingId,
@@ -183,11 +235,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.log(status);
                     console.log(err);
                 });
-
         }
 
         function editReading() {
-
         }
 
         function showMetersHistory() {
@@ -197,19 +247,14 @@ document.addEventListener("DOMContentLoaded", function () {
             currentMeterName = newElem;
             currentMeter = meterId;
             newElem.appendChild(clickedH5.nextSibling.cloneNode(true));
-
-            console.log("history for meter id: " + meterId);
             getMeterHistory(currentMeter, currentMeterName);
             formMetersHistory.show();
             formMetersList.hide();
-            formMetersAddReading.hide();
             buttonBack.show();
             buttonAddMeter.hide();
         }
 
-
         function getMeterHistory(meterId, meterName) {
-
             $.ajax({
                 type: 'get',
                 url: 'meters/history/' + meterId,
@@ -263,11 +308,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     btnDeleteEm.addClass("fas fa-trash-alt");
                     btnEditEm.addClass("fas fa-pencil-alt");
                     btnDelete.addClass("btn btn-xs float-right btn-mixedBgTheme-outline mr-2").attr("data-toggle", "tooltip")
-                        .attr("value", data[i].id).prop('title', $("#meterDeleteTooltip").val()).on("click", function () {
-                        deleteEntity("Reading done on: " + readingDate, deleteReading, data[i].id)
+                        .attr("value", data[i].id).prop('title', $("#meterDeleteReadingTooltip").val()).on("click", function () {
+                        deleteEntity($("#readDeleteMessage").val() + " " + readingDate, deleteReading, data[i].id)
                     });
                     btnEdit.addClass("btn btn-xs float-right btn-mixedBgTheme-outline mr-2").attr("data-toggle", "tooltip")
-                        .attr("value", data[i].id).prop('title', $("#meterEditTooltip").val()).on("click", editReading);
+                        .attr("value", data[i].id).prop('title', $("#meterEditReadingTooltip").val()).on("click", editReading);
                     btnEdit.append(btnEditEm);
                     btnDelete.append(btnDeleteEm);
 
@@ -284,40 +329,195 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-    //    enums translations
-    function getMeterType(meeterType) {
-        switch (meeterType) {
-            case "ELECTRICITY":
-                return $("#meterElectricity").val();
-            case "WATER_COLD":
-                return $("#meterWaterCold").val();
-            case "WATER_HOT":
-                return $("#meterWaterHot").val();
-            case "HEATING":
-                return $("#meterHeat").val();
-            case "GAS":
-                return $("#meterGas").val();
-            default:
-                return $("#meterUndefined").val();
+        //    enums translations
+        function getMeterType(meeterType) {
+            switch (meeterType) {
+                case "ELECTRICITY":
+                    return $("#meterElectricity").val();
+                case "WATER_COLD":
+                    return $("#meterWaterCold").val();
+                case "WATER_HOT":
+                    return $("#meterWaterHot").val();
+                case "HEATING":
+                    return $("#meterHeat").val();
+                case "GAS":
+                    return $("#meterGas").val();
+                default:
+                    return $("#meterUndefined").val();
+            }
         }
-    }
 
-    function getIconForMeter(meeterType) {
-        switch (meeterType) {
-            case "ELECTRICITY":
-                return "fas fa-bolt";
-            case "WATER_COLD":
-                return "fas fa-snowflake";
-            case "WATER_HOT":
-                return "fas fa-tint";
-            case "HEATING":
-                return "fas fa-temperature-high";
-            case "GAS":
-                return "fas fa-fire-alt";
-            default:
-                return "";
+        function getIconForMeter(meeterType) {
+            switch (meeterType) {
+                case "ELECTRICITY":
+                    return "fas fa-bolt";
+                case "WATER_COLD":
+                    return "fas fa-snowflake";
+                case "WATER_HOT":
+                    return "fas fa-tint";
+                case "HEATING":
+                    return "fas fa-temperature-high";
+                case "GAS":
+                    return "fas fa-fire-alt";
+                default:
+                    return "";
+            }
         }
-    }
+
+        function saveNewMeter() {
+            if (checkRequiredFieldsMeter() !== true) return;
+            let meter = {};
+            meter.flatId = currentFlat;
+            meter.meterType = $('#meterType').val();
+            meter.description = $('#meterDescription').val();
+            $.ajax({
+                type: 'post',
+                url: 'meters/add/',
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(meter),
+            })
+                .done(function (data) {
+                    $('#meterDataModal').modal('hide');
+                    getMeters(currentFlat);
+                })
+                .fail(function (xhr, status, err) {
+                    console.log(xhr.statusText);
+                    console.log(status);
+                    console.log(err);
+                });
+        }
+
+        function initAddMeterButtons() {
+            let openButtons = $(".addMeter");
+            openButtons.on("click", addNewMeter);
+        }
+
+        function addNewMeter() {
+            resetErrorsMeter();
+            $('#meterDataTitle').text($('#meterDataTitleNew').val());
+            $('#meterDescription').val("");
+            buttonSave.prop("onclick", null).off("click");
+            buttonSave.on("click", saveNewMeter);
+            $("#meterType").val('').trigger('change');
+            $('#meterDataModal').modal();
+        }
+
+
+        function createMeterTypes() {
+            meterTypes.push({
+                "id": "ELECTRICITY", "text": '<em class="' + getIconForMeter("ELECTRICITY") + '"></em>' + " " +
+                    $("#meterElectricity").val()
+            });
+            meterTypes.push({
+                "id": "WATER_COLD", "text": '<em class="' + getIconForMeter("WATER_COLD") + '"></em>' + " " +
+                    $("#meterWaterCold").val()
+            });
+            meterTypes.push({
+                "id": "WATER_HOT", "text": '<em class="' + getIconForMeter("WATER_HOT") + '"></em>' + " " +
+                    $("#meterWaterHot").val()
+            });
+            meterTypes.push({
+                "id": "HEATING", "text": '<em class="' + getIconForMeter("HEATING") + '"></em>' + " " +
+                    $("#meterHeat").val()
+            });
+            meterTypes.push({
+                "id": "GAS", "text": '<em class="' + getIconForMeter("GAS") + '"></em>' + " " +
+                    $("#meterGas").val()
+            });
+        }
+
+        function getMeterById(meterId) {
+            $.ajax({
+                type: 'get',
+                url: 'meters/' + meterId,
+                dataType: "json",
+                data: {},
+            })
+                .done(function (data) {
+                    $('#meterType').val(data.meterType).trigger('change');
+                    $('#meterDescription').val(data.description);
+                    currentMeter = data.id;
+                    buttonSave.prop("onclick", null).off("click");
+                    buttonSave.on("click", function () {
+                        saveMeterChanges(currentMeter)
+                    });
+
+                    $('#meterDataModal').modal();
+
+                })
+                .fail(function (xhr, status, err) {
+                    console.log(xhr.statusText);
+                    console.log(status);
+                    console.log(err);
+                });
+        }
+
+        function saveMeterChanges(meterId) {
+            if (checkRequiredFieldsMeter() !== true) return;
+            let meter = {};
+            meter.id = meterId;
+            meter.flatId = currentFlat;
+            meter.meterType = $('#meterType').val();
+            meter.description = $('#meterDescription').val();
+            $.ajax({
+                type: 'put',
+                url: 'meters/edit/' + meterId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(meter),
+            })
+                .done(function (data) {
+                    $('#meterDataModal').modal('hide');
+                    getMeters(currentFlat);
+                })
+                .fail(function (xhr, status, err) {
+                    console.log(xhr.statusText);
+                    console.log(status);
+                    console.log(err);
+                });
+        }
+
+        function checkRequiredFieldsMeter() {
+            let passedValidation = true;
+            let meterType = $('#meterType');
+            resetErrorsMeter();
+            if (meterType.val() === "") {
+                meterType.removeClass("is-valid").addClass("is-invalid");
+                passedValidation = false;
+            }
+            return passedValidation;
+        }
+
+        function checkRequiredFieldsReading() {
+            let passedValidation = true;
+            let readingDate = $('#readingDate');
+            let readingValue = $('#readingValue');
+            resetErrorsReading();
+            if (readingDate.val() === "") {
+                readingDate.removeClass("is-valid").addClass("is-invalid");
+                passedValidation = false;
+            }
+            if (readingValue.val() === "") {
+                readingValue.removeClass("is-valid").addClass("is-invalid");
+                passedValidation = false;
+            }
+            return passedValidation;
+
+        }
+
+        function resetErrorsMeter() {
+            let meterType = $('#meterType');
+            meterType.addClass("is-valid").removeClass("is-invalid");
+        }
+
+        function resetErrorsReading() {
+            let readingDate = $('#readingDate');
+            let readingValue = $('#readingValue');
+            readingDate.addClass("is-valid").removeClass("is-invalid");
+            readingValue.addClass("is-valid").removeClass("is-invalid");
+        }
 
     }
-);
+)
+;

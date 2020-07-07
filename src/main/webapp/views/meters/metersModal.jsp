@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" href="css/metersHistory.css" type="text/css">
 <div class="container text-center">
-    <div class="modal fade " id="ModalMeters" tabindex="-1" role="dialog" aria-labelledby="ModalMeters">
+    <div class="modal fade " id="ModalMeters" tabindex="-1" role="dialog" aria-labelledby="ModalMeters"  data-backdrop="static">
         <div class="modal-dialog modal-lg mw-75 w-75" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-dark-blue">
@@ -36,15 +36,9 @@
                         </div>
                     </div>
 
-                    <div class="item" id="metersAddReadingsForm">
-                        <h4><spring:message code="meters.header.addReading"/></h4>
-                        <form>
-
-                        </form>
-                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-orange" id="btnAddMeter">
+                    <button type="button" class="btn btn-orange addMeter" id="btnAddMeter">
                         <em class="fas fa-plus"></em>
                         <spring:message code="meters.button.addMeeter"/></button>
                     <button type="button" class="btn btn-orange" id="btnBack">
@@ -64,10 +58,15 @@
     <input id="meterDeleteTooltip" type="hidden" value="<spring:message code='meters.button.deleteMeter'/>"/>
     <input id="meterHistoryTooltip" type="hidden" value="<spring:message code='meters.button.history'/>"/>
     <input id="meterAddReadingTooltip" type="hidden" value="<spring:message code='meters.button.addReading'/>"/>
+    <input id="meterDeleteReadingTooltip" type="hidden" value="<spring:message code='meters.button.deleteReading'/>"/>
+    <input id="meterEditReadingTooltip" type="hidden" value="<spring:message code='meters.button.editReading'/>"/>
     <input id="meterEditTooltip" type="hidden" value="<spring:message code='meters.button.editMeeter'/>"/>
     <input id="lastReadDate" type="hidden" value="<spring:message code='meters.badge.lastRead.tooltip'/>"/>
     <input id="readDateLabel" type="hidden" value="<spring:message code='meters.history.readDate'/>"/>
     <input id="readValueLabel" type="hidden" value="<spring:message code='meters.history.readValue'/>"/>
+    <input id="readDeleteMessage" type="hidden" value="<spring:message code='meters.history.delete.message'/>"/>
 </div>
-<jsp:include page="deleteConfirm.jsp"/>
-<script type="text/javascript" src="js/metersModal.js"></script>
+<jsp:include page="../util/deleteConfirm.jsp"/>
+<jsp:include page="metersData.jsp"/>
+<jsp:include page="meterReadingData.jsp"/>
+<script type="text/javascript" src="js/meters/metersModal.js"></script>

@@ -13,6 +13,11 @@ public class Meters {
     private MeterType meterType;
     private String description;
 
+    public Meters(long flatId, MeterType meterType, String description) {
+        this.flatId = flatId;
+        this.meterType = meterType;
+        this.description = description;
+    }
 
     @AllArgsConstructor
     @Getter
