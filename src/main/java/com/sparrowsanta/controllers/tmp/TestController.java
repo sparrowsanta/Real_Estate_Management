@@ -1,4 +1,4 @@
-package com.sparrowsanta.controllers;
+package com.sparrowsanta.controllers.tmp;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +8,6 @@ public class TestController {
 
     @GetMapping(value = "/test")
     public String testForMeters() {
-        return "test";
+        return "tmp/test";
     }
 }

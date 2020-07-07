@@ -41,7 +41,7 @@
         <div class="collapse navbar-collapse" id="mainmenu">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="mainpage.jsp">Start</a>
+                    <a class="nav-link" href="../main/mainpage.jsp">Start</a>
                 </li>
                 <li class="nav-item dropdown" id="something">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
