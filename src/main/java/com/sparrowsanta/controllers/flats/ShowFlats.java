@@ -2,8 +2,10 @@ package com.sparrowsanta.controllers.flats;
 
 import com.google.gson.Gson;
 import com.sparrowsanta.businessmodel.Flat;
+import jdk.jfr.BooleanFlag;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,7 +19,6 @@ public class ShowFlats {
 
     @GetMapping
     String showFlats() {
-
         return "flats/showFlats";
     }
 
@@ -36,6 +37,17 @@ public class ShowFlats {
 //        flats.add(flat3);
         request.setAttribute("flats", flats);
         return new Gson().toJson(flats);
+    }
+
+    @GetMapping(value = "/addFlat", produces = "text/plain;charset=UTF-8")
+    public String addFlat() {
+        return "flats/addFlat";
+    }
+
+    @PostMapping(value = "/addFlat", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String addFlatPost() {
+        return "flats/addFlat";
     }
 
 }

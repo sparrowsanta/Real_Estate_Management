@@ -100,14 +100,39 @@ main div {
 
 .em {
     color: #12272B;
+    display: inline-block;
 }
 
 .flats-header {
     text-shadow: 1px 1px #12272b;;
 }
 
+/*ADD FLAT*/
 
+.labelForForm {
+    font-family: sans-serif;
+    margin-left: 60px;
+}
 
+.input-group-addon {
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+.form-control input {
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+.control-label {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+/**/
 
 
 

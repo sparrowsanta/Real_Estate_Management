@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         //    Meters management
         function openMetersModal() {
-            currentFlat = $(this).attr("value");;
+            currentFlat = $(this).attr("value");
             getMeters(currentFlat);
             $('#ModalMeters').modal();
             backToMetersList();
