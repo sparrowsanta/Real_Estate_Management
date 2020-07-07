@@ -22,15 +22,15 @@
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
             crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="css/default.css" type="text/css">
-    <link rel="stylesheet" href="css/main.css" type="text/css">
-    <script src="js/jquery.js"></script>
-    <script src="js/popper.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
+    <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 </head>
 <body>
 <header>
     <nav class="navbar navbar-custom  navbar-expand-lg" id="mainNavbar">
-        <a class="navbar-brand mx-4 p-0" href="main.html"><img src="img/home-sign.jpg" width="55" height="55"
+        <a class="navbar-brand mx-4 p-0" href="main.html"><img src="${pageContext.request.contextPath}/img/home-sign.jpg" width="55" height="55"
                                                                class="d-inline-block float-left mr-2 align-bottom p-0"
                                                                alt=""> Real Estate<br>Management
         </a>
@@ -47,7 +47,7 @@
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
                        aria-expanded="false" id="submenu1" aria-haspopup="true"><spring:message code="homepage.navbar.flats"/></a>
                     <div class="dropdown-menu" aria-labelledby="submenu1">
-                        <a class="dropdown-item" href="#"><spring:message code="homepage.navbar.flats.addFlat"/></a>
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/flats/addFlat"><spring:message code="homepage.navbar.flats.addFlat"/></a>
                         <a class="dropdown-item" href="#"><spring:message code="homepage.navbar.flats.editFlat"/></a>
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/flats"><spring:message code="homepage.navbar.flats.showFlats"/></a>
                     </div>
