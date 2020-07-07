@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let meterTypes = [];
         let buttonSave = $("#btnSave");
 
+
+
+
         buttonBack.on("click", backToMetersList);
         initAddMeterButtons();
         initModalOpenButtons();
@@ -37,6 +40,13 @@ document.addEventListener("DOMContentLoaded", function () {
         function initModalOpenButtons() {
             let openButtons = $(".openMeters");
             openButtons.on("click", openMetersModal);
+            let containerDiv = $(".containerDiv")
+            containerDiv.bind('DOMSubtreeModified', function(){
+                console.log("Aaaaa")
+                let openButtons = $(".openMeters");
+                openButtons.on("click", openMetersModal);
+            });
+
         }
 
         function openMetersModal() {

@@ -18,7 +18,6 @@
 <header>
     <jsp:include page="/views/util/header.jsp"></jsp:include>
     <script type="text/javascript" src="js/flats.js"></script>
-    <script type="text/javascript" src="js/metersModal.js"></script>
 </header>
 <main>
     <div class="mainContainer">
@@ -30,6 +29,7 @@
     </div>
 
 </main>
+<jsp:include page="../meters/metersModal.jsp"/>
 <footer>
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>
