@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-sm modal-notify" role="document">
         <div class="modal-content text-center">
             <input id="deleteMessage" type="hidden" value="<spring:message code='common.message.confirm.delete'/>"/>
-            <div class="modal-header d-flex justify-content-center bg-dark-blue text-white">
+            <div class="modal-header d-flex justify-content-center bg-darker-blue text-white">
                 <p id="delTitle" class="heading"><strong></strong></p>
             </div>
             <div class="modal-body">
@@ -18,4 +18,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="js/deleteConfirm.js"></script>
+<script type="text/javascript" src="js/util/deleteConfirm.js"></script>

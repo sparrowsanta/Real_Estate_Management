@@ -1,4 +1,4 @@
-package com.sparrowsanta.controllers;
+package com.sparrowsanta.controllers.login;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ public class LoginController {
     public String login() {
         logger.info("Test loggera");
         logger.error("Test loggera file");
-        return "login";
+        return "login/login";
 
     }
 }
