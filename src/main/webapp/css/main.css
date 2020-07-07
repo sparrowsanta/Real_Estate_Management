@@ -2,6 +2,7 @@
 body {
     background-color: #EDE7E3;
 }
+
 main {
     width: 90vw;
     margin: 0 auto;
@@ -10,54 +11,62 @@ main {
     /*padding-bottom: 10px;*/
     min-height: calc(100vh - 76px - 68px);
 }
+
 footer {
     text-align: center;
     background-color: #16697A;
     padding: 6px;
 }
+
 * {
     margin: 0;
     padding: 0;
 }
 
 
-
 /* 2 - Navbar*/
 #mainNavbar {
     background-color: #16697A;
 }
+
 .navbar-nav li:hover > .dropdown-menu {
     display: block;
     top: 50px
 }
+
 .navbar-brand {
     color: #12272B;
 
 }
+
 .nav-link {
     color: #FFA62B;
     font-size: 1.5em;
 }
+
 /*Search*/
 #searching {
     display: inline;
     text-align: center;
 }
+
 /*Search Button*/
 .btn-custom {
     background-color: #FFA62B;
 }
+
 /*Search Bar*/
 .form-control {
     background-color: #EDE7E3;
 }
+
 /*DropDown items*/
 .dropdown-menu {
     background-color: #EDE7E3;
 }
 
 /* 3 - Main*/
-.chart img{
+.chart img {
     padding: 30px 0px;
 }
 
@@ -69,6 +78,7 @@ main div {
 .row-border {
     outline: 2px solid #12272B;
     margin-bottom: 20px;
+    box-shadow: 0 8px 6px -6px black;
 }
 
 .row-border figure {
@@ -83,13 +93,46 @@ main div {
 .additional {
     margin-top: 42px;
 }
+
 .toHide {
     display: none;
 }
 
+.em {
+    color: #12272B;
+    display: inline-block;
+}
 
+.flats-header {
+    text-shadow: 1px 1px #12272b;;
+}
 
+/*ADD FLAT*/
 
+.labelForForm {
+    font-family: sans-serif;
+    margin-left: 60px;
+}
+
+.input-group-addon {
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+.form-control input {
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+.control-label {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+/**/
 
 
 

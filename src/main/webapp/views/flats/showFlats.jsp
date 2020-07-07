@@ -18,53 +18,14 @@
 <header>
     <jsp:include page="/views/util/header.jsp"></jsp:include>
     <script type="text/javascript" src="js/flats.js"></script>
+    <script type="text/javascript" src="js/metersModal.js"></script>
 </header>
 <main>
     <div class="mainContainer">
         <header>
-            <h2><spring:message code="flats.show.header"/></h2>
+            <h2 class="flats-header"><spring:message code="flats.show.header"/></h2>
         </header>
         <div class="containerDiv">
- <%--           <div class="row-border">
-                <div class="row">
-                    <div class="col-sm-3 col3">
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="infoRow">
-                            &lt;%&ndash;                        <h4 id="infoForIcon" class="mt-2"><spring:message code="flats.show.header.info"/></h4>&ndash;%&gt;
-                            <p class="infoP"><spring:message code="flats.show.info.street"/></p>
-                        </div>
-                        <div class="infoRow2">
-                            <p class="infoP"><spring:message code="flats.show.info.zipCode"/></p>
-                        </div>
-                        <div class="infoRow3">
-                            <p class="infoP"><spring:message code="flats.show.info.yearOfConstruction"/></p>
-                        </div>
-                    </div>--%>
-
-<%--                    <div class="col-sm-2">
-                        <div class="infoRowThree1">
-                            <p class="infoP"><spring:message code="flats.show.info.flatSquareMeters"/></p>
-                        </div>
-                        <div class="infoRowThree2">
-                            <p class="infoP"><spring:message code="flats.show.info.roomsNumber"/></p>
-                        </div>
-                        <div class="infoRowThree3">
-                            <p class="infoP"><spring:message code="flats.show.info.flatDescription"/></p>
-                        </div>
-                    </div>
-                </div>
-            </div>--%>
-
-<%--            <div class="row-border">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <figure class="img-fluid">
-                            <a href="#"><img src="img/flat.jpg" class="img-fluid"></a>
-                        </figure>
-                    </div>
-                </div>
-            </div>--%>
         </div>
     </div>
 
