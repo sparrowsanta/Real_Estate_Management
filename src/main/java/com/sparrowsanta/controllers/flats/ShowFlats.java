@@ -2,7 +2,6 @@ package com.sparrowsanta.controllers.flats;
 
 import com.google.gson.Gson;
 import com.sparrowsanta.businessmodel.Flat;
-import jdk.jfr.BooleanFlag;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
