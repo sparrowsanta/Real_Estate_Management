@@ -17,13 +17,13 @@ import java.util.List;
 public class ShowFlats {
 
     @GetMapping
-    String showFlats() {
+    public String showFlats() {
         return "flats/showFlats";
     }
 
     @GetMapping(value = "/allFlats", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    String getAllFlats(HttpServletRequest request) {
+    public String getAllFlats(HttpServletRequest request) {
         List<Flat> flats = new ArrayList<>();
         Flat flat1 = new Flat(1, "Pierwsze", "Kraków", "Złota Podkowa", "5", "31-322", 2, null, 3, "Moje pierwsze mieszkanie",
                 34.4, 2010, 305000.00, 2000.0, null, "");

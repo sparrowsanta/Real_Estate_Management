@@ -1,10 +1,9 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-</head>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 <div class="modal fade" id="meterDataModal" data-backdrop="static">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -29,12 +28,12 @@
                                             id="meterType">
                                         <option></option>
                                     </select>
-                                    <div class="input-group-prepend">
+                                    <div class="input-group-append">
                                         <span class="input-group-text required-field"
                                               title="<spring:message code='common.tooltip.requiredField'/>">★</span>
                                     </div>
 
-                                    <div class="alert bg-dark-blue invalid-feedback">
+                                    <div class="alert invalid-feedback">
                                         <span><stromg><em class="fas fa-exclamation-triangle text-orange"></em>
                                              <spring:message code='common.error.field.required'/></stromg>
                                         </span>
