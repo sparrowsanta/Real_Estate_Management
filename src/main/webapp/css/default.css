@@ -2,6 +2,7 @@
     background-color: #EDE7E3;
 }
 
+/* Orange button with darker orange tone on hover*/
 .btn-orange {
     background-color: #FFA62B !important;
     border-color: #FFA62B !important;
@@ -13,6 +14,7 @@
     border-color: #c7770b !important;
 }
 
+/* Orange outline button with orange button fill on hover */
 .btn-orange-outline {
     background-color: #fff !important;
     color: #FFA62B !important;
@@ -35,6 +37,7 @@
     color: black !important;
 }
 
+/* Blue button with darker blue tone on hover */
 .btn-dark-blue {
     color: #fff !important;
     background-color: #16697A !important;
@@ -47,6 +50,7 @@
     border-color: #054a58 !important;
 }
 
+/* Blue outline button with blue button fill on hover */
 .btn-dark-blue-outline {
     background-color: #fff !important;
     color: #16697A !important;
@@ -60,21 +64,10 @@
     border-color: #16697A !important;
 }
 
+/* Mixed button - outline blue without hover, and orange button fill on hover */
+
 .btn-mixed-outline {
     background-color: #fff !important;
-    color: #16697A !important;
-    border-color: #16697A !important;
-    cursor: pointer;
-}
-
-.btn-mixedBgTheme-outline:hover {
-    color: black !important;
-    background-color: #FFA62B !important;
-    border-color: #FFA62B !important;
-}
-
-.btn-mixedBgTheme-outline {
-    background-color: #EDE7E3 !important;
     color: #16697A !important;
     border-color: #16697A !important;
     cursor: pointer;
@@ -97,31 +90,21 @@
     color: #fff !important;
 }
 
+/* Not used yet - may be useful for custom checkboxes*/
+/*.custom-control-label::before,*/
+/*.custom-control-label::after {*/
+/*    width: 2rem;*/
+/*    height: 2rem;*/
+/*}*/
 
-.custom-control-label::before,
-.custom-control-label::after {
-    width: 2rem;
-    height: 2rem;
-}
+/*.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {*/
+/*    background-color: #FFA62B;*/
+/*}*/
 
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
-    background-color: #FFA62B;
-}
 
+/*Custom scrollbar orange*/
 .custom-scrollbar-orange {
     height: 200px;
-}
-
-.custom-scrollbar-blue {
-    height: 200px;
-}
-
-
-.custom-scrollbar-orange {
-    overflow-y: scroll;
-}
-
-.custom-scrollbar-blue {
     overflow-y: scroll;
 }
 
@@ -129,15 +112,7 @@
     width: 5px;
 }
 
-.custom-scrollbar-blue::-webkit-scrollbar {
-    width: 5px;
-}
-
 .custom-scrollbar-orange::-webkit-scrollbar-track {
-    background: #eee;
-}
-
-.custom-scrollbar-blue::-webkit-scrollbar-track {
     background: #eee;
 }
 
@@ -147,12 +122,29 @@
     background-image: linear-gradient(to top, #e5b062 0%, #ef8a01 100%);
 }
 
+
+/*Custom scrollbar blue*/
+
+.custom-scrollbar-blue {
+    height: 200px;
+    overflow-y: scroll;
+}
+
+.custom-scrollbar-blue::-webkit-scrollbar {
+    width: 5px;
+}
+
+.custom-scrollbar-blue::-webkit-scrollbar-track {
+    background: #eee;
+}
+
 .custom-scrollbar-blue::-webkit-scrollbar-thumb {
     border-radius: 1rem;
     background-color: #16697A;
     background-image: linear-gradient(to top, #529ead 0%, #055768 100%);
 }
 
+/*Custom style for select 2 plugin*/
 .select2-container--default .select2-results__option[aria-selected="true"] {
     background-color: #16697A !important;
     color: white;
@@ -175,6 +167,7 @@
     height: 34px !important;
 }
 
+/*Styling input-group-append div to display orange star marked for required fields */
 
 .required-field {
     background-color: transparent;
@@ -187,19 +180,8 @@
     border-right: 0 solid transparent;
 }
 
-
-/*input[type="date"] {*/
-
-/*}*/
-
-/*input[type="date"]::-webkit-clear-button {*/
-
-/*}*/
-
-/*input[type="date"]::-webkit-inner-spin-button {*/
-
-/*}*/
-
-/*input[type="date"]::-webkit-calendar-picker-indicator {*/
-/*    color: #FFA62B !important;*/
-/*}*/
+/*styling invalid feedback div*/
+.invalid-feedback {
+    background-color: transparent;
+    color: #0e5a6a;
+}

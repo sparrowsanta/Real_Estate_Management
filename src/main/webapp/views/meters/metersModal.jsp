@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" href="css/metersHistory.css" type="text/css">
 <div class="container text-center">
-    <div class="modal fade " id="ModalMeters" tabindex="-1" role="dialog" aria-labelledby="ModalMeters"  data-backdrop="static">
+    <div class="modal fade " id="ModalMeters" tabindex="-1" role="dialog" aria-labelledby="ModalMeters"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg mw-75 w-75" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-dark-blue">

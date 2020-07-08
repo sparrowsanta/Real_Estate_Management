@@ -22,11 +22,11 @@
                                 <div class="input-group mb-3">
 
                                     <input class="form-control" id="readingDate" type="date" autocomplete="off"/>
-                                    <div class="input-group-prepend">
+                                    <div class="input-group-append">
                                         <span class="input-group-text required-field"
                                               title="<spring:message code='common.tooltip.requiredField'/>">★</span>
                                     </div>
-                                    <div class="alert bg-dark-blue invalid-feedback">
+                                    <div class="alert invalid-feedback">
                                         <span><stromg><em class="fas fa-exclamation-triangle text-orange"></em>
                                              <spring:message code='common.error.field.required'/></stromg>
                                         </span>
@@ -42,9 +42,14 @@
                                 <div class="input-group mb-3">
 
                                     <input class="form-control" id="readingValue" type="number" autocomplete="off"/>
-                                    <div class="input-group-prepend">
+                                    <div class="input-group-append">
                                         <span class="input-group-text required-field"
                                               title="<spring:message code='common.tooltip.requiredField'/>">★</span>
+                                    </div>
+                                    <div class="alert invalid-feedback">
+                                        <span><stromg><em class="fas fa-exclamation-triangle text-orange"></em>
+                                             <spring:message code='common.error.field.required'/></stromg>
+                                        </span>
                                     </div>
                                 </div>
 
