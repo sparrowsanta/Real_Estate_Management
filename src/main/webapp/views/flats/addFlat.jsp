@@ -13,28 +13,32 @@
     <title>Add Flat</title>
     <script defer src="${pageContext.request.contextPath}/css/FA/js/all.js"></script> <!--load all styles -->
     <link href="${pageContext.request.contextPath}/css/FA/css/all.css" rel="stylesheet"> <!--load all styles -->
-
-
 </head>
 <body>
 <header>
-    <jsp:include page="/views/header.jsp"></jsp:include>
-<%--    <script type="text/javascript" src="${pageContext.request.contextPath}/js/flats.js"></script>--%>
+    <jsp:include page="/views/util/header.jsp"></jsp:include>
+    <%--    <script type="text/javascript" src="${pageContext.request.contextPath}/js/flats.js"></script>--%>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/addFlat.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/metersModal.js"></script>
+    <%--    <script type="text/javascript" src="${pageContext.request.contextPath}/js/metersModal.js"></script>--%>
 </header>
 <main>
     <div class="mainContainer" id="flat">
         <header>
             <h2 class="flats-header"><spring:message code="flats.add.header"/></h2>
         </header>
-        <div class="containerDiv">
-        </div>
+        <div class="containerDiv"></div>
+    </div>
+    <div class="alert alert-success">
+        File Uploaded Successfully
+    </div>
+    <div class="alert alert-danger">
+        File is not uploaded
     </div>
 
 </main>
 <footer>
-    <jsp:include page="/views/footer.jsp"></jsp:include>
+    <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>
+
 </body>
 </html>

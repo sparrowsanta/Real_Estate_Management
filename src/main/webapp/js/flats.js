@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
             //Buttons
             let buttonCol = $("<div class = 'buttonCol mt-10'>")
             let buttonRowCol = $("<div class = 'col-sm-2 mt-10'>")
-            let b1 = $("<p><button class='openMeters'>Meters</button></p>");
+            let b1 = $("<p><button class='btn btn-orange openMeters'>Meters</button></p>");
             let button1 = $(b1).find("button");
             button1.attr("value", flats[i].id)
             let b2 = $("<p><button>Rooms</button></p>");
