@@ -132,7 +132,16 @@ main div {
     margin-right: 5px;
 }
 
+.containerDiv {
+    border-style: solid;
+    border-width: 5px;
+    border: #1c7430;
+}
 
+.sec {
+    position: absolute;
+    height: auto;
+}
 
 .select2-selection {
     color: #16697A !important;
@@ -147,7 +156,7 @@ main div {
     border-color: #16697A !important;
 }
 
-.select2-selection input{
+.select2-selection input {
     width: 100%;
     color: #16697A !important;
     border-color: #16697A !important;
@@ -158,6 +167,7 @@ main div {
     color: #16697A !important;
     border-color: #16697A !important;
 }
+
 /*ARROW IN SELECT2 multiple*/
 .select2-selection--multiple:before {
     content: "";
@@ -197,7 +207,7 @@ main div {
     border-color: #054a58 !important;
 }
 
-.btn-dark-blue-outline  {
+.btn-dark-blue-outline {
     background-color: #fff !important;
     color: #16697A !important;
     border-color: #16697A !important;

@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             //thrid row
             let p6 = $("<p>");
-            let icon6 = $("<em class='fas fa-align-justify mt-1 ml-1 fa-2x mr-3 em'></em>")
+            let icon6 = $("<em class='fas fa-file-alt mt-1 ml-1 fa-2x mr-3 em'></em>")
             let infoRow6 = $("<div class = 'infoRow6'>")
             let iconDiv6 = $("<div class='float-left'>")
             rowForInfo2.append(infoRow6)

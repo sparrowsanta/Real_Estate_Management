@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.print.attribute.standard.MediaSize;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +41,7 @@ public class ShowFlats {
                 66.1, 2014, 255000.00, 1000.0, null, "");
 //        Flat flat3 = new Flat(2, "Trzecie", "Gdańsk", "Olejna", "4", "01-020", 2, null, 10, "Moje trzecie mieszkanie",
 //                23.1, 2019, 355000.00, 1500.0, null, "");
+        flats.clear();
         flats.add(flat1);
         flats.add(flat2);
 //        flats.add(flat3);
@@ -52,13 +54,19 @@ public class ShowFlats {
         return "flats/addFlat";
     }
 
+//    FOR MultiPartHTTPServlet https://www.jvt.me/posts/2019/09/08/spring-extract-multipart-request-parameters/
     @PostMapping(value = "/addFlat", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String addFlatPost(Model model, @RequestParam(value = "file") MultipartFile file, @RequestParam(name = "name") String name) throws IOException {
+    public String addFlatPost(Model model, @RequestParam(value = "file") MultipartFile file, @RequestParam(name = "name") String name, MultipartHttpServletRequest mrequest) throws IOException {
         File convertFile = new File("/home/kuba/JAVA_COURSE/JAVA_1/Real_Estate_Management/src/main/webapp/dump/" + file.getOriginalFilename());
         convertFile.createNewFile();
         FileOutputStream fout = new FileOutputStream(convertFile);
         fout.write(file.getBytes());
         fout.close();
+        System.out.println(mrequest.getParameter("name"));
+        System.out.println(mrequest.getParameter("flatNumber"));
+        System.out.println(mrequest.getParameter("flats"));
+        System.out.println(mrequest.getParameter("file"));
+        System.out.println(mrequest.getParameter("meters"));
         return "flats/addFlat";
 
     }

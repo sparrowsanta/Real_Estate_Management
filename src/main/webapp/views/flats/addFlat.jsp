@@ -39,6 +39,33 @@
 <footer>
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>
+<div class="toHide">
+    <p class="infoP" id="infoFlatName" type="hidden"><spring:message code="flats.show.info.flatName"/></p>
+    <p class="infoP" id="infoChooseFile" type="hidden"><spring:message code="flats.show.info.chooseFile"/></p>
+    <p class="infoP" id="infoCity" type="hidden"><spring:message code="flats.show.info.city"/></p>
+    <p class="infoP" id="infoStreet" type="hidden"><spring:message code="flats.show.add.street"/></p>
+    <p class="infoP" id="infoFlatNumber" type="hidden"><spring:message code="flats.show.info.flatNumber"/></p>
+    <p class="infoP" id="infoZipCode" type="hidden"><spring:message code="flats.show.info.zipCode"/></p>
+    <p class="infoP" id="infoNumberOfRooms" type="hidden"><spring:message code="flats.show.info.numberOfRooms"/></p>
+    <p class="infoP" id="infoFloorNumber" type="hidden"><spring:message code="flats.show.info.floorNumber"/></p>
+    <p class="infoP" id="infoPicUrl" type="hidden"><spring:message code="flats.show.info.picUrl"/></p>
+    <p class="infoP" id="infoFlatPrice" type="hidden"><spring:message code="flats.show.info.flatPrice"/></p>
+    <p class="infoP" id="infoExpectedIncome" type="hidden"><spring:message code="flats.show.info.expectedIncome"/></p>
+    <p class="infoP" id="infoListOfMeters" type="hidden"><spring:message code="flats.show.info.listOfMeters"/></p>
+    <p class="infoP" id="infoListOfRooms" type="hidden"><spring:message code="flats.show.info.listOfRooms"/></p>
+    <p class="infoP" id="infoYearOfConstruction" type="hidden"><spring:message code="flats.show.info.yearOfConstruction"/></p>
+    <p class="infoP" id="infoFlatSquareMeters" type="hidden"><spring:message code="flats.show.info.flatSquareMeters"/></p>
+    <p class="infoP" id="infoRoomsNumber" type="hidden"><spring:message code="flats.show.info.roomsNumber"/></p>
+    <p class="infoP" id="infoFlatDescription" type="hidden"><spring:message code="flats.show.info.flatDescription"/></p>
+    <p class="infoP" id="infoCurrency" type="hidden"><spring:message code="common.general.currency"/></p>
+    <p class="infoP" id="infoArea" type="hidden"><spring:message code="common.general.area"/></p>
+<%--    Missing--%>
+    <p class="infoP" id="infoMissingName" type="hidden"><spring:message code="flats.show.missing.name"/></p>
+    <p class="infoP" id="infoMissingCity" type="hidden"><spring:message code="flats.show.missing.city"/></p>
+    <p class="infoP" id="infoMissingStreet" type="hidden"><spring:message code="flats.show.missing.street"/></p>
+    <p class="infoP" id="infoMissingFlatNumber" type="hidden"><spring:message code="flats.show.missing.flatNumber"/></p>
+    <p class="infoP" id="infoMissingFoto" type="hidden"><spring:message code="flats.show.missing.foto"/></p>
 
+</div>
 </body>
 </html>
