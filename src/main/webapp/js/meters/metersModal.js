@@ -11,14 +11,25 @@ document.addEventListener("DOMContentLoaded", function () {
         let currentMeterName = {};
         let meterTypes = [];
         let buttonSave = $("#btnSave");
-        let addMeterButton = $(".addMeter");
         let buttonSaveReading = $("#btnSaveReading");
 
         buttonBack.on("click", backToMetersList);
-        addMeterButton.on("click", addNewMeter);
+        buttonAddMeter.on("click", addNewMeter);
 
         initModalOpenButtons();
         initMetersTypesSelect();
+
+        //disable submit forms on enter in input fields
+        let inputs = $("#meterForms :input[type='text'], :input[type='number'], :input[type='date']");
+        inputs.each(function () {
+            $(this).keydown(function (event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            })
+        });
+
 
         // -------- Initialize select with meter types
         function initMetersTypesSelect() {
@@ -42,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
             openButtons.on("click", openMetersModal);
 
             //find containers with class "haveOpenMeterButtons" and bind listener tracking changes in subtree. Add function to search
-            // for buttons "openMeters" if container subtree dynamic changes, and and add onclick event to open MeterModal to those buttons.
+            // for buttons "openMeters" if container subtree dynamically changes, and and add onclick event to open MeterModal to those buttons.
             let containerDiv = $(".haveOpenMeterButtons")
             containerDiv.bind('DOMSubtreeModified', function () {
                 let openMetersButtons = $(".openMeters");

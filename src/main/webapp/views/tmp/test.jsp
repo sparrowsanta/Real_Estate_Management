@@ -40,8 +40,8 @@
 <button type="button" id="btnModalMeters" class="btn btn-orange btn-lg openMeters" value="1">
     <spring:message code="meters.button.view.meters"/> Flat 1
 </button>
-<button type="button" id="btnModalMeters2" class="btn btn-orange btn-lg openMeters" value="2">
-    <spring:message code="meters.button.view.meters"/> Flat 2
+<button type="button" id="btnModalMeters2" class="btn btn-orange btn-lg openBills" value="1">
+    <spring:message code="meters.button.view.meters"/> Bills 1
 </button>
 <br><br><br>
 
@@ -50,6 +50,7 @@ Test button outline
 </button>
 </body>
 <jsp:include page="../meters/metersModal.jsp"/>
+<jsp:include page="../bills/billsModal.jsp"/>
 <footer class="page-footer font-small blue">
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>

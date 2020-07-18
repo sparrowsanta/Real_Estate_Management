@@ -9,9 +9,9 @@
         <div class="modal-content">
             <div class="modal-header bg-darker-blue text-white">
                 <h4 class="modal-title" id="meterDataTitle"></h4>
-                <button class="close" data-dismiss="modal">
+                <a class="close" data-dismiss="modal">
                     <span>&times;</span>
-                </button>
+                </a>
             </div>
             <form id="metersDataForm">
                 <div class="modal-body">
@@ -24,7 +24,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <select class="form-control js-example-basic-single is-valid" style="width: 90%;"
+                                    <select class="form-control js-example-basic-single is-valid input-white" style="width: 90%;"
                                             id="meterType">
                                         <option></option>
                                     </select>
@@ -49,7 +49,7 @@
                                 <label class="control-label" for="meterDescription"><strong><spring:message
                                         code='meters.label.meterDescription'/></strong></label>
 
-                                <input class="form-control" id="meterDescription" type="text" autocomplete="off"
+                                <input class="form-control input-white" id="meterDescription" type="text" autocomplete="off"
                                        required/>
 
                             </div>

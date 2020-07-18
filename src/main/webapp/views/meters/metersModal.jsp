@@ -38,7 +38,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-orange addMeter" id="btnAddMeter">
+                    <button type="button" class="btn btn-orange" id="btnAddMeter">
                         <em class="fas fa-plus"></em>
                         <spring:message code="meters.button.addMeeter"/></button>
                     <button type="button" class="btn btn-orange" id="btnBack">
@@ -66,7 +66,9 @@
     <input id="readValueLabel" type="hidden" value="<spring:message code='meters.history.readValue'/>"/>
     <input id="readDeleteMessage" type="hidden" value="<spring:message code='meters.history.delete.message'/>"/>
 </div>
+<div id="meterForms">
 <jsp:include page="../util/deleteConfirm.jsp"/>
 <jsp:include page="metersData.jsp"/>
 <jsp:include page="meterReadingData.jsp"/>
+</div>
 <script type="text/javascript" src="js/meters/metersModal.js"></script>
