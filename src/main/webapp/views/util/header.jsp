@@ -32,11 +32,12 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" type="text/css">
 
-
-<script defer src="css/FA/js/all.js"></script>
-<!--load all styles -->
-<link href="css/FA/css/all.css" rel="stylesheet">
-<!--load all styles -->
+<script
+        src="https://kit.fontawesome.com/86100016c3.js"
+        crossorigin="anonymous"
+></script>
+<%--<script defer src="css/FA/js/all.js"></script>--%>
+<%--<link href="css/FA/css/all.css" rel="stylesheet">--%>
 
 <nav class="navbar navbar-custom  navbar-expand-lg" id="mainNavbar">
     <a class="navbar-brand mx-4 p-0" href="main.html"><img

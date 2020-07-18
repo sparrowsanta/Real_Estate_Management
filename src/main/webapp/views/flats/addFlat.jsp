@@ -1,24 +1,22 @@
+<!DOCTYPE html>
 <%@ page language="Java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: kuba
-  Date: 24.06.2020
-  Time: 17:07
-  To change this template use File | Settings | File Templates.
---%>
 <html>
 <head>
     <title>Add Flat</title>
-    <script defer src="${pageContext.request.contextPath}/css/FA/js/all.js"></script> <!--load all styles -->
-    <link href="${pageContext.request.contextPath}/css/FA/css/all.css" rel="stylesheet"> <!--load all styles -->
+
+    <jsp:include page="/views/util/header.jsp"></jsp:include>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/addFlat.js"></script>
+
 </head>
 <body>
 <header>
-    <jsp:include page="/views/util/header.jsp"></jsp:include>
+
     <%--    <script type="text/javascript" src="${pageContext.request.contextPath}/js/flats.js"></script>--%>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/addFlat.js"></script>
+
     <%--    <script type="text/javascript" src="${pageContext.request.contextPath}/js/metersModal.js"></script>--%>
 </header>
 <main>
