@@ -132,7 +132,103 @@ main div {
     margin-right: 5px;
 }
 
-/**/
+.containerDiv {
+    border-style: solid;
+    border-width: 5px;
+    border: #1c7430;
+}
+
+.sec {
+    position: absolute;
+    height: auto;
+}
+
+.select2-selection {
+    color: #16697A !important;
+    border-color: #16697A !important;
+    width: 100%;
+    cursor: pointer;
+}
+
+.select2-selection:hover {
+    width: 100%;
+    color: #16697A !important;
+    border-color: #16697A !important;
+}
+
+.select2-selection input {
+    width: 100%;
+    color: #16697A !important;
+    border-color: #16697A !important;
+
+}
+
+.forInputSelect:hover {
+    color: #16697A !important;
+    border-color: #16697A !important;
+}
+
+/*ARROW IN SELECT2 multiple*/
+.select2-selection--multiple:before {
+    content: "";
+    position: absolute;
+    right: 7px;
+    top: 42%;
+    border-top: 5px solid #888;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+}
+
+
+.custom-file-label:hover {
+    background-color: #16697A !important;
+    color: #16697A !important;
+    border-color: #16697A !important;
+    cursor: pointer;
+}
+
+.custom-file-label {
+    background-color: #fff !important;
+    color: #16697A !important;
+    border-color: #16697A !important;
+    cursor: pointer;
+}
+
+.custom-file-input:hover {
+    background-color: #16697A !important;
+    color: #16697A !important;
+    border-color: #16697A !important;
+    cursor: pointer;
+}
+
+
+.btn-dark-blue-outline:hover {
+    background-color: #054a58 !important;
+    border-color: #054a58 !important;
+}
+
+.btn-dark-blue-outline {
+    background-color: #fff !important;
+    color: #16697A !important;
+    border-color: #16697A !important;
+    cursor: pointer;
+}
+
+.doubleStyle:hover {
+    background-color: #054a58 !important;
+}
+
+.select2-selection__choice {
+    line-height: 25px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.select2-selection {
+    height: 2.4em;
+    alignment: center;
+}
+
 
 
 
