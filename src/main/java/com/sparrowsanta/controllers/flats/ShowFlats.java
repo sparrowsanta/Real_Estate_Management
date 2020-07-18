@@ -16,7 +16,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/flats")
@@ -54,20 +57,33 @@ public class ShowFlats {
         return "flats/addFlat";
     }
 
-//    FOR MultiPartHTTPServlet https://www.jvt.me/posts/2019/09/08/spring-extract-multipart-request-parameters/
+    //    FOR MultiPartHTTPServlet https://www.jvt.me/posts/2019/09/08/spring-extract-multipart-request-parameters/
     @PostMapping(value = "/addFlat", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String addFlatPost(Model model, @RequestParam(value = "file") MultipartFile file, @RequestParam(name = "name") String name, MultipartHttpServletRequest mrequest) throws IOException {
+    public String addFlatPost(Model model, @RequestParam(value = "file") MultipartFile file, MultipartHttpServletRequest mrequest) throws IOException {
         File convertFile = new File("/home/kuba/JAVA_COURSE/JAVA_1/Real_Estate_Management/src/main/webapp/dump/" + file.getOriginalFilename());
         convertFile.createNewFile();
         FileOutputStream fout = new FileOutputStream(convertFile);
         fout.write(file.getBytes());
         fout.close();
-        System.out.println(mrequest.getParameter("name"));
-        System.out.println(mrequest.getParameter("flatNumber"));
+//        ALL PARAMETERS FROM FORM instead of Select and File
+        Map<String, String[]> parameterMap = mrequest.getParameterMap();
+        Map<String, List<String>> collect = parameterMap.entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getKey(), entry -> Arrays.asList(entry.getValue())));
+        /*        for (int i = 0; i < collect.size(); i++) {
+            System.out.println(collect.keySet());
+        }*/
+
         System.out.println(mrequest.getParameter("flats"));
-        System.out.println(mrequest.getParameter("file"));
+        System.out.println(mrequest.getParameter("selectFlatsVar"));
         System.out.println(mrequest.getParameter("meters"));
         return "flats/addFlat";
 
+    }
+
+
+    @DeleteMapping(value = "/delete/{id}", produces = "text/plain;charset=UTF-8")
+    public String deleteFlat(@PathVariable(name = "id") long id) {
+        System.out.println(id);
+        return new Gson().toJson("Ok");
     }
 }

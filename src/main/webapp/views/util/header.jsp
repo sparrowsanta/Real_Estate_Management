@@ -58,7 +58,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="../main/mainpage.jsp">Start</a>
                 </li>
-                <li class="nav-item dropdown" id="something">
+                <li class="nav-item dropdown" id="flatsNav">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
                        aria-expanded="false" id="submenu1" aria-haspopup="true"><spring:message code="homepage.navbar.flats"/></a>
                     <div class="dropdown-menu" aria-labelledby="submenu1">
@@ -67,7 +67,15 @@
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/flats"><spring:message code="homepage.navbar.flats.showFlats"/></a>
                     </div>
                 </li>
-                <li class="nav-item dropdown" id="something2">
+                <li class="nav-item dropdown" id="roomsNav">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
+                       aria-expanded="false"><spring:message code="homepage.navbar.rooms"/></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/rooms/addRoom"><spring:message code="homepage.navbar.rooms.addRoom"/></a>
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/rooms"><spring:message code="homepage.navbar.rooms.showRooms"/></a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown" id="clientNav">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
                        aria-expanded="false"><spring:message code="homepage.navbar.clients"/></a>
                     <div class="dropdown-menu">

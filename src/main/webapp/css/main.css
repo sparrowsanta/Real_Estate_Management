@@ -218,7 +218,17 @@ main div {
     background-color: #054a58 !important;
 }
 
-/**/
+.select2-selection__choice {
+    line-height: 25px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.select2-selection {
+    height: 2.4em;
+    alignment: center;
+}
+
 
 
 

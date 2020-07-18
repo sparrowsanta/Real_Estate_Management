@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             //Zip Code
             let zipCodeLabel = $("<h5 class='control-label'/>")
-            let zipCodeInput = $("<input type='number' id='zipCode' name='zipCode' class='form-control mx-4 btn-dark-blue-outline'>")
+            let zipCodeInput = $("<input type='text' id='zipCode' name='zipCode' class='form-control mx-4 btn-dark-blue-outline'>")
             let zipCodeIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-address-book fa-2x em'></em></span>")
             let flatFormRowGroupZipCode = flatFormRowGroup.clone(true).empty().attr("id", "zipCode");
 
@@ -162,16 +162,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
             //List Rooms
             let listRoomsLabel = $("<h5 class='control-label'/>")
-            let listRoomsInput = $("<select class='form-control js-example-basic-multiple p-1' multiple='multiple' name='flats' id='flatSelect'></select>")
+            let listRoomsInput = $("<select class='form-control js-example-basic-multiple' multiple='multiple' name='flats' id='flatSelect'></select>")
             let listRoomsIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-list-ul fa-2x em'></em></span>")
             let flatFormRowGrouplistRooms = flatFormRowGroup.clone(true).empty().attr("id", "rooms")
             let flatFormRowGrouplistRoomsOnlyForSelect = $("<div class='form-control forInputSelect mx-4 p-0' >")
+            let customDivForListRooms = $("<div class='custom-file' id='customListRooms'>")
+
 
             flatFormRowSec.append(flatFormRowGrouplistRooms)
             flatFormRowGrouplistRooms.prepend(listRoomsLabel.attr("for", "rooms").text(infoListOfRooms.clone(true).html()))
             listRoomsLabel.prepend(listRoomsIcon)
             flatFormRowGrouplistRooms.append(flatFormRowGrouplistRoomsOnlyForSelect)
-            flatFormRowGrouplistRoomsOnlyForSelect.append(listRoomsInput)
+            flatFormRowGrouplistRoomsOnlyForSelect.append(customDivForListRooms)
+            customDivForListRooms.append(listRoomsInput)
 
             let testList = ["test " + " test22", "test2"];
             $("#flatSelect").select2({
@@ -307,12 +310,14 @@ document.addEventListener("DOMContentLoaded", function () {
             let metersIcon = $("<span class='input-group-addon' id='metersIcon'><em style='vertical-align: middle' class='fas fa-tachometer-alt fa-2x em'></em></span>")
             let flatFormRowGroupMeters = flatFormRowGroup.clone(true).empty().attr("id", "meters")
             let flatFormRowGroupMetersOnlyForSelect = $("<div class='form-control forInputSelect mx-4 p-0' >")
+            let customDivForListMeters = $("<div class='custom-file' id='customListMeters'>")
 
             flatFormRowForth.append(flatFormRowGroupMeters)
             flatFormRowGroupMeters.prepend(metersLabel.attr("for", "meters").text(infoListOfMeters.clone(true).html()))
             metersLabel.prepend(metersIcon)
             flatFormRowGroupMeters.append(flatFormRowGroupMetersOnlyForSelect)
-            flatFormRowGroupMetersOnlyForSelect.append(metersInput)
+            flatFormRowGroupMetersOnlyForSelect.append(customDivForListMeters)
+            customDivForListMeters.append(metersInput)
 
             let testListMeters = ["Meter 1 " + " test22", "Meter 2"];
             $("#metersSelect").select2({
@@ -334,24 +339,20 @@ document.addEventListener("DOMContentLoaded", function () {
             submitBtn.on("click", saveFlat)
 
 
-            var teacher = {
-                name: "Janusz"
-                ,
-                surname: "Kowalski"
-                ,
-                subject: "Programowanie JS"
-            }
 
             //    SAVE METHOD
             //https://stackoverflow.com/questions/43936372/upload-file-springboot-required-request-part-file-is-not-present
+            //https://www.legendblogs.com/how-to-send-additional-parameter-with-form-data-with-ajax
             function saveFlat(event) {
+                let selectFlatsVar = $('#flatSelect').select2('data')
+                console.log(selectFlatsVar)
                 if (checkIfRequiredAreNotEmpty() !== true) return false;
 
                 // $(this).prop('disabled', true);
                 let file = $("#file").first()
 
                 let data = new FormData()
-                data.get(teacher)
+                // data.get(selectFlatsVar)
                 data.append("file", file)
                 // console.log(data)
                 // let jsonDataObj = {

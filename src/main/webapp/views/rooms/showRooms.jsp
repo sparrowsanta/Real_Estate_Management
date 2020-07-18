@@ -10,27 +10,26 @@
 --%>
 <html>
 <head>
-    <title>Show Flats</title>
+    <title>Show Rooms</title>
     <script defer src="css/FA/js/all.js"></script> <!--load all styles -->
     <link href="css/FA/css/all.css" rel="stylesheet"> <!--load all styles -->
-
 </head>
 <body>
 <header>
     <jsp:include page="/views/util/header.jsp"></jsp:include>
     <script type="text/javascript" src="js/flats.js"></script>
-    <script type="text/javascript" src="js/meters/metersModal.js"></script>
+    <script type="text/javascript" src="js/metersModal.js"></script>
 
 </header>
 <main>
     <div class="mainContainer">
         <header>
-            <h2 class="flats-header"><spring:message code="flats.show.header"/></h2>
+            <h2 class="rooms-header"><spring:message code="rooms.show.header"/></h2>
         </header>
         <div class="containerDiv">
         </div>
     </div>
-    <jsp:include page="/views/util/deleteConfirm.jsp"></jsp:include>
+
 </main>
 <jsp:include page="../meters/metersModal.jsp"/>
 <footer>
@@ -46,7 +45,6 @@
 <p class="infoP" id="infoFlatSquareMeters" type="hidden"><spring:message code="flats.show.info.flatSquareMeters"/></p>
 <p class="infoP" id="infoRoomsNumber" type="hidden"><spring:message code="flats.show.info.roomsNumber"/></p>
 <p class="infoP" id="infoFlatDescription" type="hidden"><spring:message code="flats.show.info.flatDescription"/></p>
-    <input id="readDeleteMessage" type="hidden" value="<spring:message code='meters.history.delete.message'/>"/>
 </div>
 <%--<input id="infoStreet" type="hidden" value="<spring:message code="flats.show.info.street"/>"/>
 <input id="infoZipCode" type="hidden" value="<spring:message code="flats.show.info.zipCode"/>"/>

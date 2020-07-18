@@ -20,9 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let infoFlatSquareMeters = $("#infoFlatSquareMeters")
             let infoRoomsNumber = $("#infoRoomsNumber")
             let infoFlatDescription = $("#infoFlatDescription")
-
-
-            rowForPic.append(imgFlat)
+            let readDeleteMessage = $("#readDeleteMessage")
 
 
             //Construction
@@ -129,13 +127,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
             //Buttons
             let buttonCol = $("<div class = 'buttonCol mt-10'>")
-            let buttonRowCol = $("<div class = 'col-sm-2 mt-10'>")
+            let buttonRowCol = $("<div class = 'col-sm-1 mt-10'>")
             let b1 = $("<p><button class='btn btn-orange openMeters'>Meters</button></p>");
             let button1 = $(b1).find("button");
             button1.attr("value", flats[i].id)
-            let b2 = $("<p><button>Rooms</button></p>");
-            let b3 = $("<p><button>Bills</button></p>");
-            let b4 = $("<p><button>Something</button></p>");
+            let b2 = $("<p><button class='btn btn-orange'>Rooms</button></p>");
+            let b3 = $("<p><button class='btn btn-orange'>Bills</button></p>");
+            // let b4 = $("<p><button class='btn btn-orange'>Something</button></p>");
 
             let additionalDiv3 = $("<div class='additional'>");
             row.append(buttonRowCol)
@@ -144,7 +142,37 @@ document.addEventListener("DOMContentLoaded", function () {
             buttonCol.append(b1)
             buttonCol.append(b2)
             buttonCol.append(b3)
-            buttonCol.append(b4)
+            // buttonCol.append(b4)
+
+            //Edit/Delete
+            let editDelCol = $("<div class = 'editDelCol mt-10'>")
+            let editDelRowCol = $("<div class = 'col-sm-1 mt-10'>")
+            let additionalDiv4 = $("<div class='additional'>");
+
+            let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='flatEditBtn'/>")
+            let editEm = $("<em class='fa fa-pencil-alt'/>")
+            let additionalPEdit = $("<p>")
+            editBtn.attr("value", flats[i].id)
+            editBtn.attr("flatName", flats[i].name)
+            additionalPEdit.append(editBtn)
+            editBtn.append(editEm)
+
+            let delBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='flatDelBtn'/>")
+            let delEm = $("<em class='fa fa-trash-alt'/>")
+            let additionalPDel = $("<p>")
+            delBtn.attr("value", flats[i].id)
+            delBtn.attr("flatName", flats[i].name)
+            additionalPDel.append(delBtn)
+            delBtn.append(delEm)
+
+            row.append(editDelRowCol)
+            editDelRowCol.append(additionalDiv4)
+            additionalDiv4.append(editDelCol)
+            editDelCol.append(additionalPEdit)
+            editDelCol.append(additionalPDel)
+
+            //Delete/Edit functions
+            additionalPDel.on("click", deleteEntity("following flat:", deleteFlat, flats[i].id))
         }
     }
 
@@ -158,6 +186,38 @@ document.addEventListener("DOMContentLoaded", function () {
             .done(function (flats) {
                 console.log("success");
                 showFlatsInformation(flats);
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
+
+    function deleteFlat(flatId) {
+        $.ajax({
+            type: 'delete',
+            url: 'flats/delete/' + flatId,
+        })
+            .done(function () {
+                getAllFlats();
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
+
+
+    function deleteMeter(meterId) {
+        console.log("Deleting meter id: " + meterId);
+        $.ajax({
+            type: "DELETE",
+            url: 'meters/delete/' + meterId,
+        })
+            .done(function (data) {
+                getMeters(currentFlat);
             })
             .fail(function (xhr, status, err) {
                 console.log(xhr.statusText);
