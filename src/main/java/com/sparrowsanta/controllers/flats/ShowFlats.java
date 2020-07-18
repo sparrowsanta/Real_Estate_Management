@@ -2,12 +2,11 @@ package com.sparrowsanta.controllers.flats;
 
 import com.google.gson.Gson;
 import com.sparrowsanta.businessmodel.Flat;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.print.attribute.standard.MediaSize;
 import javax.servlet.http.HttpServletRequest;
@@ -30,13 +29,13 @@ public class ShowFlats {
 
 
     @GetMapping
-    String showFlats() {
+    public String showFlats() {
         return "flats/showFlats";
     }
 
     @GetMapping(value = "/allFlats", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    String getAllFlats(HttpServletRequest request) {
+    public String getAllFlats(HttpServletRequest request) {
 
         Flat flat1 = new Flat(1, "Pierwsze", "Kraków", "Złota Podkowa", "5", "31-322", 2, null, 3, "Moje pierwsze mieszkanie",
                 34.4, 2010, 305000.00, 2000.0, null, "");

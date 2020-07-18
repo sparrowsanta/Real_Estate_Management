@@ -1,10 +1,11 @@
 package com.sparrowsanta.utils;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import com.sparrowsanta.businessmodel.Meters;
 import com.sparrowsanta.businessmodel.MetersHistory;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -49,7 +50,15 @@ public class TestData {
 
 
     public void addReading(String readingString) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
+            @Override
+            public LocalDate deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) {
+                return LocalDate.parse(json.getAsJsonPrimitive().getAsString());
+            }
+        }).create();
+
+
+
         MetersHistory reading = gson.fromJson(readingString, MetersHistory.class);
         reading.setId(nextReadingId);
         nextReadingId++;
@@ -57,7 +66,12 @@ public class TestData {
     }
 
     public void editReading(String readingString) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
+            @Override
+            public LocalDate deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) {
+                return LocalDate.parse(json.getAsJsonPrimitive().getAsString());
+            }
+        }).create();
         MetersHistory reading = gson.fromJson(readingString, MetersHistory.class);
         Iterator<MetersHistory> itr = metersHistory.iterator();
         while (itr.hasNext()) {
