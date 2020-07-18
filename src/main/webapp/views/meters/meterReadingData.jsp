@@ -7,9 +7,9 @@
         <div class="modal-content">
             <div class="modal-header bg-darker-blue text-white">
                 <h4 class="modal-title" id="meterReadingDataTitle"></h4>
-                <button class="close" data-dismiss="modal">
+                <a class="close" data-dismiss="modal">
                     <span>&times;</span>
-                </button>
+                </a>
             </div>
             <form id="metersReadingDataForm">
                 <div class="modal-body">
@@ -21,7 +21,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <input class="form-control" id="readingDate" type="date" autocomplete="off"/>
+                                    <input class="form-control input-white" id="readingDate" type="date" autocomplete="off"/>
                                     <div class="input-group-append">
                                         <span class="input-group-text required-field"
                                               title="<spring:message code='common.tooltip.requiredField'/>">★</span>
@@ -41,7 +41,7 @@
                                         code='meters.label.readingValue'/></strong></label>
                                 <div class="input-group mb-3">
 
-                                    <input class="form-control" id="readingValue" type="number" autocomplete="off"/>
+                                    <input class="form-control input-white" id="readingValue" type="number" autocomplete="off"/>
                                     <div class="input-group-append">
                                         <span class="input-group-text required-field"
                                               title="<spring:message code='common.tooltip.requiredField'/>">★</span>
