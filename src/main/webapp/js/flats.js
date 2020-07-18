@@ -172,7 +172,9 @@ document.addEventListener("DOMContentLoaded", function () {
             editDelCol.append(additionalPDel)
 
             //Delete/Edit functions
-            additionalPDel.on("click", deleteEntity("following flat:", deleteFlat, flats[i].id))
+            delBtn.on("click", function (){
+                deleteEntity("following flat:", deleteFlat, flats[i].id)
+            })
         }
     }
 
@@ -209,22 +211,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-
-    function deleteMeter(meterId) {
-        console.log("Deleting meter id: " + meterId);
-        $.ajax({
-            type: "DELETE",
-            url: 'meters/delete/' + meterId,
-        })
-            .done(function (data) {
-                getMeters(currentFlat);
-            })
-            .fail(function (xhr, status, err) {
-                console.log(xhr.statusText);
-                console.log(status);
-                console.log(err);
-            });
-    }
 
     getAllFlats();
 })
