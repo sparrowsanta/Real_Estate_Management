@@ -43,8 +43,8 @@
 </main>
 
 </body>
-<jsp:include page="../util/deleteConfirm.jsp"/>
 <jsp:include page="../meters/metersModal.jsp"/>
+<jsp:include page="../util/deleteConfirm.jsp"/>
 <footer>
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>
