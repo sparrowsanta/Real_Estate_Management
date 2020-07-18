@@ -31,14 +31,13 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" type="text/css">
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
 
 <script defer src="css/FA/js/all.js"></script>
 <!--load all styles -->
 <link href="css/FA/css/all.css" rel="stylesheet">
 <!--load all styles -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
 <nav class="navbar navbar-custom  navbar-expand-lg" id="mainNavbar">
     <a class="navbar-brand mx-4 p-0" href="main.html"><img
             src="${pageContext.request.contextPath}/img/home-sign.jpg" width="55" height="55"
