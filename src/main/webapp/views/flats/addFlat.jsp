@@ -7,9 +7,11 @@
     <title>Add Flat</title>
 
     <jsp:include page="/views/util/header.jsp"></jsp:include>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <jsp:include page="/views/rooms/roomsModal.jsp"></jsp:include>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/addFlat.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/rooms/addRooms.js"></script>
 
 </head>
 <body>
@@ -32,6 +34,44 @@
     <div class="alert alert-danger">
         File is not uploaded
     </div>
+    <div class="form-row" id="rowAddFlatTable">
+        <div class="row col-md-6 ml-4" id="dataRoomFeed">
+            <table class="table table-striped table-bordered table-sm table-hover" id="flatTableAdd">
+                <h5><spring:message code="flats.add.room.desc"></spring:message></h5>
+                <tr class="table-ro">
+                    <th scope="col"> #</th>
+                    <th scope="col"> Description</th>
+                    <th scope="col"> Room SQM </th>
+                    <th scope="col"> Income </th>
+                    <th scope="col"> Room Type</th>
+                    <th scope="col"> DELETE</th>
+
+                </tr>
+                <div id="tableDivToFeed">
+
+                </div>
+
+            </table>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3 ml-4" id="addRoomBtnDiv">
+            <button type="button" id="btnModalRoom" class="btn btn-orange addRoom" value="">
+                <spring:message code="rooms.add.header"/>
+            </button>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3 ml-4">
+            <button type="button" id="prevBtn" class="btn btn-orange-outline">
+                <spring:message code="common.button.back"/>
+            </button>
+<%--            <button type="button" id="submitFormFlat" class="btn btn-orange">
+                <spring:message code="common.button.submit"/>
+            </button>--%>
+        </div>
+    </div>
+
 
 </main>
 <footer>
@@ -51,13 +91,15 @@
     <p class="infoP" id="infoExpectedIncome" type="hidden"><spring:message code="flats.show.info.expectedIncome"/></p>
     <p class="infoP" id="infoListOfMeters" type="hidden"><spring:message code="flats.show.info.listOfMeters"/></p>
     <p class="infoP" id="infoListOfRooms" type="hidden"><spring:message code="flats.show.info.listOfRooms"/></p>
-    <p class="infoP" id="infoYearOfConstruction" type="hidden"><spring:message code="flats.show.info.yearOfConstruction"/></p>
-    <p class="infoP" id="infoFlatSquareMeters" type="hidden"><spring:message code="flats.show.info.flatSquareMeters"/></p>
+    <p class="infoP" id="infoYearOfConstruction" type="hidden"><spring:message
+            code="flats.show.info.yearOfConstruction"/></p>
+    <p class="infoP" id="infoFlatSquareMeters" type="hidden"><spring:message
+            code="flats.show.info.flatSquareMeters"/></p>
     <p class="infoP" id="infoRoomsNumber" type="hidden"><spring:message code="flats.show.info.roomsNumber"/></p>
     <p class="infoP" id="infoFlatDescription" type="hidden"><spring:message code="flats.show.info.flatDescription"/></p>
     <p class="infoP" id="infoCurrency" type="hidden"><spring:message code="common.general.currency"/></p>
     <p class="infoP" id="infoArea" type="hidden"><spring:message code="common.general.area"/></p>
-<%--    Missing--%>
+    <%--    Missing--%>
     <p class="infoP" id="infoMissingName" type="hidden"><spring:message code="flats.show.missing.name"/></p>
     <p class="infoP" id="infoMissingCity" type="hidden"><spring:message code="flats.show.missing.city"/></p>
     <p class="infoP" id="infoMissingStreet" type="hidden"><spring:message code="flats.show.missing.street"/></p>

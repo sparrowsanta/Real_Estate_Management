@@ -14,7 +14,7 @@ public class Room {
     private RoomType roomType;
     private String description;
     private double roomSquareMeters;
-    private double expectedPrice;
+    private double expectedRentPrice;
 
 
     @AllArgsConstructor

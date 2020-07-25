@@ -109,6 +109,8 @@ main div {
 
 /*ADD FLAT*/
 
+
+
 .labelForForm {
     font-family: sans-serif;
     margin-left: 60px;
@@ -228,6 +230,49 @@ main div {
     height: 2.4em;
     alignment: center;
 }
+
+/*ROOMS*/
+.modalH5 {
+    text-align: left!important;
+    margin-bottom: 1px;
+}
+
+
+.select2-selection select2-selection--single {
+    width: 200px;
+    text-align: left!important;
+}
+
+.js-example-basic {
+    width: 230px;
+    text-align: left!important;
+}
+
+
+#rowAddFlatTable {
+
+    /*justify-content: center;*/
+    align-items: center;
+    vertical-align: center;
+    width: auto;
+    margin-top: 20px;
+    text-align: center;
+    horiz-align: center;
+}
+
+#submitForm {
+    bottom: 300px;
+    position: fixed;
+}
+/*
+.select2-selection select2-selection--single {
+    width: 100%;
+}
+
+.select2 select2-container select2-container--default select2-container--below select2-container--focus {
+    width: 1em;
+}
+*/
 
 
 
