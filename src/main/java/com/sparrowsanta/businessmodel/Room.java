@@ -16,6 +16,12 @@ public class Room {
     private double roomSquareMeters;
     private double expectedRentPrice;
 
+    public Room(String description, double roomSquareMeters, double expectedRentPrice, RoomType roomType) {
+        this.roomType = roomType;
+        this.description = description;
+        this.roomSquareMeters = roomSquareMeters;
+        this.expectedRentPrice = expectedRentPrice;
+    }
 
     @AllArgsConstructor
     @Getter

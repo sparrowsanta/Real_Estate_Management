@@ -59,13 +59,14 @@
             <button type="button" id="btnModalRoom" class="btn btn-orange addRoom" value="">
                 <spring:message code="rooms.add.header"/>
             </button>
+            <button type="button" id="prevBtn" class="btn btn-orange-outline">
+                <spring:message code="common.button.back"/>
+            </button>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-3 ml-4">
-            <button type="button" id="prevBtn" class="btn btn-orange-outline">
-                <spring:message code="common.button.back"/>
-            </button>
+
 <%--            <button type="button" id="submitFormFlat" class="btn btn-orange">
                 <spring:message code="common.button.submit"/>
             </button>--%>

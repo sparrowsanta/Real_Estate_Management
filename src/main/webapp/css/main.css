@@ -260,7 +260,7 @@ main div {
     horiz-align: center;
 }
 
-#submitForm {
+.submitFixed {
     bottom: 300px;
     position: fixed;
 }

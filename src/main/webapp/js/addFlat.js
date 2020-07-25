@@ -155,9 +155,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             //Rooms Number
             let roomsNumberLabel = $("<h5 class='control-label'/>")
-            let roomsNumberInput = $("<input type='number' id='roomsNumber' name='roomsNumber' class='form-control mx-4 btn-dark-blue-outline'>")
+            let roomsNumberInput = $("<input type='text' id='roomsNumber' name='roomsNumber' class='form-control mx-4 btn-dark-blue-outline'>")
             let roomsNumberIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-th-large fa-2x em'></em></span>")
-            let flatFormRowGroupRoomsNumber = flatFormRowGroup.clone(true).empty().attr("id", "roomsNumber");
+            let flatFormRowGroupRoomsNumber = flatFormRowGroup.clone(true).empty().attr("id", "roomsNumberGroup");
 
             flatFormRowSec.append(flatFormRowGroupRoomsNumber)
             flatFormRowGroupRoomsNumber.prepend(roomsNumberLabel.attr("for", "roomsNumber").text(infoNumberOfRooms.clone(true).html()))
@@ -334,8 +334,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             //Submit button
             let nextBtn = $("<button  class='btn btn-orange' type='button' id='nextBtn'>Next</button>")
-            let submitInput = $("<input class='btn btn-orange mx-4 mt-4' type='submit' id='submitForm' value='Submit Request'>")
-            let testBtn = $("<button class='btn btn-orange mx-4 mt-4' type='button' id='testbbt' value='test test'>")
+            let submitInput = $("<input class='btn btn-orange mt-4' type='submit' id='submitForm' value='Submit Request'>")
+            // let testBtn = $("<button class='btn btn-orange mx-4 mt-4' type='button' id='testbbt' value='test test'>")
 
             let flatFormRowFifth = flatFormRow.clone().empty();
             flatForm.append(flatFormRowFifth)
@@ -343,12 +343,12 @@ document.addEventListener("DOMContentLoaded", function () {
             flatFormRowFifth.append(flatFormRowGroupSubmit)
             flatFormRowGroupSubmit.append(nextBtn)
             flatFormRowGroupSubmit.append(submitInput)
-            flatFormRowGroupSubmit.append(testBtn)
+            // flatFormRowGroupSubmit.append(testBtn)
 
 
             let submitBtn = $("#submitForm")
             submitBtn.on("click", saveFlat)
-            testBtn.on("click", saveRooms)
+
             checkThePage(currentTab)
 
             //Next button
@@ -370,13 +370,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (currentTab === 0) {
                     $(".firstPage").show()
                     $("#rooms").hide()
-                    $("#roomsNumber").hide()
+                    $("#roomsNumberGroup").hide()
                     $("#meters").hide()
                     $("#flatTableAdd").hide()
                     $("#dataRoomFeed").hide()
                     $("#prevBtn").hide()
                     $("#btnModalRoom").hide()
-                    // $("#submitForm").hide()
+                    $("#submitForm").hide()
                     $("#submitFormFlat").hide()
                     $("#nextBtn").show()
                 } else if (currentTab === 1) {
@@ -385,7 +385,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     $("#dataRoomFeed").show()
                     $(".firstPage").hide()
                     console.log("sec")
-                    $("#submitForm").show()
+                    $("#submitForm").show().addClass("submitFixed")
                     $("#btnModalRoom").show()
                     $("#nextBtn").hide()
                     $("#prevBtn").show()
@@ -395,30 +395,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
 
-/*            function saveRooms() {
+            function takeDataFromRoomsTable() {
                 let roomsTable = $("#flatTableAdd").children().children()
-                let roomToSend = []
-                let roomToSendL = {}
+                let roomToSendT = []
                 for (let i = 1; i < roomsTable.length; i++) {
-                    roomToSend.push(roomsTable.eq(i).find(':nth-child(2)').text())
-                    roomToSend.push(roomsTable.eq(i).find(':nth-child(3)').text())
-                    roomToSend.push(roomsTable.eq(i).find(':nth-child(4)').text())
-                    roomToSend.push(roomsTable.eq(i).find(':nth-child(5)').text())
-                    console.log(roomToSend)
-
-                    roomToSendL.description = roomsTable.eq(i).find(':nth-child(3)').text();
-                    roomToSendL.roomType = roomsTable.eq(i).find(':nth-child(4)').text()
-                    roomToSendL.sqm = roomsTable.eq(i).find(':nth-child(5)').text()
+                    let roomToSendL = {}
+                    roomToSendL.description = roomsTable.eq(i).find(':nth-child(2)').text();
+                    roomToSendL.roomSquareMeters = roomsTable.eq(i).find(':nth-child(3)').text();
+                    roomToSendL.expectedRentPrice = roomsTable.eq(i).find(':nth-child(4)').text()
+                    roomToSendL.roomType = roomsTable.eq(i).find(':nth-child(5)').text()
+                    roomToSendT.push(roomToSendL)
                 }
-                let string = JSON.stringify(roomToSendL)
-                $("#roomsNumber").val("s")
-                $("#roomsNumber").text("s")
-                console.log($("#roomsNumber").text("s"))
-                console.log($("#roomsNumber").val("s"))
-                console.log($("#roomsNumber").html("s"))
-                console.log($("#roomsNumber").attr("value", "s"))
-                $("#roomsNumber").show()
-            }*/
+                let string = JSON.stringify(roomToSendT)
+                $("#roomsNumber").val(string)
+
+            }
 
 
             //    SAVE METHOD
@@ -436,7 +427,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // data.get(selectFlatsVar)
                 data.append("file", file)
                 data.append("test", "test")
-
+                takeDataFromRoomsTable();
                 // $("#roomsNumber").val(roomToSend)
                 // console.log(data)
                 // let jsonDataObj = {

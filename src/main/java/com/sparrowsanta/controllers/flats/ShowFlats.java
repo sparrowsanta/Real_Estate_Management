@@ -2,6 +2,7 @@ package com.sparrowsanta.controllers.flats;
 
 import com.google.gson.Gson;
 import com.sparrowsanta.businessmodel.Flat;
+import com.sparrowsanta.businessmodel.Room;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.Part;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/flats")
@@ -77,11 +79,19 @@ public class ShowFlats {
         }*/
 
 
+        Gson gson = new Gson();
+        String stringOfRooms = mrequest.getParameter("roomsNumber");
+        String[] tableOfRooms =stringOfRooms.split("},\\{");
+        String[] tableOfRoomsReplaced = Arrays.stream(tableOfRooms)
+                .map(s -> s.replaceAll("(\\[)|(\\])|(\\{)|(\\})", ""))
+                .toArray(size -> new String[size]);
+        Room room1 = gson.fromJson("{"+tableOfRoomsReplaced[1]+"}",Room.class);
+//        room1.setId(3);
 
         System.out.println(mrequest.getParameter("name"));
-        System.out.println(mrequest.getParameter("test"));
         System.out.println(mrequest.getParameter("meters"));
-//        Part idPart = mrequest.getPart("e_id");
+
+
         return "flats/addFlat";
 
     }
