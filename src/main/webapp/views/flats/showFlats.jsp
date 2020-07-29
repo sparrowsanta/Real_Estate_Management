@@ -11,6 +11,7 @@
     <jsp:include page="/views/util/header.jsp"></jsp:include>
 
     <script type="text/javascript" src="js/flats.js"></script>
+    <script type="text/javascript" src="js/rooms/addRooms.js"></script>
 
 
     <title>Show Flats</title>
@@ -44,6 +45,7 @@
 
 </body>
 <jsp:include page="../meters/metersModal.jsp"/>
+<jsp:include page="../rooms/showRooms.jsp"/>
 <jsp:include page="../util/deleteConfirm.jsp"/>
 <footer>
     <jsp:include page="/views/util/footer.jsp"></jsp:include>

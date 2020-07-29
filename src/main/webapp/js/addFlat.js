@@ -26,12 +26,16 @@ document.addEventListener("DOMContentLoaded", function () {
     let infoFlatDescription = $("#infoFlatDescription")
     let infoArea = $("#infoArea")
     let infoCurrency = $("#infoCurrency")
+    let infoNext = $("#infoNext")
     //INFO
     let infoMissingName = $("#infoMissingName")
     let infoMissingCity = $("#infoMissingCity")
     let infoMissingStreet = $("#infoMissingStreet")
     let infoMissingFlatNumber = $("#infoMissingFlatNumber")
     let infoMissingFoto = $("#infoMissingFoto")
+    // let flatEdited = $("#flatEdited").val()
+
+    console.log($("#flatEdited").text())
 
     if (mainContainer.prop("id").length) {
         let formDiv = $("<div class='divForm' id='formDiv'>");
@@ -333,17 +337,15 @@ document.addEventListener("DOMContentLoaded", function () {
             })
 
             //Submit button
-            let nextBtn = $("<button  class='btn btn-orange' type='button' id='nextBtn'>Next</button>")
+            let nextBtn = $("<button  class='btn btn-orange mt-4' type='button' id='nextBtn'></button>")
             let submitInput = $("<input class='btn btn-orange mt-4' type='submit' id='submitForm' value='Submit Request'>")
-            // let testBtn = $("<button class='btn btn-orange mx-4 mt-4' type='button' id='testbbt' value='test test'>")
 
             let flatFormRowFifth = flatFormRow.clone().empty();
             flatForm.append(flatFormRowFifth)
             let flatFormRowGroupSubmit = flatFormRowGroup.clone(true).empty().attr("id", "buttons").removeClass('firstPage').addClass('ml-4');
             flatFormRowFifth.append(flatFormRowGroupSubmit)
-            flatFormRowGroupSubmit.append(nextBtn)
+            flatFormRowGroupSubmit.append(nextBtn.text(infoNext.clone(true).html()))
             flatFormRowGroupSubmit.append(submitInput)
-            // flatFormRowGroupSubmit.append(testBtn)
 
 
             let submitBtn = $("#submitForm")
@@ -379,16 +381,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     $("#submitForm").hide()
                     $("#submitFormFlat").hide()
                     $("#nextBtn").show()
+                    $("#rowAddFlatTable").hide()
+                    fixStepIndicator(currentTab)
                 } else if (currentTab === 1) {
                     if (checkIfRequiredAreNotEmptyFirstPage(currentTab) !== true) return false;
+                    fixStepIndicator(currentTab)
                     $("#flatTableAdd").show()
                     $("#dataRoomFeed").show()
                     $(".firstPage").hide()
-                    console.log("sec")
                     $("#submitForm").show().addClass("submitFixed")
                     $("#btnModalRoom").show()
                     $("#nextBtn").hide()
                     $("#prevBtn").show()
+                    $("#rowAddFlatTable").show()
 
 
                 }
@@ -411,6 +416,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
 
+
+            function fixStepIndicator(n) {
+                // This function removes the "active" class of all steps...
+                var i, x = document.getElementsByClassName("step");
+                for (i = 0; i < x.length; i++) {
+                    x[i].className = x[i].className.replace(" active", "");
+                }
+                //... and adds the "active" class to the current step:
+                x[n].className += " active";
+            }
 
             //    SAVE METHOD
             //https://stackoverflow.com/questions/43936372/upload-file-springboot-required-request-part-file-is-not-present
@@ -450,6 +465,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
 
+
             function checkIfRequiredAreNotEmptyFirstPage() {
                 // let file = $("#file").val()
 
@@ -477,6 +493,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 return flag;
             }
+
+
 
             function checkIfRequiredAreNotEmptySecPage() {
                 let flag = true;

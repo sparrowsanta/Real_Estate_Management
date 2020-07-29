@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let infoRoomsNumber = $("#infoRoomsNumber")
             let infoFlatDescription = $("#infoFlatDescription")
             let readDeleteMessage = $("#readDeleteMessage")
+            let hiddenName = $("#hiddenName")
 
 
             //Construction
@@ -131,7 +132,9 @@ document.addEventListener("DOMContentLoaded", function () {
             let b1 = $("<p><button class='btn btn-orange openMeters'>Meters</button></p>");
             let button1 = $(b1).find("button");
             button1.attr("value", flats[i].id)
-            let b2 = $("<p><button class='btn btn-orange'>Rooms</button></p>");
+            let b2 = $("<p><button class='btn btn-orange rooms'>Rooms</button></p>");
+            let button2 = $(b2).find("button");
+            button2.attr("value", flats[i].id)
             let b3 = $("<p><button class='btn btn-orange'>Bills</button></p>");
             // let b4 = $("<p><button class='btn btn-orange'>Something</button></p>");
 
@@ -144,12 +147,41 @@ document.addEventListener("DOMContentLoaded", function () {
             buttonCol.append(b3)
             // buttonCol.append(b4)
 
+
+            button2.on('click', function () {
+                let flatId = $(this).attr("value")
+                console.log(flatId)
+                getRooms(flatId)
+
+
+            })
+
+            function getRooms(flatId) {
+                $.ajax({
+                    type: 'get',
+                    url: 'flats/getRooms/' + flatId,
+                    dataType: 'json',
+                    data: {},
+                })
+                    .done(function (data) {
+                        console.log(data)
+                        //Next Func
+                        $("#modalRoomsEdit").modal()
+                        // $("#tableDivToFeed").append(data.roomType)
+                        addToShowTable(data.description, data.roomSquareMeters, data.expectedRentPrice, data.roomTypeSelect)
+
+                    })
+                    .fail(function (xhr, status, err) {
+                        console.log(xhr)
+                    });
+            }
+
             //Edit/Delete
             let editDelCol = $("<div class = 'editDelCol mt-10'>")
             let editDelRowCol = $("<div class = 'col-sm-1 mt-10'>")
             let additionalDiv4 = $("<div class='additional'>");
 
-            let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='flatEditBtn'/>")
+            let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' href='flats/addFlat' id='flatEditBtn'/>")
             let editEm = $("<em class='fa fa-pencil-alt'/>")
             let additionalPEdit = $("<p>")
             editBtn.attr("value", flats[i].id)
@@ -172,8 +204,12 @@ document.addEventListener("DOMContentLoaded", function () {
             editDelCol.append(additionalPDel)
 
             //Delete/Edit functions
-            delBtn.on("click", function (){
+            delBtn.on("click", function () {
                 deleteEntity("following flat:", deleteFlat, flats[i].id)
+            })
+
+            editBtn.on("click", function () {
+                editFlat(hiddenName);
             })
         }
     }
@@ -208,6 +244,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log(xhr.statusText);
                 console.log(status);
                 console.log(err);
+            });
+    }
+
+    function editFlat(hiddenName) {
+        $("#name").val("test")
+        let flatId = '/flats/' + $("#flatEditBtn").attr("value")
+        window.location.replace(flatId)
+
+    }
+
+    function getFlatById(flatId) {
+        $.ajax({
+            type: 'get',
+            url: 'flats/' + flatId,
+            dataType: "json",
+            data: {},
+        })
+            .done(function (data) {
+                console.log(data)
+                $("#name").val("test")
+
             });
     }
 

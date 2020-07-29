@@ -2,6 +2,7 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
 <html>
 <head>
     <title>Add Flat</title>
@@ -22,58 +23,59 @@
     <%--    <script type="text/javascript" src="${pageContext.request.contextPath}/js/metersModal.js"></script>--%>
 </header>
 <main>
-    <div class="mainContainer" id="flat">
-        <header>
-            <h2 class="flats-header"><spring:message code="flats.add.header"/></h2>
-        </header>
-        <div class="containerDiv"></div>
-    </div>
-    <div class="alert alert-success">
-        File Uploaded Successfully
-    </div>
-    <div class="alert alert-danger">
-        File is not uploaded
-    </div>
-    <div class="form-row" id="rowAddFlatTable">
-        <div class="row col-md-6 ml-4" id="dataRoomFeed">
-            <table class="table table-striped table-bordered table-sm table-hover" id="flatTableAdd">
-                <h5><spring:message code="flats.add.room.desc"></spring:message></h5>
-                <tr class="table-ro">
-                    <th scope="col"> #</th>
-                    <th scope="col"> Description</th>
-                    <th scope="col"> Room SQM </th>
-                    <th scope="col"> Income </th>
-                    <th scope="col"> Room Type</th>
-                    <th scope="col"> DELETE</th>
+    <div style="z-index: 1">
+        <div class="mainContainer" id="flat">
+            <header>
+                <h2 class="flats-header"><spring:message code="flats.add.header"/></h2>
+            </header>
+            <div class="containerDiv"></div>
+        </div>
+        <div class="alert alert-success">
+            File Uploaded Successfully
+        </div>
+        <div class="alert alert-danger">
+            File is not uploaded
+        </div>
+        <div class="form-row" id="rowAddFlatTable">
 
-                </tr>
-                <div id="tableDivToFeed">
+            <div class="row col-md-9 ml-4" id="dataRoomFeed">
+                <table class="table table-striped table-bordered table-md table-hover"
+                       id="flatTableAdd">
+                    <thead class="thead-own">
+                    <tr class="table-ro">
+                        <th scope="col"><spring:message code="common.general.hash"/></th>
+                        <th scope="col"><spring:message code="common.general.description"/></th>
+                        <th scope="col"><spring:message code="rooms.add.roomSQM"/></th>
+                        <th scope="col"><spring:message code="common.general.income"/></th>
+                        <th scope="col"><spring:message code="rooms.add.roomType"/></th>
+                        <th scope="col"><spring:message code="common.button.delete"/></th>
 
-                </div>
+                    </tr>
+                    </thead>
+                    <div id="tableDivToFeed">
 
-            </table>
+                    </div>
+
+                </table>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3 ml-4" id="addRoomBtnDiv">
+                <button type="button" id="btnModalRoom" class="btn btn-orange addRoom" value="">
+                    <spring:message code="rooms.add.header"/>
+                </button>
+                <button type="button" id="prevBtn" class="btn btn-orange-outline">
+                    <spring:message code="common.button.back"/>
+                </button>
+            </div>
         </div>
     </div>
-    <div class="form-row">
-        <div class="form-group col-md-3 ml-4" id="addRoomBtnDiv">
-            <button type="button" id="btnModalRoom" class="btn btn-orange addRoom" value="">
-                <spring:message code="rooms.add.header"/>
-            </button>
-            <button type="button" id="prevBtn" class="btn btn-orange-outline">
-                <spring:message code="common.button.back"/>
-            </button>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-3 ml-4">
-
-<%--            <button type="button" id="submitFormFlat" class="btn btn-orange">
-                <spring:message code="common.button.submit"/>
-            </button>--%>
-        </div>
+    <div style="text-align:center;margin-bottom:40px">
+        <span class="step"></span>
+        <span class="step"></span>
     </div>
 
-
+    <p>Wartość przekazana max: ${flatEdited} </p>
 </main>
 <footer>
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
@@ -106,6 +108,12 @@
     <p class="infoP" id="infoMissingStreet" type="hidden"><spring:message code="flats.show.missing.street"/></p>
     <p class="infoP" id="infoMissingFlatNumber" type="hidden"><spring:message code="flats.show.missing.flatNumber"/></p>
     <p class="infoP" id="infoMissingFoto" type="hidden"><spring:message code="flats.show.missing.foto"/></p>
+    <p class="infoP" id="infoNext" type="hidden"><spring:message code="common.button.next"/></p>
+
+
+
+
+
 
 </div>
 </body>

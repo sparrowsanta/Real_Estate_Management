@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.sparrowsanta.businessmodel.Flat;
 import com.sparrowsanta.businessmodel.Room;
 import org.springframework.http.MediaType;
-import org.springframework.http.codec.multipart.Part;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,25 +19,33 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static com.sparrowsanta.businessmodel.Room.RoomType.ROOM;
 
 @Controller
-@RequestMapping("/flats")
+@SessionAttributes("flatEdited")
+@RequestMapping("flats")
 public class ShowFlats {
 
 
     public static final List<Flat> flats = new ArrayList<>();
 
-//    getMeters(currentFlat);
+    //    getMeters(currentFlat);
     @GetMapping
     public String showFlats() {
         return "flats/showFlats";
     }
 
 
-    private ShowFlats(){
+    private ShowFlats() {
+        Room r1 = new Room("myFirst", 30.20, 1000, ROOM);
+        Room r2 = new Room("mySec", 40.20, 2000, ROOM);
+        List<Room> rooms = Arrays.asList(new Room("myFirst", 30.20, 1000, ROOM),
+                new Room("mySec", 40.20, 2000, ROOM));
         Flat flat1 = new Flat(1, "Pierwsze", "Kraków", "Złota Podkowa", "5", "31-322", 2, null, 3, "Moje pierwsze mieszkanie",
                 34.4, 2010, 305000.00, 2000.0, null, "");
+        flat1.setRooms(rooms);
+
         Flat flat2 = new Flat(3, "Drugie", "Oświęcim", "Stawowa", "1", "11-322", 4, null, 1, "Moje drugie mieszkanie",
                 66.1, 2014, 255000.00, 1000.0, null, "");
 //      Flat flat3 = new Flat(2, "Trzecie", "Gdańsk", "Olejna", "4", "01-020", 2, null, 10, "Moje trzecie mieszkanie",
@@ -81,11 +88,11 @@ public class ShowFlats {
 
         Gson gson = new Gson();
         String stringOfRooms = mrequest.getParameter("roomsNumber");
-        String[] tableOfRooms =stringOfRooms.split("},\\{");
+        String[] tableOfRooms = stringOfRooms.split("},\\{");
         String[] tableOfRoomsReplaced = Arrays.stream(tableOfRooms)
                 .map(s -> s.replaceAll("(\\[)|(\\])|(\\{)|(\\})", ""))
                 .toArray(size -> new String[size]);
-        Room room1 = gson.fromJson("{"+tableOfRoomsReplaced[1]+"}",Room.class);
+        Room room1 = gson.fromJson("{" + tableOfRoomsReplaced[1] + "}", Room.class);
 //        room1.setId(3);
 
         System.out.println(mrequest.getParameter("name"));
@@ -105,5 +112,31 @@ public class ShowFlats {
 
         return new Gson().toJson("Ok");
     }
+
+
+    @RequestMapping(value = "/{id}", produces = "text/plain;charset=UTF-8")
+    public String getFlatById(Model model, @PathVariable(name = "id") long id) {
+        Flat flat = flats.stream()
+                .filter(s -> s.getId() == id)
+                .findFirst()
+                .orElse(null);
+        model.addAttribute("flatEdited", flat);
+//        new Gson().toJson(flat);"forward:addFlat";
+        return "/addFlat";
+    }
+
+    @GetMapping(value = "/getRooms/{flatId}", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String getRoomsFromFlat(@PathVariable(name = "flatId") long flatId) {
+        Flat flat = flats.stream()
+                .filter(s -> s.getId() == flatId)
+                .findFirst()
+                .orElse(null);
+//        new Gson().toJson(flat);"forward:addFlat";
+        String s = new Gson().toJson(flat.getRooms());
+        System.out.println();
+        return s;
+    }
+
 }
 

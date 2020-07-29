@@ -109,8 +109,6 @@ main div {
 
 /*ADD FLAT*/
 
-
-
 .labelForForm {
     font-family: sans-serif;
     margin-left: 60px;
@@ -250,20 +248,56 @@ main div {
 
 
 #rowAddFlatTable {
-
-    /*justify-content: center;*/
-    align-items: center;
     vertical-align: center;
     width: auto;
     margin-top: 20px;
     text-align: center;
-    horiz-align: center;
+    min-height: 380px;
+
+
 }
+
+#dataRoomFeed{
+    outline: 2px solid rgba(22, 105, 122, 0.5);
+    padding: 0px;
+    margin-bottom: 10px;
+    box-shadow: 0 8px 6px -6px rgba(22, 105, 122, 0.5);
+}
+.thead-own th{
+    background-color: #16697A;
+    color: #F7F4F3;
+}
+.thead-own td{
+    background-color: rgba(22, 105, 122, 0.5);
+    padding: 0px;
+    margin: 0px;
+    vertical-align : baseline;
+}
+
 
 .submitFixed {
     bottom: 300px;
     position: fixed;
 }
+
+
+/*STEPS*/
+.step {
+    height: 15px;
+    width: 15px;
+
+    background-color: #16697A;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+}
+
+/* Mark the active step: */
+.step.active {
+    opacity: 1;
+}
+
 /*
 .select2-selection select2-selection--single {
     width: 100%;
