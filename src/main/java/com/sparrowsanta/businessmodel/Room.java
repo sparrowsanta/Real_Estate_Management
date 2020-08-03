@@ -15,8 +15,9 @@ public class Room {
     private String description;
     private double roomSquareMeters;
     private double expectedRentPrice;
-
-    public Room(String description, double roomSquareMeters, double expectedRentPrice, RoomType roomType) {
+//Testowy
+    public Room(long id, String description, double roomSquareMeters, double expectedRentPrice, RoomType roomType) {
+        this.id = id;
         this.roomType = roomType;
         this.description = description;
         this.roomSquareMeters = roomSquareMeters;

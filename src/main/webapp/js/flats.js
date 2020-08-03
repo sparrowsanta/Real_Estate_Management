@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showFlatsInformation(flats) {
         containerDiv.empty();
+
         for (let i = 0; i < flats.length; i++) {
             let imgFlat = $("<figure><a href='#' id='flatPicture' ><img class='img-fluid' src='img/flat.jpg'></a></figure>")
             let row = $("<div class='row'>");
@@ -157,6 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
 
             function getRooms(flatId) {
+                // $("#modalRoomsEdit").html("");
                 $.ajax({
                     type: 'get',
                     url: 'flats/getRooms/' + flatId,
@@ -167,9 +169,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         console.log(data)
                         //Next Func
                         $("#modalRoomsEdit").modal()
-                        // $("#tableDivToFeed").append(data.roomType)
-                        addToShowTable(data.description, data.roomSquareMeters, data.expectedRentPrice, data.roomTypeSelect)
 
+                        // $("#tableDivToFeed").append(data.roomType)
+                        addToShowTable(data.length ,data)
+                    //.description, data.roomSquareMeters, data.expectedRentPrice, data.roomTypeSelect
                     })
                     .fail(function (xhr, status, err) {
                         console.log(xhr)
@@ -180,8 +183,11 @@ document.addEventListener("DOMContentLoaded", function () {
             let editDelCol = $("<div class = 'editDelCol mt-10'>")
             let editDelRowCol = $("<div class = 'col-sm-1 mt-10'>")
             let additionalDiv4 = $("<div class='additional'>");
+            //TEMP
+            let flatIdRedirectUrl = "flats/addFlat/" + flats[i].id
 
-            let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' href='flats/addFlat' id='flatEditBtn'/>")
+            let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' href='' id='flatEditBtn'/>")
+            editBtn.attr("href", flatIdRedirectUrl)
             let editEm = $("<em class='fa fa-pencil-alt'/>")
             let additionalPEdit = $("<p>")
             editBtn.attr("value", flats[i].id)
@@ -249,8 +255,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function editFlat(hiddenName) {
         $("#name").val("test")
-        let flatId = '/flats/' + $("#flatEditBtn").attr("value")
-        window.location.replace(flatId)
+        let flatId = $("#flatEditBtn").attr("value")
+        let redirectPoint = '/flats/' + flatId;
+        window.location.replace(redirectPoint)
 
     }
 

@@ -9,19 +9,19 @@
         <div class="modal-dialog modal-lg mw-75 w-75" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-dark-blue">
-                    <h4 class="modal-title" id="myModalLabel"><span><em class="fas fa-tachometer-alt"> </em></span>
-                        <spring:message code="meters.header.text"/></h4>
+                    <h4 class="modal-title" id="myModalLabel"><span><em class='fab fa-buromobelexperte'></em></span>
+                        <spring:message code="rooms.edit.rooms"/></h4>
                     <button class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div id="roomTable">
-                        <h4><spring:message code="meters.header.list"/></h4>
+                        <h4><spring:message code="flats.show.rooms.info"/></h4>
                         <div class="custom-scrollbar-blue p-2"
-                             style="text-align: left;  height: 600px">
+                             style="text-align: center;  height: 600px">
                             <div class="divForRooms">
-                                <div class="row col-md-9 ml-4" id="dataRoomFeedForFlat">
+                                <div class="row col-md-12 mr-2" id="dataRoomFeedForFlat">
                                     <table class="table table-striped table-bordered table-md table-hover"
                                            id="flatTableAdd">
                                         <thead class="thead-own">
@@ -46,26 +46,18 @@
 
                     </div>
                 </div>
-                <div class="item" id="metersHistoryForm">
-                    <h4><spring:message code="meters.header.history"/></h4>
-                    <h4 id="meterHistoryTitle"></h4>
 
-                    <div class="custom-scrollbar-blue p-2"
-                         style="text-align: left;  height: 600px">
-                        <ul class="timeline" id="meterHistoryList">
-
-                        </ul>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-orange" id="btnModalRoom">
+                        <em class="fas fa-plus"></em>
+                        <spring:message code="rooms.add.header"/></button>
+                    <button type="button" class="btn btn-orange" id="btnSubmitRoomChange">
+                        <em class="fas fa-plus"></em>
+                        <spring:message code="common.button.submit"/></button>
+                    <button type="button" class="btn btn-orange" id="btnBack">
+                        <em class="fas fa-backward"></em>
+                        <spring:message code="common.button.back"/></button>
                 </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-orange" id="btnAddMeter">
-                    <em class="fas fa-plus"></em>
-                    <spring:message code="meters.button.addMeeter"/></button>
-                <button type="button" class="btn btn-orange" id="btnBack">
-                    <em class="fas fa-backward"></em>
-                    <spring:message code="common.button.back"/></button>
             </div>
         </div>
     </div>
@@ -90,6 +82,7 @@
 </div>
 <div id="meterForms">
     <jsp:include page="../util/deleteConfirm.jsp"/>
+    <jsp:include page="../rooms/roomsModal.jsp"/>
 
 </div>
 <script type="text/javascript" src="js/flats.js"></script>

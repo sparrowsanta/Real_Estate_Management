@@ -38,10 +38,8 @@ public class ShowFlats {
 
 
     private ShowFlats() {
-        Room r1 = new Room("myFirst", 30.20, 1000, ROOM);
-        Room r2 = new Room("mySec", 40.20, 2000, ROOM);
-        List<Room> rooms = Arrays.asList(new Room("myFirst", 30.20, 1000, ROOM),
-                new Room("mySec", 40.20, 2000, ROOM));
+        List<Room> rooms = Arrays.asList(new Room(1,"myFirst", 30.20, 1000, ROOM),
+                new Room(2,"mySec", 40.20, 2000, ROOM));
         Flat flat1 = new Flat(1, "Pierwsze", "Kraków", "Złota Podkowa", "5", "31-322", 2, null, 3, "Moje pierwsze mieszkanie",
                 34.4, 2010, 305000.00, 2000.0, null, "");
         flat1.setRooms(rooms);
@@ -66,6 +64,8 @@ public class ShowFlats {
 
     @GetMapping(value = "/addFlat", produces = "text/plain;charset=UTF-8")
     public String addFlat(Model model) {
+        model.addAttribute("flatEdited", 0);
+
         return "flats/addFlat";
     }
 
@@ -114,26 +114,27 @@ public class ShowFlats {
     }
 
 
-    @RequestMapping(value = "/{id}", produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/addFlat/{id}")
     public String getFlatById(Model model, @PathVariable(name = "id") long id) {
         Flat flat = flats.stream()
                 .filter(s -> s.getId() == id)
                 .findFirst()
                 .orElse(null);
-        model.addAttribute("flatEdited", flat);
+        model.addAttribute("flatEdited", new Gson().toJson(flat));
 //        new Gson().toJson(flat);"forward:addFlat";
-        return "/addFlat";
+        return "flats/addFlat";
     }
 
     @GetMapping(value = "/getRooms/{flatId}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getRoomsFromFlat(@PathVariable(name = "flatId") long flatId) {
+        String s = "";
         Flat flat = flats.stream()
-                .filter(s -> s.getId() == flatId)
+                .filter(d -> d.getId() == flatId)
                 .findFirst()
                 .orElse(null);
 //        new Gson().toJson(flat);"forward:addFlat";
-        String s = new Gson().toJson(flat.getRooms());
+        s = new Gson().toJson(flat.getRooms());
         System.out.println();
         return s;
     }

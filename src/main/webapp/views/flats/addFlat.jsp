@@ -38,7 +38,7 @@
         </div>
         <div class="form-row" id="rowAddFlatTable">
 
-            <div class="row col-md-9 ml-4" id="dataRoomFeed">
+            <div class="row col-md-12 ml-4" id="dataRoomFeed">
                 <table class="table table-striped table-bordered table-md table-hover"
                        id="flatTableAdd">
                     <thead class="thead-own">
@@ -74,8 +74,6 @@
         <span class="step"></span>
         <span class="step"></span>
     </div>
-
-    <p>Wartość przekazana max: ${flatEdited} </p>
 </main>
 <footer>
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
@@ -109,6 +107,7 @@
     <p class="infoP" id="infoMissingFlatNumber" type="hidden"><spring:message code="flats.show.missing.flatNumber"/></p>
     <p class="infoP" id="infoMissingFoto" type="hidden"><spring:message code="flats.show.missing.foto"/></p>
     <p class="infoP" id="infoNext" type="hidden"><spring:message code="common.button.next"/></p>
+    <p class="infoP" id="flatToEdit" type="hidden">${flatEdited}</p>
 
 
 

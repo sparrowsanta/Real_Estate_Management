@@ -298,6 +298,10 @@ main div {
     opacity: 1;
 }
 
+.table-row td {
+    vertical-align : baseline;
+
+}
 /*
 .select2-selection select2-selection--single {
     width: 100%;

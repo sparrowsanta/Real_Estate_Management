@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     let mainContainer = $(".mainContainer")
-    let currentTab = 0;
     $(".alert-success").hide();
     $(".alert-danger").hide();
 
@@ -26,15 +25,12 @@ document.addEventListener("DOMContentLoaded", function () {
     let infoFlatDescription = $("#infoFlatDescription")
     let infoArea = $("#infoArea")
     let infoCurrency = $("#infoCurrency")
-    let infoNext = $("#infoNext")
     //INFO
     let infoMissingName = $("#infoMissingName")
     let infoMissingCity = $("#infoMissingCity")
     let infoMissingStreet = $("#infoMissingStreet")
     let infoMissingFlatNumber = $("#infoMissingFlatNumber")
     let infoMissingFoto = $("#infoMissingFoto")
-    //Flat received
-    let flatEditedParsed;
 
     if (mainContainer.prop("id").length) {
         let formDiv = $("<div class='divForm' id='formDiv'>");
@@ -58,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let nameIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-home fa-2x em'></em></span>")
             let customDivForName = $("<div class='custom-file ml-4' id='customName'>")
 
-            flatFormRowFirst.prepend(flatFormRowGroup.addClass("firstPage"))
+            flatFormRowFirst.prepend(flatFormRowGroup)
             flatFormRowGroup.prepend(nameLabel.attr("for", "name").text(infoFlatName.clone(true).html()))
 
             nameLabel.prepend(nameIcon)
@@ -77,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let cityLabel = $("<h5 class='control-label'/>")
             let cityInput = $("<input type='text' id='city' name='city' required class='form-control btn-dark-blue-outline is-valid'>")
             let cityIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-city fa-2x em'></em></span>")
-            let flatFormRowGroupCity = flatFormRowGroup.clone(true).empty().attr("id", "cityG").addClass("firstPage");
+            let flatFormRowGroupCity = flatFormRowGroup.clone(true).empty().attr("id", "cityG");
             let customDivForCity = $("<div class='custom-file ml-4' id='customCity'>")
 
             flatFormRowFirst.append(flatFormRowGroupCity)
@@ -99,8 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let streetLabel = $("<h5 class='control-label'/>")
             let streetInput = $("<input type='text' id='street' name='street' required class='form-control btn-dark-blue-outline is-valid'>")
             let streetIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-road fa-2x em'></em></span>")
-            let flatFormRowGroupStreet = flatFormRowGroup.clone(true).empty().attr("id", "streetG").addClass("firstPage");
-            ;
+            let flatFormRowGroupStreet = flatFormRowGroup.clone(true).empty().attr("id", "streetG");
             let customDivForStreet = $("<div class='custom-file ml-4' id='customStreet'>")
 
             flatFormRowFirst.append(flatFormRowGroupStreet)
@@ -120,10 +115,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             //FlatNumber
             let flatLabel = $("<h5 class='control-label'/>")
-            let flatInput = $("<input type='number' id='flatNumber' name='flatNumber' value='' required class='form-control btn-dark-blue-outline is-valid'>")
+            let flatInput = $("<input type='number' id='flatNumber' name='flatNumber' required class='form-control btn-dark-blue-outline is-valid'>")
             let flatIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-list-ol fa-2x em'></em></span>")
-            let flatFormRowGroupFlat = flatFormRowGroup.clone(true).empty().attr("id", "flat").addClass("firstPage");
-            ;
+            let flatFormRowGroupFlat = flatFormRowGroup.clone(true).empty().attr("id", "flat");
             let customDivForFlatNumber = $("<div class='custom-file ml-4' id='customFlatNumber'>")
 
             flatFormRowFirst.append(flatFormRowGroupFlat)
@@ -148,8 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let zipCodeLabel = $("<h5 class='control-label'/>")
             let zipCodeInput = $("<input type='text' id='zipCode' name='zipCode' class='form-control mx-4 btn-dark-blue-outline'>")
             let zipCodeIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-address-book fa-2x em'></em></span>")
-            let flatFormRowGroupZipCode = flatFormRowGroup.clone(true).empty().attr("id", "zipCode").addClass("firstPage");
-            ;
+            let flatFormRowGroupZipCode = flatFormRowGroup.clone(true).empty().attr("id", "zipCode");
 
             flatFormRowSec.append(flatFormRowGroupZipCode)
             flatFormRowGroupZipCode.prepend(zipCodeLabel.attr("for", "zipCode").text(infoZipCode.clone(true).html()))
@@ -158,9 +151,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             //Rooms Number
             let roomsNumberLabel = $("<h5 class='control-label'/>")
-            let roomsNumberInput = $("<input type='text' id='roomsNumber' name='roomsNumber' class='form-control mx-4 btn-dark-blue-outline'>")
+            let roomsNumberInput = $("<input type='number' id='roomsNumber' name='roomsNumber' class='form-control mx-4 btn-dark-blue-outline'>")
             let roomsNumberIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-th-large fa-2x em'></em></span>")
-            let flatFormRowGroupRoomsNumber = flatFormRowGroup.clone(true).empty().attr("id", "roomsNumberGroup");
+            let flatFormRowGroupRoomsNumber = flatFormRowGroup.clone(true).empty().attr("id", "roomsNumber");
 
             flatFormRowSec.append(flatFormRowGroupRoomsNumber)
             flatFormRowGroupRoomsNumber.prepend(roomsNumberLabel.attr("for", "roomsNumber").text(infoNumberOfRooms.clone(true).html()))
@@ -192,50 +185,14 @@ document.addEventListener("DOMContentLoaded", function () {
             let floorNumberLabel = $("<h5 class='control-label'/>")
             let floorNumberInput = $("<input type='number' id='floorNumber' name='floorNumber' class='form-control mx-4 btn-dark-blue-outline'>")
             let floorNumberIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-layer-group fa-2x em'></em></span>")
-            let flatFormRowGroupfloorNumber = flatFormRowGroup.clone(true).empty().attr("id", "floorNumber").addClass("firstPage");
+            let flatFormRowGroupfloorNumber = flatFormRowGroup.clone(true).empty().attr("id", "floorNumber");
 
             flatFormRowSec.append(flatFormRowGroupfloorNumber)
             flatFormRowGroupfloorNumber.prepend(floorNumberLabel.attr("for", "floorNumber").text(infoFloorNumber.clone(true).html()))
             floorNumberLabel.prepend(floorNumberIcon)
             flatFormRowGroupfloorNumber.append(floorNumberInput)
 
-            //Expected Income
-            let expectedIncomeLabel = $("<h5 class='control-label'/>")
-            let expectedIncomeInput = $("<input type='number' step='1.00' placeholder='0.00' id='expectedIncome' name='expectedIncome' class='form-control btn-dark-blue-outline'>")
-            let expectedIncomeIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-dollar-sign fa-2x em'></em></span>")
-            let flatFormRowGroupexpectedIncome = flatFormRowGroup.clone(true).empty().attr("id", "expectedIncome").addClass("firstPage");
-            ;
 
-            //Appender for DIV
-            let spanForAppenderExpectedIncome = $("<span class='input-group-text'></span>")
-            let divWithIncome = $("<div class='input-group-append'></div>")
-            let inputGroupIncome = $("<div class='input-group mx-4'>")
-            inputGroupIncome.append(expectedIncomeInput)
-            inputGroupIncome.append(divWithIncome.append(spanForAppenderExpectedIncome.text(infoCurrency.html())))
-
-            flatFormRowSec.append(flatFormRowGroupexpectedIncome)
-            flatFormRowGroupexpectedIncome.prepend(expectedIncomeLabel.attr("for", "expectedIncome").text(infoExpectedIncome.clone(true).html()))
-            expectedIncomeLabel.prepend(expectedIncomeIcon)
-            flatFormRowGroupexpectedIncome.append(inputGroupIncome)
-
-            //Flat Price
-            let flatPriceLabel = $("<h5 class='control-label'/>")
-            let flatPriceInput = $("<input type='number' id='flatPrice' step='10.0' placeholder='0.00' name='flatPrice' class='form-control btn-dark-blue-outline'>")
-            let flatPriceIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-tag fa-2x em'></em></span>")
-            let flatFormRowGroupflatPrice = flatFormRowGroup.clone(true).empty().attr("id", "flatPrice").addClass("firstPage");
-            ;
-
-            //Appender for DIV
-            let spanForAppenderFlatPrice = $("<span class='input-group-text'></span>")
-            let divWithCurrency = $("<div class='input-group-append'></div>")
-            let inputGroupPrize = $("<div class='input-group mx-4'>")
-            inputGroupPrize.append(flatPriceInput)
-            inputGroupPrize.append(divWithCurrency.append(spanForAppenderFlatPrice.text(infoCurrency.html())))
-
-            flatFormRowSec.append(flatFormRowGroupflatPrice)
-            flatFormRowGroupflatPrice.prepend(flatPriceLabel.attr("for", "flatPrice").text(infoFlatPrice.clone(true).html()))
-            flatPriceLabel.prepend(flatPriceIcon)
-            flatFormRowGroupflatPrice.append(inputGroupPrize)
             //Third ROW
             let flatFormRowThird = flatFormRow.clone().empty();
             flatForm.append(flatFormRowThird)
@@ -271,8 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let flatDescriptionLabel = $("<h5 class='control-label'/>")
             let flatDescriptionInput = $("<input type='freetext' id='flatDescription' name='flatDescription' class='form-control mx-4 btn-dark-blue-outline'>")
             let flatDescriptionIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-file-alt fa-2x em'></em></span>")
-            let flatFormRowGroupflatDescription = flatFormRowGroup.clone(true).empty().attr("id", "flatDescription").addClass("firstPage");
-            ;
+            let flatFormRowGroupflatDescription = flatFormRowGroup.clone(true).empty().attr("id", "flatDescription");
 
             flatFormRowThird.append(flatFormRowGroupflatDescription)
             flatFormRowGroupflatDescription.prepend(flatDescriptionLabel.attr("for", "flatDescription").text(infoFlatDescription.clone(true).html()))
@@ -283,8 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let flatSquareMetersLabel = $("<h5 class='control-label'/>")
             let flatSquareMetersInput = $("<input type='number' step='0.1' placeholder='0.00' id='flatSquareMeters' name='flatSquareMeters' class='form-control btn-dark-blue-outline'>")
             let flatSquareMetersIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-square fa-2x em'></em></span>")
-            let flatFormRowGroupfflatSquareMeters = flatFormRowGroup.clone(true).empty().attr("id", "flatSquareMeters").addClass("firstPage");
-            ;
+            let flatFormRowGroupfflatSquareMeters = flatFormRowGroup.clone(true).empty().attr("id", "flatSquareMeters");
 
             //Appender for DIV
             let spanForAppenderflatSquareMeters = $("<span class='input-group-text'></span>")
@@ -298,12 +253,11 @@ document.addEventListener("DOMContentLoaded", function () {
             flatSquareMetersLabel.prepend(flatSquareMetersIcon)
             flatFormRowGroupfflatSquareMeters.append(inputGroupSQM)
 
-            //yearOfConstruction
+            //flatDescription
             let yearOfConstructionLabel = $("<h5 class='control-label'/>")
             let yearOfConstructionInput = $("<input type='freetext' id='yearOfConstruction' name='yearOfConstruction' class='form-control mx-4 btn-dark-blue-outline'>")
             let yearOfConstructionIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-hard-hat fa-2x em'></em></span>")
-            let flatFormRowGroupyearOfConstruction = flatFormRowGroup.clone(true).empty().attr("id", "yearOfConstruction").addClass("firstPage");
-            ;
+            let flatFormRowGroupyearOfConstruction = flatFormRowGroup.clone(true).empty().attr("id", "yearOfConstruction");
 
             flatFormRowThird.append(flatFormRowGroupyearOfConstruction)
             flatFormRowGroupyearOfConstruction.prepend(yearOfConstructionLabel.attr("for", "yearOfConstruction").text(infoYearOfConstruction.clone(true).html()))
@@ -314,156 +268,93 @@ document.addEventListener("DOMContentLoaded", function () {
             let flatFormRowForth = flatFormRow.clone().empty();
             flatForm.append(flatFormRowForth)
 
+            //Flat Price
+            let flatPriceLabel = $("<h5 class='control-label'/>")
+            let flatPriceInput = $("<input type='number' id='flatPrice' step='10.0' placeholder='0.00' name='flatPrice' class='form-control btn-dark-blue-outline'>")
+            let flatPriceIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-tag fa-2x em'></em></span>")
+            let flatFormRowGroupflatPrice = flatFormRowGroup.clone(true).empty().attr("id", "flatPrice");
+
+            //Appender for DIV
+            let spanForAppenderFlatPrice = $("<span class='input-group-text'></span>")
+            let divWithCurrency = $("<div class='input-group-append'></div>")
+            let inputGroupPrize = $("<div class='input-group mx-4'>")
+            inputGroupPrize.append(flatPriceInput)
+            inputGroupPrize.append(divWithCurrency.append(spanForAppenderFlatPrice.text(infoCurrency.html())))
+
+            flatFormRowForth.append(flatFormRowGroupflatPrice)
+            flatFormRowGroupflatPrice.prepend(flatPriceLabel.attr("for", "flatPrice").text(infoFlatPrice.clone(true).html()))
+            flatPriceLabel.prepend(flatPriceIcon)
+            flatFormRowGroupflatPrice.append(inputGroupPrize)
+
+            //Expected Income
+            let expectedIncomeLabel = $("<h5 class='control-label'/>")
+            let expectedIncomeInput = $("<input type='number' step='1.00' placeholder='0.00' id='expectedIncome' name='expectedIncome' class='form-control btn-dark-blue-outline'>")
+            let expectedIncomeIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-dollar-sign fa-2x em'></em></span>")
+            let flatFormRowGroupexpectedIncome = flatFormRowGroup.clone(true).empty().attr("id", "expectedIncome");
+
+            //Appender for DIV
+            let spanForAppenderExpectedIncome = $("<span class='input-group-text'></span>")
+            let divWithIncome = $("<div class='input-group-append'></div>")
+            let inputGroupIncome = $("<div class='input-group mx-4'>")
+            inputGroupIncome.append(expectedIncomeInput)
+            inputGroupIncome.append(divWithIncome.append(spanForAppenderExpectedIncome.text(infoCurrency.html())))
+
+            flatFormRowForth.append(flatFormRowGroupexpectedIncome)
+            flatFormRowGroupexpectedIncome.prepend(expectedIncomeLabel.attr("for", "expectedIncome").text(infoExpectedIncome.clone(true).html()))
+            expectedIncomeLabel.prepend(expectedIncomeIcon)
+            flatFormRowGroupexpectedIncome.append(inputGroupIncome)
 
             //List Meter
-            /*            let metersLabel = $("<h5 class='control-label'/>")
-                        let metersInput = $("<select class='form-control js-example-basic-multiple p-1' multiple='multiple' name='meters[]' id='metersSelect'></select>")
-                        let metersIcon = $("<span class='input-group-addon' id='metersIcon'><em style='vertical-align: middle' class='fas fa-tachometer-alt fa-2x em'></em></span>")
-                        let flatFormRowGroupMeters = flatFormRowGroup.clone(true).empty().attr("id", "meters")
-                        let flatFormRowGroupMetersOnlyForSelect = $("<div class='form-control forInputSelect mx-4 p-0' >")
-                        let customDivForListMeters = $("<div class='custom-file' id='customListMeters'>")
+            let metersLabel = $("<h5 class='control-label'/>")
+            let metersInput = $("<select class='form-control js-example-basic-multiple p-1' multiple='multiple' name='meters[]' id='metersSelect'></select>")
+            let metersIcon = $("<span class='input-group-addon' id='metersIcon'><em style='vertical-align: middle' class='fas fa-tachometer-alt fa-2x em'></em></span>")
+            let flatFormRowGroupMeters = flatFormRowGroup.clone(true).empty().attr("id", "meters")
+            let flatFormRowGroupMetersOnlyForSelect = $("<div class='form-control forInputSelect mx-4 p-0' >")
+            let customDivForListMeters = $("<div class='custom-file' id='customListMeters'>")
 
-                        flatFormRowForth.append(flatFormRowGroupMeters)
-                        flatFormRowGroupMeters.prepend(metersLabel.attr("for", "meters").text(infoListOfMeters.clone(true).html()))
-                        metersLabel.prepend(metersIcon)
-                        flatFormRowGroupMeters.append(flatFormRowGroupMetersOnlyForSelect)
-                        flatFormRowGroupMetersOnlyForSelect.append(customDivForListMeters)
-                        customDivForListMeters.append(metersInput)
+            flatFormRowForth.append(flatFormRowGroupMeters)
+            flatFormRowGroupMeters.prepend(metersLabel.attr("for", "meters").text(infoListOfMeters.clone(true).html()))
+            metersLabel.prepend(metersIcon)
+            flatFormRowGroupMeters.append(flatFormRowGroupMetersOnlyForSelect)
+            flatFormRowGroupMetersOnlyForSelect.append(customDivForListMeters)
+            customDivForListMeters.append(metersInput)
 
-                        let testListMeters = ["Meter 1 " + " test22", "Meter 2"];
-                        $("#metersSelect").select2({
-                            data: testListMeters
-                        })
-            */
+            let testListMeters = ["Meter 1 " + " test22", "Meter 2"];
+            $("#metersSelect").select2({
+                data: testListMeters
+            })
+
+            //Next button
+
             //Submit button
-            let nextBtn = $("<button  class='btn btn-orange mt-4' type='button' id='nextBtn'></button>")
-            let submitInput = $("<input class='btn btn-orange mt-4' type='submit' id='submitForm' value='Submit Request'>")
+            let submitInput = $("<input class='btn btn-orange mx-4 mt-4' type='submit' id='submitForm' value='Submit Request'>")
 
             let flatFormRowFifth = flatFormRow.clone().empty();
             flatForm.append(flatFormRowFifth)
-            let flatFormRowGroupSubmit = flatFormRowGroup.clone(true).empty().attr("id", "buttons").removeClass('firstPage').addClass('ml-4');
+            let flatFormRowGroupSubmit = flatFormRowGroup.clone(true).empty().attr("id", "flatPrice");
             flatFormRowFifth.append(flatFormRowGroupSubmit)
-            flatFormRowGroupSubmit.append(nextBtn.text(infoNext.clone(true).html()))
             flatFormRowGroupSubmit.append(submitInput)
 
 
             let submitBtn = $("#submitForm")
             submitBtn.on("click", saveFlat)
 
-            checkThePage(currentTab)
 
-            //Next button
-            nextBtn.on("click", function () {
-                currentTab++;
-                checkThePage(currentTab)
-            })
-
-            //Previous button
-            let prevBtn = $("#prevBtn")
-            prevBtn.on("click", function () {
-                currentTab--;
-                checkThePage(currentTab)
-            })
-
-            // Hidding
-            function checkThePage(currentTab) {
-                if (currentTab === 0) {
-                    $(".firstPage").show()
-                    $("#rooms").hide()
-                    $("#roomsNumberGroup").hide()
-                    $("#meters").hide()
-                    $("#flatTableAdd").hide()
-                    $("#dataRoomFeed").hide()
-                    $("#prevBtn").hide()
-                    $("#btnModalRoom").hide()
-                    $("#submitForm").hide()
-                    $("#submitFormFlat").hide()
-                    $("#nextBtn").show()
-                    $("#rowAddFlatTable").hide()
-                    insertValuesIfFlatToEdit();
-                    fixStepIndicator(currentTab)
-                } else if (currentTab === 1) {
-                    if (checkIfRequiredAreNotEmptyFirstPage(currentTab) !== true) return false;
-                    fixStepIndicator(currentTab)
-                    $("#flatTableAdd").show()
-                    $("#dataRoomFeed").show()
-                    $(".firstPage").hide()
-                    $("#submitForm").show().addClass("submitFixed")
-                    $("#btnModalRoom").show()
-                    $("#nextBtn").hide()
-                    $("#prevBtn").show()
-                    $("#rowAddFlatTable").show()
-
-
-                    addToShowTable(2, flatEditedParsed.rooms)
-
-                }
-
-            }
-
-            function takeDataFromRoomsTable() {
-                let roomsTable = $("#flatTableAdd").children().children()
-                let roomToSendT = []
-                for (let i = 1; i < roomsTable.length; i++) {
-                    let roomToSendL = {}
-                    roomToSendL.description = roomsTable.eq(i).find(':nth-child(2)').text();
-                    roomToSendL.roomSquareMeters = roomsTable.eq(i).find(':nth-child(3)').text();
-                    roomToSendL.expectedRentPrice = roomsTable.eq(i).find(':nth-child(4)').text()
-                    roomToSendL.roomType = roomsTable.eq(i).find(':nth-child(5)').text()
-                    roomToSendT.push(roomToSendL)
-                }
-                let string = JSON.stringify(roomToSendT)
-                $("#roomsNumber").val(string)
-
-            }
-            function insertValuesIfFlatToEdit(){
-                if ($("#flatToEdit").text() != 0) {
-                    flatEditedParsed = JSON.parse($("#flatToEdit").text())
-                    nameInput.attr("value", flatEditedParsed.name)
-                    cityInput.attr("value", flatEditedParsed.city)
-                    streetInput.attr("value", flatEditedParsed.street)
-                    flatInput.attr("value", flatEditedParsed.flatNumber)
-                    zipCodeInput.attr("value", flatEditedParsed.zipCode)
-                    roomsNumberInput.attr("value", flatEditedParsed.roomsNumber)
-                    listRoomsInput.attr("value", flatEditedParsed.rooms)
-                    flatPriceInput.attr("value", flatEditedParsed.flatPrice)
-                    expectedIncomeInput.attr("value", flatEditedParsed.expectedIncome)
-                    floorNumberInput.attr("value", flatEditedParsed.floorNumber)
-                    picUrlInput.attr("value", flatEditedParsed.picUrl)
-                    flatDescriptionInput.attr("value", flatEditedParsed.flatDescription)
-                    flatSquareMetersInput.attr("value", flatEditedParsed.flatSquareMeters)
-                    yearOfConstructionInput.attr("value", flatEditedParsed.yearOfConstruction)
-                }
-            }
-
-
-            function fixStepIndicator(n) {
-                // This function removes the "active" class of all steps...
-                var i, x = document.getElementsByClassName("step");
-                for (i = 0; i < x.length; i++) {
-                    x[i].className = x[i].className.replace(" active", "");
-                }
-                //... and adds the "active" class to the current step:
-                x[n].className += " active";
-            }
 
             //    SAVE METHOD
             //https://stackoverflow.com/questions/43936372/upload-file-springboot-required-request-part-file-is-not-present
             //https://www.legendblogs.com/how-to-send-additional-parameter-with-form-data-with-ajax
-            function saveFlat() {
-                console.log("test")
-                // let selectFlatsVar = $('#flatSelect').select2('data')
-                // console.log(selectFlatsVar)
-                if (checkIfRequiredAreNotEmptyFirstPage() !== true) return false;
+            function saveFlat(event) {
+                let selectFlatsVar = $('#flatSelect').select2('data')
+                console.log(selectFlatsVar)
+                if (checkIfRequiredAreNotEmpty() !== true) return false;
+
                 // $(this).prop('disabled', true);
                 let file = $("#file").first()
 
                 let data = new FormData()
                 // data.get(selectFlatsVar)
                 data.append("file", file)
-                data.append("test", "test")
-                takeDataFromRoomsTable();
-                // $("#roomsNumber").val(roomToSend)
                 // console.log(data)
                 // let jsonDataObj = {
                 //     "name": $("#name").val(),
@@ -485,10 +376,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
 
-
-            function checkIfRequiredAreNotEmptyFirstPage() {
+            function checkIfRequiredAreNotEmpty() {
                 // let file = $("#file").val()
-
                 let flag = true;
                 let file = $("#file")
                 let name = $("#name")
@@ -497,6 +386,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 let flatNumber = $("#flatNumber")
 
                 let listToCheck = []
+
                 listToCheck.push(file)
                 listToCheck.push(name)
                 listToCheck.push(city)
@@ -508,31 +398,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         flag = false;
                     }
                 }
-                if (!flag) {
-                    currentTab--;
-                }
                 return flag;
             }
 
 
-            function checkIfRequiredAreNotEmptySecPage() {
-                let flag = true;
-                let file = $("#file")
-                let listToCheck = []
-                listToCheck.push(file)
-
-                for (let i = 0; i < listToCheck.length; i++) {
-                    if (listToCheck[i].val() === "") {
-                        listToCheck[i].removeClass("is-valid").addClass("is-invalid")
-                        flag = false;
-                    }
-                }
-                if (!flag) {
-                    currentTab--;
-                }
-                return flag;
-            }
         }
+
+
     }
 
 
@@ -541,28 +413,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /*    private int yearOfConstruction;
     private double flatPrice;*/
-
-    /*
-                let roomsNumber = $("#roomsNumber").first();
-                $("#roomsNumber").val("test")
-                data.append("roomsNumber", roomsNumber)
-
-                let roomsTable = $("#flatTableAdd").children().children()
-                let roomToSend = []
-                let roomToSendL = {}
-                for (let i = 1; i < roomsTable.length; i++) {
-                    roomToSend.push(roomsTable.eq(i).find(':nth-child(2)').text())
-                    roomToSend.push(roomsTable.eq(i).find(':nth-child(3)').text())
-                    roomToSend.push(roomsTable.eq(i).find(':nth-child(4)').text())
-                    roomToSend.push(roomsTable.eq(i).find(':nth-child(5)').text())
-                    console.log(roomToSend)
-
-                    roomToSendL.description = roomsTable.eq(i).find(':nth-child(3)').text();
-                    roomToSendL.roomType = roomsTable.eq(i).find(':nth-child(4)').text()
-                    roomToSendL.sqm = roomsTable.eq(i).find(':nth-child(5)').text()
-                }
-                $("#roomsNumber").first();
-                $("#roomsNumber").text("s")
-                data.append("roomToSend", roomToSend)
-                data.append("roomToSendL", roomToSendL)*/
 })

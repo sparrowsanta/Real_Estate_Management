@@ -75,3 +75,44 @@ document.addEventListener("DOMContentLoaded", function () {
         return iterationId;
     }
 })
+
+function addToShowTable(size, data) {
+    let defaultTr = $("<tr class='table-row'>")
+    let defaultTd = $("<td>")
+    let defaultBtnTd = $("<td><a class='btn btn-xs pull-right btn-mixed-outline mr-2'><em class='fa fa-trash-alt'></em></a></td>")
+    let flatTableAdd = $(".table-ro")
+    let iterationId = 1;
+    for (let i = 0; i < size; i++) {
+
+        let rowTr = defaultTr.clone(true);
+        let rowId = defaultTd.clone(true)
+        let rowValueDesc = defaultTd.clone(true)
+        let rowValueSquareMeters = defaultTd.clone(true)
+        let rowValueRentPrice = defaultTd.clone(true)
+        let rowValueTypeSelect = defaultTd.clone(true)
+        let deleteFlatBtn = defaultBtnTd.clone(true)
+
+        flatTableAdd.after(rowTr)
+
+        //Add column to row
+        rowTr.append(rowId)
+        rowTr.append(rowValueDesc)
+        rowTr.append(rowValueSquareMeters)
+        rowTr.append(rowValueRentPrice)
+        rowTr.append(rowValueTypeSelect)
+        rowTr.append(deleteFlatBtn)
+
+        //Add value to column
+        rowId.append(iterationId)
+        rowValueDesc.append(data[i].description)
+        rowValueSquareMeters.append(data[i].roomSquareMeters)
+        rowValueRentPrice.append(data[i].expectedRentPrice)
+        rowValueTypeSelect.append(data[i].roomType)
+
+        iterationId++;
+        deleteFlatBtn.on("click", function () {
+            $(this).parent().remove()
+        })
+
+    }
+}
