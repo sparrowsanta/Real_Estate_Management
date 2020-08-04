@@ -139,5 +139,15 @@ public class ShowFlats {
         return s;
     }
 
+    @PutMapping(value = "/updateRooms/{flatId}", produces = "text/plain;charset=UTF-8")
+    public String updateRoomsForFlat(@PathVariable(name = "flatId") long flatId, MultipartHttpServletRequest mrequest){
+        Flat flat = flats.stream()
+                .filter(s -> s.getId() == flatId)
+                .findFirst()
+                .orElse(null);
+        mrequest.getParameter("roomType");
+        return "";
+    }
+
 }
 

@@ -11,7 +11,7 @@
     <jsp:include page="/views/util/header.jsp"></jsp:include>
 
     <script type="text/javascript" src="js/flats.js"></script>
-    <script type="text/javascript" src="js/rooms/addRooms.js"></script>
+
 
 
     <title>Show Flats</title>
