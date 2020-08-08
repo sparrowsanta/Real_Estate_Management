@@ -62,23 +62,7 @@
         </div>
     </div>
 </div>
-<input id="meterElectricity" type="hidden" value="<spring:message code='common.meterType.electricity'/>"/>
-<input id="meterWaterHot" type="hidden" value="<spring:message code='common.meterType.water.hot'/>"/>
-<input id="meterWaterCold" type="hidden" value="<spring:message code='common.meterType.water.cold'/>"/>
-<input id="meterGas" type="hidden" value="<spring:message code='common.meterType.gas'/>"/>
-<input id="meterHeat" type="hidden" value="<spring:message code='common.meterType.heat'/>"/>
-<input id="meterUndefined" type="hidden" value="<spring:message code='common.meterType.undefined'/>"/>
-<input id="noMetersMessage" type="hidden" value="<spring:message code='meters.meter.message.noMeters'/>"/>
-<input id="meterDeleteTooltip" type="hidden" value="<spring:message code='meters.button.deleteMeter'/>"/>
-<input id="meterHistoryTooltip" type="hidden" value="<spring:message code='meters.button.history'/>"/>
-<input id="meterAddReadingTooltip" type="hidden" value="<spring:message code='meters.button.addReading'/>"/>
-<input id="meterDeleteReadingTooltip" type="hidden" value="<spring:message code='meters.button.deleteReading'/>"/>
-<input id="meterEditReadingTooltip" type="hidden" value="<spring:message code='meters.button.editReading'/>"/>
-<input id="meterEditTooltip" type="hidden" value="<spring:message code='meters.button.editMeeter'/>"/>
-<input id="lastReadDate" type="hidden" value="<spring:message code='meters.badge.lastRead.tooltip'/>"/>
-<input id="readDateLabel" type="hidden" value="<spring:message code='meters.history.readDate'/>"/>
-<input id="readValueLabel" type="hidden" value="<spring:message code='meters.history.readValue'/>"/>
-<input id="readDeleteMessage" type="hidden" value="<spring:message code='meters.history.delete.message'/>"/>
+
 </div>
 <div id="meterForms">
     <jsp:include page="../util/deleteConfirm.jsp"/>

@@ -115,18 +115,82 @@ document.addEventListener("DOMContentLoaded", function () {
             infoRow6.append(p6.text(flats[i].flatDescription))
 
             //Charts
-            let chartCol = $("<div class = 'chartCol mt-10'>")
-            let chartRowCol = $("<div class = 'col-sm-3 mt-10'>")
-            let p7 = $("<p>Some nice charts how much you have earned so far, flag if all bils have been paid, etc</p>");
-            let p8 = $("<p>Some nice charts how much you have earned so far, flag if all bils have been paid, etc</p>");
-            let p9 = $("<p>Some nice charts how much you have earned so far, flag if all bils have been paid, etc</p>");
-            let additionalDiv2 = $("<div class='additional'>");
+            let chartCol = $("<div class = 'chartCol'>")
+            let chartRowCol = $("<div class = 'col-sm-3'>")
+            let p8 = $("<canvas id='lineChart' class='lineCharts' width='400' height='200'></canvas>")
+
+            let additionalDiv2 = $("<div class='additionalForGraph  mt-4 mb-3'>");
             row.append(chartRowCol)
             chartRowCol.append(additionalDiv2)
             additionalDiv2.prepend(chartCol)
-            chartCol.append(p7)
             chartCol.append(p8)
-            chartCol.append(p9)
+
+
+            let myLineChart = $(".lineCharts")
+            for (let i = 0; i < myLineChart.length; i++) {
+                let lineChart = new Chart(myLineChart[i], {
+                    type: 'line',
+                    data: {
+                        labels: ['June', 'July', 'August', 'September', 'October', 'November'],
+                        datasets: [{
+                            label: 'Income',
+                            data: [12, 19, 3, 5, 2, 3],
+                            backgroundColor: [
+                                'rgba(2, 99, 132, 0.2)',
+                                'rgba(2, 162, 235, 0.2)',
+                                'rgba(2, 206, 86, 0.2)',
+                                'rgba(2, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(2, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(2, 99, 132, 1)',
+                                'rgba(2, 162, 235, 1)',
+                                'rgba(2, 206, 86, 1)',
+                                'rgba(2, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(2, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        },
+                            {
+                                label: 'Expectation',
+                                data: [5, 1, 7, 2, 8, 5],
+                                backgroundColor: [
+                                    'rgba(2, 99, 132, 0.2)',
+                                    'rgba(2, 162, 235, 0.2)',
+                                    'rgba(2, 206, 86, 0.2)',
+                                    'rgba(2, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(2, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(2, 99, 132, 1)',
+                                    'rgba(2, 162, 235, 1)',
+                                    'rgba(2, 206, 86, 1)',
+                                    'rgba(2, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(2, 159, 64, 1)'
+                                ],
+                                borderWidth: 2
+                            }]
+                    },
+                    options: {
+                        responsive: false,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        tooltips: {
+                            mode: 'nearest'
+                        }
+                    }
+                })
+
+            }
 
             //Buttons
             let buttonCol = $("<div class = 'buttonCol mt-10'>")
@@ -152,7 +216,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             button2.on('click', function () {
                 let flatId = $(this).attr("value")
-                getRooms(flatId)
+                // getRooms(flatId)
+                showAllRoomsView(flatId)
 
 
             })
@@ -166,13 +231,19 @@ document.addEventListener("DOMContentLoaded", function () {
             function updateRoomsForFlat(flatId) {
                 let dataFeedRoomsModal = $(".thead-own").children()
                 console.log(dataFeedRoomsModal)
-                let data = feedRoomsFromModalToJson(dataFeedRoomsModal)
+                let dataToSend = feedRoomsFromModalToJson(dataFeedRoomsModal)
+                let test = {}
+                test.id = 3
+
+                let urlToSend = '/flats/updateRooms/' + flats[flatId].id
+                console.log(dataToSend)
                 $.ajax({
-                    type: 'put',
-                    url: '/flats/updateRooms/' + flatId,
-                    dataType: 'json',
+                    type: 'post',
+                    url: urlToSend,
+                    dataType: "json",
                     contentType: "application/json",
-                    data: JSON.stringify(data),
+                    data: JSON.stringify(test),
+
                 })
                     .done(function (data) {
                         console.log(data)
@@ -193,131 +264,137 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-        function getRooms(flatId) {
-            emptyTheModalShowRoomTable()
-            $.ajax({
-                type: 'get',
-                url: 'flats/getRooms/' + flatId,
-                dataType: 'json',
-                data: {},
-            })
-                .done(function (data) {
-                    console.log(data)
-                    //Next Func
-                    $("#modalRoomsEdit").modal()
-
-                    //Process Modal
-                    $("#btnSubmitRoomChange").on("click", function (flatId) {
-                        updateRoomsForFlat(flatId)
-                    })
-                    addToShowTable(data.length, data)
+            function getRooms(flatId) {
+                emptyTheModalShowRoomTable()
+                $.ajax({
+                    type: 'get',
+                    url: 'flats/getRooms/' + flatId,
+                    dataType: 'json',
+                    data: {},
                 })
-                .fail(function (xhr, status, err) {
-                    console.log(xhr)
-                });
+                    .done(function (data) {
+                        console.log(data)
+                        //Next Func
+                        $("#modalRoomsEdit").modal()
 
+                        //Process Modal
+                        $("#btnSubmitRoomChange").on("click", function () {
+                            updateRoomsForFlat(flatId)
+                        })
+                        addToShowTable(data.length, data)
+                    })
+                    .fail(function (xhr, status, err) {
+                        console.log(xhr)
+                    });
+
+            }
+            function showAllRoomsView(flatId) {
+                    let redirectPoint = 'Real_Estate_Management/flats/showAllRooms/' + flatId;
+                    window.location.replace(redirectPoint)
+
+            }
+
+            //Edit/Delete
+            let editDelCol = $("<div class = 'editDelCol mt-10'>")
+            let editDelRowCol = $("<div class = 'col-sm-1 mt-10'>")
+            let additionalDiv4 = $("<div class='additional'>");
+            //TEMP
+            let flatIdRedirectUrl = "flats/addFlat/" + flats[i].id
+
+            let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' href='' id='flatEditBtn'/>")
+            editBtn.attr("href", flatIdRedirectUrl)
+            let editEm = $("<em class='fa fa-pencil-alt'/>")
+            let additionalPEdit = $("<p>")
+            editBtn.attr("value", flats[i].id)
+            editBtn.attr("flatName", flats[i].name)
+            additionalPEdit.append(editBtn)
+            editBtn.append(editEm)
+
+            let delBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='flatDelBtn'/>")
+            let delEm = $("<em class='fa fa-trash-alt'/>")
+            let additionalPDel = $("<p>")
+            delBtn.attr("value", flats[i].id)
+            delBtn.attr("flatName", flats[i].name)
+            additionalPDel.append(delBtn)
+            delBtn.append(delEm)
+
+            row.append(editDelRowCol)
+            editDelRowCol.append(additionalDiv4)
+            additionalDiv4.append(editDelCol)
+            editDelCol.append(additionalPEdit)
+            editDelCol.append(additionalPDel)
+
+            //Delete/Edit functions
+            delBtn.on("click", function () {
+                deleteEntity("following flat:", deleteFlat, flats[i].id)
+            })
+
+            editBtn.on("click", function () {
+                editFlat(hiddenName);
+            })
         }
-
-        //Edit/Delete
-        let editDelCol = $("<div class = 'editDelCol mt-10'>")
-        let editDelRowCol = $("<div class = 'col-sm-1 mt-10'>")
-        let additionalDiv4 = $("<div class='additional'>");
-        //TEMP
-        let flatIdRedirectUrl = "flats/addFlat/" + flats[i].id
-
-        let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' href='' id='flatEditBtn'/>")
-        editBtn.attr("href", flatIdRedirectUrl)
-        let editEm = $("<em class='fa fa-pencil-alt'/>")
-        let additionalPEdit = $("<p>")
-        editBtn.attr("value", flats[i].id)
-        editBtn.attr("flatName", flats[i].name)
-        additionalPEdit.append(editBtn)
-        editBtn.append(editEm)
-
-        let delBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='flatDelBtn'/>")
-        let delEm = $("<em class='fa fa-trash-alt'/>")
-        let additionalPDel = $("<p>")
-        delBtn.attr("value", flats[i].id)
-        delBtn.attr("flatName", flats[i].name)
-        additionalPDel.append(delBtn)
-        delBtn.append(delEm)
-
-        row.append(editDelRowCol)
-        editDelRowCol.append(additionalDiv4)
-        additionalDiv4.append(editDelCol)
-        editDelCol.append(additionalPEdit)
-        editDelCol.append(additionalPDel)
-
-        //Delete/Edit functions
-        delBtn.on("click", function () {
-            deleteEntity("following flat:", deleteFlat, flats[i].id)
-        })
-
-        editBtn.on("click", function () {
-            editFlat(hiddenName);
-        })
     }
-}
 
-function getAllFlats() {
-    $.ajax({
-        type: 'get',
-        url: 'flats/allFlats',
-        dataType: 'json',
-        data: {},
-    })
-        .done(function (flats) {
-            console.log("success");
-            showFlatsInformation(flats);
+
+    function getAllFlats() {
+        $.ajax({
+            type: 'get',
+            url: 'flats/allFlats',
+            dataType: 'json',
+            data: {},
         })
-        .fail(function (xhr, status, err) {
-            console.log(xhr.statusText);
-            console.log(status);
-            console.log(err);
-        });
-}
+            .done(function (flats) {
+                console.log("success");
+                showFlatsInformation(flats);
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
 
-function deleteFlat(flatId) {
-    $.ajax({
-        type: 'delete',
-        url: 'flats/delete/' + flatId,
-    })
-        .done(function () {
-            getAllFlats();
+    function deleteFlat(flatId) {
+        $.ajax({
+            type: 'delete',
+            url: 'flats/delete/' + flatId,
         })
-        .fail(function (xhr, status, err) {
-            console.log(xhr.statusText);
-            console.log(status);
-            console.log(err);
-        });
-}
+            .done(function () {
+                getAllFlats();
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
 
-function editFlat(hiddenName) {
-    $("#name").val("test")
-    let flatId = $("#flatEditBtn").attr("value")
-    let redirectPoint = '/flats/' + flatId;
-    window.location.replace(redirectPoint)
+    function editFlat(hiddenName) {
+        $("#name").val("test")
+        let flatId = $("#flatEditBtn").attr("value")
+        let redirectPoint = '/flats/' + flatId;
+        window.location.replace(redirectPoint)
 
-}
+    }
 
-function getFlatById(flatId) {
-    $.ajax({
-        type: 'get',
-        url: 'flats/' + flatId,
-        dataType: "json",
-        data: {},
-    })
-        .done(function (data) {
-            console.log(data)
-            $("#name").val("test")
+    function getFlatById(flatId) {
+        $.ajax({
+            type: 'get',
+            url: 'flats/' + flatId,
+            dataType: "json",
+            data: {},
+        })
+            .done(function (data) {
+                console.log(data)
+                $("#name").val("test")
 
-        });
-}
+            });
+    }
 
-function emptyTheModalShowRoomTable() {
-    $(".thead-own").find(".table-row").empty()
-}
+    function emptyTheModalShowRoomTable() {
+        $(".thead-own").find(".table-row").empty()
+    }
 
 
-getAllFlats();
+    getAllFlats();
 })

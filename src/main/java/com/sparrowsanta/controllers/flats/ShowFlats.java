@@ -3,6 +3,7 @@ package com.sparrowsanta.controllers.flats;
 import com.google.gson.Gson;
 import com.sparrowsanta.businessmodel.Flat;
 import com.sparrowsanta.businessmodel.Room;
+import org.springframework.boot.Banner;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,8 +39,8 @@ public class ShowFlats {
 
 
     private ShowFlats() {
-        List<Room> rooms = Arrays.asList(new Room(1,"myFirst", 30.20, 1000, ROOM),
-                new Room(2,"mySec", 40.20, 2000, ROOM));
+        List<Room> rooms = Arrays.asList(new Room(1, "myFirst", 30.20, 1000, ROOM),
+                new Room(2, "mySec", 40.20, 2000, ROOM));
         Flat flat1 = new Flat(1, "Pierwsze", "Kraków", "Złota Podkowa", "5", "31-322", 2, null, 3, "Moje pierwsze mieszkanie",
                 34.4, 2010, 305000.00, 2000.0, null, "");
         flat1.setRooms(rooms);
@@ -139,15 +140,34 @@ public class ShowFlats {
         return s;
     }
 
-    @PutMapping(value = "/updateRooms/{flatId}", produces = "text/plain;charset=UTF-8")
-    public String updateRoomsForFlat(@PathVariable(name = "flatId") long flatId, MultipartHttpServletRequest mrequest){
+    @PostMapping(value = "/updateRooms/{flatId}", produces = "text/plain;charset=UTF-8")
+    public String updateRoomsForFlat(@PathVariable(name = "flatId") long flatId, @RequestBody String data) {
         Flat flat = flats.stream()
                 .filter(s -> s.getId() == flatId)
                 .findFirst()
                 .orElse(null);
-        mrequest.getParameter("roomType");
-        return "";
+        System.out.println(data);
+
+        return new Gson().toJson("OK");
     }
+
+
+    //    Charts
+    @GetMapping(value = "/flatCharts", produces = "text/plain;charset=UTF-8")
+    public String showCharts() {
+        return "flats/flatCharts";
+    }
+
+    @RequestMapping(value = "/showAllRooms/{flatId}", produces = "text/plain;charset=UTF-8")
+    public String showAllRoomsForFlat(Model model, @PathVariable(name = "flatId") long flatId) {
+        Flat flat = flats.stream()
+                .filter(s -> s.getId() == flatId)
+                .findFirst()
+                .orElse(null);
+        model.addAttribute("flat", flat);
+        return "rooms/showAllRooms";
+    }
+
 
 }
 

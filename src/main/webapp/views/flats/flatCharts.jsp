@@ -10,10 +10,11 @@
 
     <jsp:include page="/views/util/header.jsp"></jsp:include>
 
-    <script type="text/javascript" src="js/flats.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/flats/flatCharts.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
-    <title>Show Flats</title>
+
+    <title>Flat Charts</title>
 
 </head>
 <body>
@@ -21,33 +22,19 @@
 
 </header>
 <main>
-    <div class="mainContainer haveOpenMeterButtons">
+    <div class="chartContainer">
         <header>
             <h2 class="flats-header"><spring:message code="flats.show.header"/></h2>
         </header>
-        <div class="containerDiv">
+        <div class="row-cols-6">
+            <div class="containerDivCharts">
+                <canvas id="lineChart" width="400" height="400"></canvas>
+            </div>
         </div>
-    </div>
-    <div class="toHide">
-        <h4 id="infoForIcon" type="hidden" class="mt-2"><spring:message code="flats.show.header.info"/></h4>
-        <p class="infoP" id="infoStreet" type="hidden"><spring:message code="flats.show.info.street"/></p>
-        <p class="infoP" id="infoZipCode" type="hidden"><spring:message code="flats.show.info.zipCode"/></p>
-        <p class="infoP" id="infoYearOfConstruction" type="hidden"><spring:message
-                code="flats.show.info.yearOfConstruction"/></p>
-        <p class="infoP" id="infoFlatSquareMeters" type="hidden"><spring:message
-                code="flats.show.info.flatSquareMeters"/></p>
-        <p class="infoP" id="infoRoomsNumber" type="hidden"><spring:message code="flats.show.info.roomsNumber"/></p>
-        <p class="infoP" id="infoFlatDescription" type="hidden"><spring:message
-                code="flats.show.info.flatDescription"/></p>
-        <input id="readDeleteMessage" type="hidden" value="<spring:message code='meters.history.delete.message'/>"/>
-    </div>
     </div>
 </main>
 
 </body>
-<jsp:include page="../meters/metersModal.jsp"/>
-<jsp:include page="../rooms/showRooms.jsp"/>
-<jsp:include page="../util/deleteConfirm.jsp"/>
 <footer>
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>
