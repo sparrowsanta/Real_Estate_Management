@@ -11,6 +11,7 @@
     <jsp:include page="/views/util/header.jsp"></jsp:include>
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/rooms/showRooms.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/rooms/addRooms.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
     <title>Show Rooms</title>
@@ -27,6 +28,10 @@
         </header>
         <div class="containerDivRooms">
         </div>
+
+        <div class="containerDivRoomsNoOccupable">
+                <h2 class="flats-header"><spring:message code="rooms.show.all"/></h2>
+        </div>
     </div>
     <div class="toHide">
         <h4 id="infoForIcon" type="hidden" class="mt-2"><spring:message code="flats.show.header.info"/></h4>
@@ -34,13 +39,16 @@
         <p class="infoP" id="infoDescription" type="hidden"><spring:message code="common.general.description"/></p>
         <p class="infoP" id="infoRoomSquareMeters" type="hidden"><spring:message code="rooms.add.roomSQM"/></p>
         <p class="infoP" id="infoExpectedRentPrice" type="hidden"><spring:message code="common.general.income"/></p>
+        <p class="infoP" id="infoNotOccupable" type="hidden"><spring:message code="rooms.show.all"/></p>
         <p class="infoPs" id="flatToShow" >${flat}</p>
+        <p class="infoPs" id="furnitureToShow" >${furnitures}</p>
     </div>
 </main>
 
 </body>
 <jsp:include page="../rooms/showRooms.jsp"/>
 <jsp:include page="../util/deleteConfirm.jsp"/>
+<jsp:include page="../furniture/furnitureModal.jsp"/>
 <footer>
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>

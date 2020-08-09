@@ -395,7 +395,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     $("#rowAddFlatTable").show()
 
 
-                    addToShowTable(2)
+                    addToShowTable()
 
                 }
 

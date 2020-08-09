@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 })
 
-function addToShowTable(size) {
+function addToShowTable() {
     let flatToEdit = $("#flatToEdit").html()
     let data = JSON.parse(flatToEdit);
     let defaultTr = $("<tr class='table-row'>")
@@ -84,7 +84,7 @@ function addToShowTable(size) {
     let defaultBtnTd = $("<td><a class='btn btn-xs pull-right btn-mixed-outline mr-2'><em class='fa fa-trash-alt'></em></a></td>")
     let flatTableAdd = $(".table-ro")
     let iterationId = 1;
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < data.rooms.length; i++) {
 
         let rowTr = defaultTr.clone(true);
         let rowId = defaultTd.clone(true)

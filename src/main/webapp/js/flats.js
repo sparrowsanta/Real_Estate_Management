@@ -195,13 +195,13 @@ document.addEventListener("DOMContentLoaded", function () {
             //Buttons
             let buttonCol = $("<div class = 'buttonCol mt-10'>")
             let buttonRowCol = $("<div class = 'col-sm-1 mt-10'>")
-            let b1 = $("<p><button class='btn btn-orange openMeters'>Meters</button></p>");
-            let button1 = $(b1).find("button");
+            let b2 = $("<p><button class='btn btn-mixed-outline openMeters' style='width: 120px'>Meters</button></p>");
+            let button1 = $(b2).find("button");
             button1.attr("value", flats[i].id)
-            let b2 = $("<p><button class='btn btn-orange rooms'>Rooms</button></p>");
-            let button2 = $(b2).find("button");
+            let b1 = $("<p><button class='btn btn-orange rooms' style='width: 120px'>More Details</button></p>");
+            let button2 = $(b1).find("button");
             button2.attr("value", flats[i].id)
-            let b3 = $("<p><button class='btn btn-orange'>Bills</button></p>");
+            let b3 = $("<p><button class='btn btn-mixed-outline ' style='width: 120px'>Bills</button></p>");
             // let b4 = $("<p><button class='btn btn-orange'>Something</button></p>");
 
             let additionalDiv3 = $("<div class='additional'>");
@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
             //TEMP
             let flatIdRedirectUrl = "flats/addFlat/" + flats[i].id
 
-            let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' href='' id='flatEditBtn'/>")
+            let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline ml-3 mr-2' href='' id='flatEditBtn'/>")
             editBtn.attr("href", flatIdRedirectUrl)
             let editEm = $("<em class='fa fa-pencil-alt'/>")
             let additionalPEdit = $("<p>")
@@ -310,7 +310,7 @@ document.addEventListener("DOMContentLoaded", function () {
             additionalPEdit.append(editBtn)
             editBtn.append(editEm)
 
-            let delBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='flatDelBtn'/>")
+            let delBtn = $("<a class='btn btn-xs pull-right btn-red-outline ml-3 mr-2' id='flatDelBtn'/>")
             let delEm = $("<em class='fa fa-trash-alt'/>")
             let additionalPDel = $("<p>")
             delBtn.attr("value", flats[i].id)

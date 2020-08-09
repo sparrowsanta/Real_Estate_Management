@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.sparrowsanta.businessmodel.Room.RoomType.KITCHEN;
 import static com.sparrowsanta.businessmodel.Room.RoomType.ROOM;
 
 @Controller
@@ -39,8 +40,8 @@ public class ShowFlats {
 
 
     private ShowFlats() {
-        List<Room> rooms = Arrays.asList(new Room(1, "myFirst", 30.20, 1000, ROOM),
-                new Room(2, "mySec", 40.20, 2000, ROOM));
+        List<Room> rooms = Arrays.asList(new Room(1, "myFirst", 30.20, 1000, ROOM, 1),
+                new Room(2, "mySec", 40.20, 2000, ROOM, 1), new Room(3, "Kitchen", 9.20, 0.00, KITCHEN, 0));
         Flat flat1 = new Flat(1, "Pierwsze", "Kraków", "Złota Podkowa", "5", "31-322", 2, null, 3, "Moje pierwsze mieszkanie",
                 34.4, 2010, 305000.00, 2000.0, null, "");
         flat1.setRooms(rooms);
