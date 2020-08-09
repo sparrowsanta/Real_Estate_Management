@@ -164,7 +164,7 @@ public class ShowFlats {
                 .filter(s -> s.getId() == flatId)
                 .findFirst()
                 .orElse(null);
-        model.addAttribute("flat", flat);
+        model.addAttribute("flat", new Gson().toJson(flat));
         return "rooms/showAllRooms";
     }
 

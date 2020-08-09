@@ -108,12 +108,6 @@
     <p class="infoP" id="infoMissingFoto" type="hidden"><spring:message code="flats.show.missing.foto"/></p>
     <p class="infoP" id="infoNext" type="hidden"><spring:message code="common.button.next"/></p>
     <p class="infoP" id="flatToEdit" type="hidden">${flatEdited}</p>
-
-
-
-
-
-
 </div>
 </body>
 </html>

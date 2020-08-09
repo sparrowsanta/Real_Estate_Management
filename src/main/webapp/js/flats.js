@@ -289,7 +289,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
             function showAllRoomsView(flatId) {
-                    let redirectPoint = 'Real_Estate_Management/flats/showAllRooms/' + flatId;
+                    let redirectPoint = 'flats/showAllRooms/' + flatId;
                     window.location.replace(redirectPoint)
 
             }

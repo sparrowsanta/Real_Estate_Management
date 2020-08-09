@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
             //Name
             let nameLabel = $("<h5 class='control-label'/>")
             let nameInput = $("<input type='text' id='name' name='name' required class='form-control btn-dark-blue-outline is-valid'>")
+
             let nameIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-home fa-2x em'></em></span>")
             let customDivForName = $("<div class='custom-file ml-4' id='customName'>")
 
@@ -77,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let cityLabel = $("<h5 class='control-label'/>")
             let cityInput = $("<input type='text' id='city' name='city' required class='form-control btn-dark-blue-outline is-valid'>")
             let cityIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-city fa-2x em'></em></span>")
-            let flatFormRowGroupCity = flatFormRowGroup.clone(true).empty().attr("id", "cityG").addClass("firstPage");
+            let flatFormRowGroupCity = flatFormRowGroup.clone(true).empty().attr("id", "cityGroup").addClass("firstPage");
             let customDivForCity = $("<div class='custom-file ml-4' id='customCity'>")
 
             flatFormRowFirst.append(flatFormRowGroupCity)
@@ -99,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let streetLabel = $("<h5 class='control-label'/>")
             let streetInput = $("<input type='text' id='street' name='street' required class='form-control btn-dark-blue-outline is-valid'>")
             let streetIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-road fa-2x em'></em></span>")
-            let flatFormRowGroupStreet = flatFormRowGroup.clone(true).empty().attr("id", "streetG").addClass("firstPage");
+            let flatFormRowGroupStreet = flatFormRowGroup.clone(true).empty().attr("id", "streetGroup").addClass("firstPage");
             ;
             let customDivForStreet = $("<div class='custom-file ml-4' id='customStreet'>")
 
@@ -122,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let flatLabel = $("<h5 class='control-label'/>")
             let flatInput = $("<input type='number' id='flatNumber' name='flatNumber' value='' required class='form-control btn-dark-blue-outline is-valid'>")
             let flatIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-list-ol fa-2x em'></em></span>")
-            let flatFormRowGroupFlat = flatFormRowGroup.clone(true).empty().attr("id", "flat").addClass("firstPage");
+            let flatFormRowGroupFlat = flatFormRowGroup.clone(true).empty().attr("id", "flatNumberGroup").addClass("firstPage");
             ;
             let customDivForFlatNumber = $("<div class='custom-file ml-4' id='customFlatNumber'>")
 
@@ -148,8 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let zipCodeLabel = $("<h5 class='control-label'/>")
             let zipCodeInput = $("<input type='text' id='zipCode' name='zipCode' class='form-control mx-4 btn-dark-blue-outline'>")
             let zipCodeIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-address-book fa-2x em'></em></span>")
-            let flatFormRowGroupZipCode = flatFormRowGroup.clone(true).empty().attr("id", "zipCode").addClass("firstPage");
-            ;
+            let flatFormRowGroupZipCode = flatFormRowGroup.clone(true).empty().attr("id", "zipCodeGroup").addClass("firstPage");
 
             flatFormRowSec.append(flatFormRowGroupZipCode)
             flatFormRowGroupZipCode.prepend(zipCodeLabel.attr("for", "zipCode").text(infoZipCode.clone(true).html()))
@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let floorNumberLabel = $("<h5 class='control-label'/>")
             let floorNumberInput = $("<input type='number' id='floorNumber' name='floorNumber' class='form-control mx-4 btn-dark-blue-outline'>")
             let floorNumberIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-layer-group fa-2x em'></em></span>")
-            let flatFormRowGroupfloorNumber = flatFormRowGroup.clone(true).empty().attr("id", "floorNumber").addClass("firstPage");
+            let flatFormRowGroupfloorNumber = flatFormRowGroup.clone(true).empty().attr("id", "floorNumberGroup").addClass("firstPage");
 
             flatFormRowSec.append(flatFormRowGroupfloorNumber)
             flatFormRowGroupfloorNumber.prepend(floorNumberLabel.attr("for", "floorNumber").text(infoFloorNumber.clone(true).html()))
@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let expectedIncomeLabel = $("<h5 class='control-label'/>")
             let expectedIncomeInput = $("<input type='number' step='1.00' placeholder='0.00' id='expectedIncome' name='expectedIncome' class='form-control btn-dark-blue-outline'>")
             let expectedIncomeIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-dollar-sign fa-2x em'></em></span>")
-            let flatFormRowGroupexpectedIncome = flatFormRowGroup.clone(true).empty().attr("id", "expectedIncome").addClass("firstPage");
+            let flatFormRowGroupexpectedIncome = flatFormRowGroup.clone(true).empty().attr("id", "expectedIncomeGroup").addClass("firstPage");
             ;
 
             //Appender for DIV
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let flatPriceLabel = $("<h5 class='control-label'/>")
             let flatPriceInput = $("<input type='number' id='flatPrice' step='10.0' placeholder='0.00' name='flatPrice' class='form-control btn-dark-blue-outline'>")
             let flatPriceIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-tag fa-2x em'></em></span>")
-            let flatFormRowGroupflatPrice = flatFormRowGroup.clone(true).empty().attr("id", "flatPrice").addClass("firstPage");
+            let flatFormRowGroupflatPrice = flatFormRowGroup.clone(true).empty().attr("id", "flatPriceGroup").addClass("firstPage");
             ;
 
             //Appender for DIV
@@ -271,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let flatDescriptionLabel = $("<h5 class='control-label'/>")
             let flatDescriptionInput = $("<input type='freetext' id='flatDescription' name='flatDescription' class='form-control mx-4 btn-dark-blue-outline'>")
             let flatDescriptionIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-file-alt fa-2x em'></em></span>")
-            let flatFormRowGroupflatDescription = flatFormRowGroup.clone(true).empty().attr("id", "flatDescription").addClass("firstPage");
+            let flatFormRowGroupflatDescription = flatFormRowGroup.clone(true).empty().attr("id", "flatDescriptionGroup").addClass("firstPage");
             ;
 
             flatFormRowThird.append(flatFormRowGroupflatDescription)
@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let flatSquareMetersLabel = $("<h5 class='control-label'/>")
             let flatSquareMetersInput = $("<input type='number' step='0.1' placeholder='0.00' id='flatSquareMeters' name='flatSquareMeters' class='form-control btn-dark-blue-outline'>")
             let flatSquareMetersIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-square fa-2x em'></em></span>")
-            let flatFormRowGroupfflatSquareMeters = flatFormRowGroup.clone(true).empty().attr("id", "flatSquareMeters").addClass("firstPage");
+            let flatFormRowGroupfflatSquareMeters = flatFormRowGroup.clone(true).empty().attr("id", "flatSquareMetersGroup").addClass("firstPage");
             ;
 
             //Appender for DIV
@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let yearOfConstructionLabel = $("<h5 class='control-label'/>")
             let yearOfConstructionInput = $("<input type='freetext' id='yearOfConstruction' name='yearOfConstruction' class='form-control mx-4 btn-dark-blue-outline'>")
             let yearOfConstructionIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-hard-hat fa-2x em'></em></span>")
-            let flatFormRowGroupyearOfConstruction = flatFormRowGroup.clone(true).empty().attr("id", "yearOfConstruction").addClass("firstPage");
+            let flatFormRowGroupyearOfConstruction = flatFormRowGroup.clone(true).empty().attr("id", "yearOfConstructionGroup").addClass("firstPage");
             ;
 
             flatFormRowThird.append(flatFormRowGroupyearOfConstruction)
@@ -395,7 +395,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     $("#rowAddFlatTable").show()
 
 
-                    addToShowTable(2, flatEditedParsed.rooms)
+                    addToShowTable(2)
 
                 }
 
@@ -415,25 +415,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 let string = JSON.stringify(roomToSendT)
                 $("#roomsNumber").val(string)
 
-            }
-            function insertValuesIfFlatToEdit(){
-                if ($("#flatToEdit").text() != 0) {
-                    flatEditedParsed = JSON.parse($("#flatToEdit").text())
-                    nameInput.attr("value", flatEditedParsed.name)
-                    cityInput.attr("value", flatEditedParsed.city)
-                    streetInput.attr("value", flatEditedParsed.street)
-                    flatInput.attr("value", flatEditedParsed.flatNumber)
-                    zipCodeInput.attr("value", flatEditedParsed.zipCode)
-                    roomsNumberInput.attr("value", flatEditedParsed.roomsNumber)
-                    listRoomsInput.attr("value", flatEditedParsed.rooms)
-                    flatPriceInput.attr("value", flatEditedParsed.flatPrice)
-                    expectedIncomeInput.attr("value", flatEditedParsed.expectedIncome)
-                    floorNumberInput.attr("value", flatEditedParsed.floorNumber)
-                    picUrlInput.attr("value", flatEditedParsed.picUrl)
-                    flatDescriptionInput.attr("value", flatEditedParsed.flatDescription)
-                    flatSquareMetersInput.attr("value", flatEditedParsed.flatSquareMeters)
-                    yearOfConstructionInput.attr("value", flatEditedParsed.yearOfConstruction)
-                }
             }
 
 
@@ -566,3 +547,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 data.append("roomToSend", roomToSend)
                 data.append("roomToSendL", roomToSendL)*/
 })
+
+function insertValuesIfFlatToEdit() {
+    let flatToEdit = $("#flatToEdit").html()
+    flatEditedParsed = JSON.parse(flatToEdit);
+    if (flatEditedParsed != null) {
+        $("#name").val(flatEditedParsed.name)
+        $("#city").val(flatEditedParsed.city)
+        $("#street").val(flatEditedParsed.street)
+        $("#flatNumber").val(flatEditedParsed.flatNumber)
+        $("#zipCode").val(flatEditedParsed.zipCode)
+        $("#roomsNumber").val(flatEditedParsed.roomsNumber)
+        $("#floorNumber").val(flatEditedParsed.floorNumber)
+        $("#expectedIncome").val(flatEditedParsed.expectedIncome)
+        $("#flatPrice").val(flatEditedParsed.flatPrice)
+        $("#flatDescription").val(flatEditedParsed.flatDescription)
+        $("#flatSquareMeters").val(flatEditedParsed.flatSquareMeters)
+        $("#flatDescription").val(flatEditedParsed.flatDescription)
+        $("#yearOfConstruction").val(flatEditedParsed.yearOfConstruction)
+    }
+}
+

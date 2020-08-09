@@ -76,7 +76,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 })
 
-function addToShowTable(size, data) {
+function addToShowTable(size) {
+    let flatToEdit = $("#flatToEdit").html()
+    let data = JSON.parse(flatToEdit);
     let defaultTr = $("<tr class='table-row'>")
     let defaultTd = $("<td>")
     let defaultBtnTd = $("<td><a class='btn btn-xs pull-right btn-mixed-outline mr-2'><em class='fa fa-trash-alt'></em></a></td>")
@@ -104,10 +106,10 @@ function addToShowTable(size, data) {
 
         //Add value to column
         rowId.append(iterationId)
-        rowValueDesc.append(data[i].description)
-        rowValueSquareMeters.append(data[i].roomSquareMeters)
-        rowValueRentPrice.append(data[i].expectedRentPrice)
-        rowValueTypeSelect.append(data[i].roomType)
+        rowValueDesc.append(data.rooms[i].description)
+        rowValueSquareMeters.append(data.rooms[i].roomSquareMeters)
+        rowValueRentPrice.append(data.rooms[i].expectedRentPrice)
+        rowValueTypeSelect.append(data.rooms[i].roomType)
 
         iterationId++;
         deleteFlatBtn.on("click", function () {

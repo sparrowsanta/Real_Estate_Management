@@ -13,6 +13,7 @@ public class Room {
     private long flatId;
     private RoomType roomType;
     private String description;
+    private int occupable;
     private double roomSquareMeters;
     private double expectedRentPrice;
 //Testowy

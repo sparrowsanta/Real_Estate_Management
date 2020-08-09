@@ -32,10 +32,9 @@
         <h4 id="infoForIcon" type="hidden" class="mt-2"><spring:message code="flats.show.header.info"/></h4>
         <p class="infoP" id="infoRoomType" type="hidden"><spring:message code="rooms.add.roomType"/></p>
         <p class="infoP" id="infoDescription" type="hidden"><spring:message code="common.general.description"/></p>
-        <p class="infoP" id="infoRoomSquareMeters" type="hidden"><spring:message
-                code="rooms.add.roomSQM"/></p>
-        <p class="infoP" id="infoExpectedRentPrice" type="hidden"><spring:message
-                code="common.general.income"/></p>
+        <p class="infoP" id="infoRoomSquareMeters" type="hidden"><spring:message code="rooms.add.roomSQM"/></p>
+        <p class="infoP" id="infoExpectedRentPrice" type="hidden"><spring:message code="common.general.income"/></p>
+        <p class="infoPs" id="flatToShow" >${flat}</p>
     </div>
 </main>
 
