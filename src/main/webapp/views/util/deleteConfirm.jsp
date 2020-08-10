@@ -18,4 +18,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="js/util/deleteConfirm.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/util/deleteConfirm.js"></script>

@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showFlatsInformation(flats) {
         containerDiv.empty();
+
+
         for (let i = 0; i < flats.length; i++) {
             let imgFlat = $("<figure><a href='#' id='flatPicture' ><img class='img-fluid' src='img/flat.jpg'></a></figure>")
             let row = $("<div class='row'>");
@@ -21,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let infoRoomsNumber = $("#infoRoomsNumber")
             let infoFlatDescription = $("#infoFlatDescription")
             let readDeleteMessage = $("#readDeleteMessage")
+            let hiddenName = $("#hiddenName")
 
 
             //Construction
@@ -112,27 +115,93 @@ document.addEventListener("DOMContentLoaded", function () {
             infoRow6.append(p6.text(flats[i].flatDescription))
 
             //Charts
-            let chartCol = $("<div class = 'chartCol mt-10'>")
-            let chartRowCol = $("<div class = 'col-sm-3 mt-10'>")
-            let p7 = $("<p>Some nice charts how much you have earned so far, flag if all bils have been paid, etc</p>");
-            let p8 = $("<p>Some nice charts how much you have earned so far, flag if all bils have been paid, etc</p>");
-            let p9 = $("<p>Some nice charts how much you have earned so far, flag if all bils have been paid, etc</p>");
-            let additionalDiv2 = $("<div class='additional'>");
+            let chartCol = $("<div class = 'chartCol'>")
+            let chartRowCol = $("<div class = 'col-sm-3'>")
+            let p8 = $("<canvas id='lineChart' class='lineCharts' width='400' height='200'></canvas>")
+
+            let additionalDiv2 = $("<div class='additionalForGraph  mt-4 mb-3'>");
             row.append(chartRowCol)
             chartRowCol.append(additionalDiv2)
             additionalDiv2.prepend(chartCol)
-            chartCol.append(p7)
             chartCol.append(p8)
-            chartCol.append(p9)
+
+
+            let myLineChart = $(".lineCharts")
+            for (let i = 0; i < myLineChart.length; i++) {
+                let lineChart = new Chart(myLineChart[i], {
+                    type: 'line',
+                    data: {
+                        labels: ['June', 'July', 'August', 'September', 'October', 'November'],
+                        datasets: [{
+                            label: 'Income',
+                            data: [12, 19, 3, 5, 2, 3],
+                            backgroundColor: [
+                                'rgba(2, 99, 132, 0.2)',
+                                'rgba(2, 162, 235, 0.2)',
+                                'rgba(2, 206, 86, 0.2)',
+                                'rgba(2, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(2, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(2, 99, 132, 1)',
+                                'rgba(2, 162, 235, 1)',
+                                'rgba(2, 206, 86, 1)',
+                                'rgba(2, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(2, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        },
+                            {
+                                label: 'Expectation',
+                                data: [5, 1, 7, 2, 8, 5],
+                                backgroundColor: [
+                                    'rgba(2, 99, 132, 0.2)',
+                                    'rgba(2, 162, 235, 0.2)',
+                                    'rgba(2, 206, 86, 0.2)',
+                                    'rgba(2, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(2, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(2, 99, 132, 1)',
+                                    'rgba(2, 162, 235, 1)',
+                                    'rgba(2, 206, 86, 1)',
+                                    'rgba(2, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(2, 159, 64, 1)'
+                                ],
+                                borderWidth: 2
+                            }]
+                    },
+                    options: {
+                        responsive: false,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        tooltips: {
+                            mode: 'nearest'
+                        }
+                    }
+                })
+
+            }
 
             //Buttons
             let buttonCol = $("<div class = 'buttonCol mt-10'>")
             let buttonRowCol = $("<div class = 'col-sm-1 mt-10'>")
-            let b1 = $("<p><button class='btn btn-orange openMeters'>Meters</button></p>");
-            let button1 = $(b1).find("button");
+            let b2 = $("<p><button class='btn btn-mixed-outline openMeters' style='width: 120px'>Meters</button></p>");
+            let button1 = $(b2).find("button");
             button1.attr("value", flats[i].id)
-            let b2 = $("<p><button class='btn btn-orange'>Rooms</button></p>");
-            let b3 = $("<p><button class='btn btn-orange'>Bills</button></p>");
+            let b1 = $("<p><button class='btn btn-orange rooms' style='width: 120px'>More Details</button></p>");
+            let button2 = $(b1).find("button");
+            button2.attr("value", flats[i].id)
+            let b3 = $("<p><button class='btn btn-mixed-outline ' style='width: 120px'>Bills</button></p>");
             // let b4 = $("<p><button class='btn btn-orange'>Something</button></p>");
 
             let additionalDiv3 = $("<div class='additional'>");
@@ -144,12 +213,96 @@ document.addEventListener("DOMContentLoaded", function () {
             buttonCol.append(b3)
             // buttonCol.append(b4)
 
+
+            button2.on('click', function () {
+                let flatId = $(this).attr("value")
+                // getRooms(flatId)
+                showAllRoomsView(flatId)
+
+
+            })
+            //Hide Modal
+            let returnFromShowModalButton = $(".modal-footer #btnBack")
+            returnFromShowModalButton.on("click", function () {
+                $("#modalRoomsEdit").modal('hide')
+            })
+
+
+            function updateRoomsForFlat(flatId) {
+                let dataFeedRoomsModal = $(".thead-own").children()
+                console.log(dataFeedRoomsModal)
+                let dataToSend = feedRoomsFromModalToJson(dataFeedRoomsModal)
+                let test = {}
+                test.id = 3
+
+                let urlToSend = '/flats/updateRooms/' + flats[flatId].id
+                console.log(dataToSend)
+                $.ajax({
+                    type: 'post',
+                    url: urlToSend,
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(test),
+
+                })
+                    .done(function (data) {
+                        console.log(data)
+                    })
+            }
+
+            function feedRoomsFromModalToJson(dataFeedRoomsModal) {
+                let roomToSendT = []
+                for (let j = 1; j < dataFeedRoomsModal.length; j++) {
+                    let roomToSendL = {}
+                    roomToSendL.description = dataFeedRoomsModal.eq(j).find(':nth-child(2)').text();
+                    roomToSendL.roomSquareMeters = dataFeedRoomsModal.eq(j).find(':nth-child(3)').text();
+                    roomToSendL.expectedRentPrice = dataFeedRoomsModal.eq(j).find(':nth-child(4)').text()
+                    roomToSendL.roomType = dataFeedRoomsModal.eq(j).find(':nth-child(5)').text()
+                    roomToSendT.push(roomToSendL)
+                }
+                return roomToSendT;
+            }
+
+
+            function getRooms(flatId) {
+                emptyTheModalShowRoomTable()
+                $.ajax({
+                    type: 'get',
+                    url: 'flats/getRooms/' + flatId,
+                    dataType: 'json',
+                    data: {},
+                })
+                    .done(function (data) {
+                        console.log(data)
+                        //Next Func
+                        $("#modalRoomsEdit").modal()
+
+                        //Process Modal
+                        $("#btnSubmitRoomChange").on("click", function () {
+                            updateRoomsForFlat(flatId)
+                        })
+                        addToShowTable(data.length, data)
+                    })
+                    .fail(function (xhr, status, err) {
+                        console.log(xhr)
+                    });
+
+            }
+            function showAllRoomsView(flatId) {
+                    let redirectPoint = 'flats/showAllRooms/' + flatId;
+                    window.location.replace(redirectPoint)
+
+            }
+
             //Edit/Delete
             let editDelCol = $("<div class = 'editDelCol mt-10'>")
             let editDelRowCol = $("<div class = 'col-sm-1 mt-10'>")
             let additionalDiv4 = $("<div class='additional'>");
+            //TEMP
+            let flatIdRedirectUrl = "flats/addFlat/" + flats[i].id
 
-            let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='flatEditBtn'/>")
+            let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline ml-3 mr-2' href='' id='flatEditBtn'/>")
+            editBtn.attr("href", flatIdRedirectUrl)
             let editEm = $("<em class='fa fa-pencil-alt'/>")
             let additionalPEdit = $("<p>")
             editBtn.attr("value", flats[i].id)
@@ -157,7 +310,7 @@ document.addEventListener("DOMContentLoaded", function () {
             additionalPEdit.append(editBtn)
             editBtn.append(editEm)
 
-            let delBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='flatDelBtn'/>")
+            let delBtn = $("<a class='btn btn-xs pull-right btn-red-outline ml-3 mr-2' id='flatDelBtn'/>")
             let delEm = $("<em class='fa fa-trash-alt'/>")
             let additionalPDel = $("<p>")
             delBtn.attr("value", flats[i].id)
@@ -172,11 +325,16 @@ document.addEventListener("DOMContentLoaded", function () {
             editDelCol.append(additionalPDel)
 
             //Delete/Edit functions
-            delBtn.on("click", function (){
+            delBtn.on("click", function () {
                 deleteEntity("following flat:", deleteFlat, flats[i].id)
+            })
+
+            editBtn.on("click", function () {
+                editFlat(hiddenName);
             })
         }
     }
+
 
     function getAllFlats() {
         $.ajax({
@@ -209,6 +367,32 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log(status);
                 console.log(err);
             });
+    }
+
+    function editFlat(hiddenName) {
+        $("#name").val("test")
+        let flatId = $("#flatEditBtn").attr("value")
+        let redirectPoint = '/flats/' + flatId;
+        window.location.replace(redirectPoint)
+
+    }
+
+    function getFlatById(flatId) {
+        $.ajax({
+            type: 'get',
+            url: 'flats/' + flatId,
+            dataType: "json",
+            data: {},
+        })
+            .done(function (data) {
+                console.log(data)
+                $("#name").val("test")
+
+            });
+    }
+
+    function emptyTheModalShowRoomTable() {
+        $(".thead-own").find(".table-row").empty()
     }
 
 

@@ -64,6 +64,20 @@
     border-color: #16697A !important;
 }
 
+.btn-red-outline {
+    background-color: #fff !important;
+    color: #f50e36 !important;
+    border-color: #f50e36 !important;
+    cursor: pointer;
+}
+
+.btn-red-outline:hover {
+    background-color: #e8c9c9 !important;
+    color: #ea295f !important;
+    border-color: #f50e36 !important;
+
+}
+
 /* Mixed button - outline blue without hover, and orange button fill on hover */
 
 .btn-mixed-outline {

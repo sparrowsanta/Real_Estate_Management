@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="css/default.css" type="text/css">
     <script defer src="css/FA/js/all.js"></script> <!--load all styles -->
     <link href="css/FA/css/all.css" rel="stylesheet"> <!--load all styles -->
+    <script src="js/rooms/addRooms.js"></script> <!--load all styles -->
     <title>Real Estate Management</title>
 </head>
 <body>
@@ -46,10 +47,38 @@
 <br><br><br>
 
 <button type="button" class="btn btn-orange-outline">
-Test button outline
+    Test button outline
 </button>
+
+<br><br><br>
+
+<button type="button" id="btnModalRoom" class="btn btn-orange btn-lg addRoom" value="">
+    <spring:message code="meters.button.view.meters"/> ADD ROOM
+</button>
+
+<div id="dataRoomFeed">
+    <p>Add rooms to flat</p>
+    <div class="row col-md-9">
+        <table class="table table-striped table-bordered table-sm table-hover" id="flatTableAdd">
+            <tr class="table-ro">
+                <th scope="col"> # </th>
+                <th scope="col"> Room Description </th>
+                <th scope="col"> Room Type </th>
+                <th scope="col"> ROOM SQM </th>
+                <th scope="col"> INCOME</th>
+                <th scope="col"> DELETE </th>
+
+            </tr>
+            <div id="tableDivToFeed">
+
+            </div>
+        </table>
+    </div>
+
+</div>
 </body>
 <jsp:include page="../meters/metersModal.jsp"/>
+<jsp:include page="../rooms/roomsModal.jsp"/>
 <jsp:include page="../bills/billsModal.jsp"/>
 <footer class="page-footer font-small blue">
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
