@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function getFurniture(roomId){
         $.ajax({
             type: 'get',
-            url: '/Real_Estate_Management/rooms/furniture/' + roomId,
+            url: 'rooms/furniture/' + roomId,
             dataType: 'json',
             data: {},
         })
