@@ -6,7 +6,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="css/main.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
     <title>MainPage</title>
     <!--    <link rel="stylesheet" href="../../resources/bootstrap-4.5.0-dist/css/bootstrap.css">
         <link rel="stylesheet" href="webapp/css/main.css">

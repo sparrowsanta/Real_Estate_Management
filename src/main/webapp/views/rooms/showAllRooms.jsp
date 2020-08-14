@@ -9,7 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
 
     <jsp:include page="/views/util/header.jsp"></jsp:include>
-
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/rooms/showRooms.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/rooms/addRooms.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
@@ -49,6 +50,7 @@
 <jsp:include page="../rooms/showRooms.jsp"/>
 <jsp:include page="../util/deleteConfirm.jsp"/>
 <jsp:include page="../furniture/furnitureModal.jsp"/>
+<jsp:include page="../furniture/addFurnitureModal.jsp"/>
 <footer>
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>

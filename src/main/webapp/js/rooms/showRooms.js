@@ -9,16 +9,22 @@ document.addEventListener("DOMContentLoaded", function () {
     let infoDescription = $("#infoDescription")
     let infoRoomSquareMeters = $("#infoRoomSquareMeters")
     let infoExpectedRentPrice = $("#infoExpectedRentPrice")
+    let iterationId = 1;
 
+    //global roomID
+
+    let flat = $("#flatToShow").html()
+    flatEditedParsed = JSON.parse(flat);
+    let rooms = flatEditedParsed.rooms
 
     function showRooms() {
-        let flat = $("#flatToShow").html()
+        flat = $("#flatToShow").html()
         flatEditedParsed = JSON.parse(flat);
-        let rooms = flatEditedParsed.rooms
+        rooms = flatEditedParsed.rooms
 
         for (let i = 0; i < rooms.length; i++) {
             if (rooms[i].occupable == 1) {
-                let imgRoom = $("<figure><a href='#' id='roomPicture' ><img class='img-fluid' src='img/flat.jpg'></a></figure>")
+                let imgRoom = $("<figure><a href='#' id='roomPicture' ><img class='img-fluid' src='#'></a></figure>")
                 let row = $("<div class='row'>");
                 let rowForPic = $("<div class = 'col-sm-3 col3'>")
                 let rowForInfo = $("<div class = 'col-sm-2'>")
@@ -182,8 +188,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
                 addEditAndDeleteButtons(rooms[i].id, row)
+
             } else {
-                let imgRoom = $("<figure><a href='#' id='roomPicture' ><img class='img-fluid' src='img/flat.jpg'></a></figure>")
+                let imgRoom = $("<figure><a href='#' id='roomPicture' ><img class='img-fluid' src='#'></a></figure>")
                 let row = $("<div class='row'>");
                 let rowForPic = $("<div class = 'col-sm-3 col3'>")
                 let rowForInfo = $("<div class = 'col-sm-2'>")
@@ -246,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
     showRooms();
 
     function addEditAndDeleteButtons(roomId, row) {
-        //Edit/Delete
+
         let editDelCol = $("<div class = 'editDelCol mt-10'>")
         let editDelRowCol = $("<div class = 'col-sm-1 mt-10'>")
         let additionalDiv4 = $("<div class='additional'>");
@@ -262,13 +269,13 @@ document.addEventListener("DOMContentLoaded", function () {
         additionalPEdit.append(editBtn)
         editBtn.append(editEm)
 
-        let delBtn = $("<a class='btn btn-xs pull-right btn-red-outline mr-2' id='roomDelBtn'/>")
+        let delBtn2 = $("<a class='btn btn-xs pull-right btn-red-outline mr-2' id='roomDelBtn'/>")
         let delEm = $("<em class='fa fa-trash-alt'/>")
         let additionalPDel = $("<p>")
-        delBtn.attr("value", roomId)
+        delBtn2.attr("value", roomId)
         // delBtn.attr("flatName", flats[i].name)
-        additionalPDel.append(delBtn)
-        delBtn.append(delEm)
+        additionalPDel.append(delBtn2)
+        delBtn2.append(delEm)
 
         let furBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='furBtn'/>")
         let furEm = $("<em class='fa fa-couch'/>")
@@ -286,13 +293,14 @@ document.addEventListener("DOMContentLoaded", function () {
         editDelCol.append(additionalPFur)
 
         //Delete/Edit functions
-        delBtn.on("click", function () {
+        delBtn2.on("click", function () {
             deleteEntity("following room", deleteRoom, roomId)
         })
 
-        // editBtn.on("click", function () {
-        //     editFlat(hiddenName);
-        // })
+        editBtn.on("click", function () {
+            $("#modalRooms").modal
+            $("#btnAddFlat").attr("id", "btnConfirmFlat")
+        })
 
         furBtn.on("click", function () {
             getFurniture(roomId)
@@ -301,12 +309,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function deleteRoom(roomId) {
-        let deleteAddress = '/Real_Estate_Management/rooms/delete/' + roomId;
         $.ajax({
             type: 'delete',
-            url: deleteAddress,
+            url: '../../rooms/delete/' + roomId,
         })
-            .done(function () {
+            .done(function (data) {
+                console.log(data)
                 showRooms();
             })
             .fail(function (xhr, status, err) {
@@ -316,10 +324,12 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    function getFurniture(roomId){
+    function getFurniture(roomId) {
+        clearTheFurnitureModalList()
+        iterationId = 1;
         $.ajax({
             type: 'get',
-            url: 'rooms/furniture/' + roomId,
+            url: '../../rooms/furniture/' + roomId,
             dataType: 'json',
             data: {},
         })
@@ -329,24 +339,31 @@ document.addEventListener("DOMContentLoaded", function () {
                 $("#modalFurniture").modal()
 
                 //Process Modal
-                $("#btnSubmitRoomChange").on("click", function () {
-                    // updateRoomsForFlat(flatId)
+                $("#btnSubmitFurnitureChange").on("click", function () {
+                    updateFurnitureForFlat(roomId)
                 })
-                addToShowTableFurniture()
+                //Add Furniture
+                $("#btnModalFurniture").on("click", function () {
+                    $("#addFurnitureModal").modal()
+
+                })
+                $("#btnAddFurnitureModal").on("click", function () {
+                    saveFurnitureInFrontEnd(roomId)
+                })
+                addToShowTableFurniture(data)
+
             })
             .fail(function (xhr, status, err) {
                 console.log(xhr)
             });
     }
 
-    function addToShowTableFurniture() {
+    function addToShowTableFurniture(data) {
         let furniture = $("#furnitureToShow").html()
-        let data = JSON.parse(furniture);
-        let defaultTr = $("<tr class='table-row'>")
+        let defaultTr = $("<tr class='table-row dataFurniture' >")
         let defaultTd = $("<td>")
         let defaultBtnTd = $("<td><a class='btn btn-xs pull-right btn-mixed-outline mr-2'><em class='fa fa-trash-alt'></em></a></td>")
         let flatTableAdd = $(".table-ro")
-        let iterationId = 1;
         for (let i = 0; i < data.length; i++) {
 
             let rowTr = defaultTr.clone(true);
@@ -369,10 +386,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             //Add value to column
             rowId.append(iterationId)
-            rowValueDesc.append(data.description)
-            rowValueSquareMeters.append(data.roomId)
-            rowValueRentPrice.append(data.dateOfPurchase)
-            rowValueTypeSelect.append(data.value)
+            rowValueDesc.append(data[i].description)
+            rowValueSquareMeters.append(data[i].roomId)
+            rowValueRentPrice.append(data[i].dateOfPurchase)
+            rowValueTypeSelect.append(data[i].value)
 
             iterationId++;
             deleteFlatBtn.on("click", function () {
@@ -381,4 +398,60 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
     }
+
+    function updateFurnitureForFlat(roomId) {
+        let dataFeedRoomsModal = $("#furnitureTheadOwn").children()
+        let dataToSend = feedFurnitureFromModalToJson(dataFeedRoomsModal)
+        console.log(dataToSend)
+
+        let urlToSend = '../../rooms/furniture/update/' + roomId
+        $.ajax({
+            type: 'post',
+            url: urlToSend,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(dataToSend),
+
+        })
+            .done(function (data) {
+                clearTheFurnitureModalList()
+                $("#modalFurniture").modal('hide');
+            })
+    }
+
+    function feedFurnitureFromModalToJson(dataFeedRoomsModal) {
+        let furnitureToSendT = []
+        for (let j = 1; j < dataFeedRoomsModal.length; j++) {
+            let furnitureToSendL = {}
+            furnitureToSendL.description = dataFeedRoomsModal.eq(j).find(':nth-child(2)').text();
+            furnitureToSendL.roomId = dataFeedRoomsModal.eq(j).find(':nth-child(3)').text();
+            furnitureToSendL.dateOfPurchase = dataFeedRoomsModal.eq(j).find(':nth-child(4)').text()
+            furnitureToSendL.value = dataFeedRoomsModal.eq(j).find(':nth-child(5)').text()
+            furnitureToSendT.push(furnitureToSendL)
+        }
+        return furnitureToSendT;
+    }
+
+    function clearTheFurnitureModalList() {
+        let toEmpty = $("#furnitureTheadOwn").find(".dataFurniture")
+        toEmpty.remove()
+    }
+
+    function saveFurnitureInFrontEnd(roomId) {
+        let furnitureToSendL = {}
+        let furnitureToSendT = []
+
+        furnitureToSendL.description = $("#furnitureDescription").val()
+        furnitureToSendL.roomId = roomId
+        furnitureToSendL.dateOfPurchase = $("#dateOfPurchase").val()
+        furnitureToSendL.value = $("#value").val()
+        furnitureToSendT.push(furnitureToSendL)
+
+        addToShowTableFurniture(furnitureToSendT)
+
+        $("#addFurnitureModal").modal('hide');
+
+    }
 })
+
+

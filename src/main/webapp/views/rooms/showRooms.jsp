@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-<link rel="stylesheet" href="css/metersHistory.css" type="text/css">
+
 <div class="container text-center">
     <div class="modal fade " id="modalRoomsEdit" tabindex="-1" role="dialog" aria-labelledby="modalRoomsEdit"
          data-backdrop="static" data-keyboard="false">
@@ -67,7 +67,6 @@
 <div id="meterForms">
     <jsp:include page="../util/deleteConfirm.jsp"/>
     <jsp:include page="../rooms/roomsModal.jsp"/>
-
 </div>
-<script type="text/javascript" src="js/flats.js"></script>
-<script type="text/javascript" src="js/rooms/addRooms.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/flats.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/rooms/addRooms.js"></script>
