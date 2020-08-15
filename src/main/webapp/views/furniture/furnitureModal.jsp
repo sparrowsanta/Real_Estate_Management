@@ -53,9 +53,9 @@
                         <em class="fas fa-plus"></em>
                         <spring:message code="furniture.add.furniture"/></button>
                     <button type="button" class="btn btn-orange" id="btnSubmitFurnitureChange">
-                        <em class="fas fa-plus"></em>
-                        <spring:message code="common.button.submit"/></button>
-                    <button type="button" class="btn btn-orange" id="btnBack">
+                        <em class="fas fa-save"></em>
+                        <spring:message code="common.button.save"/></button>
+                    <button type="button" class="btn btn-orange" id="btnBackRoomsAll">
                         <em class="fas fa-backward"></em>
                         <spring:message code="common.button.back"/></button>
                 </div>

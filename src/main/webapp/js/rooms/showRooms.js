@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     let containerDiv = $(".containerDivRooms")
+    let containerDivRoomsNoOccupable = $(".containerDivRoomsNoOccupable")
     containerDiv.empty();
     //Info - Hidden
     let infoForIcon = $("#infoForIcon")
@@ -18,6 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let rooms = flatEditedParsed.rooms
 
     function showRooms() {
+        containerDiv.empty();
+        containerDivRoomsNoOccupable.empty()
         flat = $("#flatToShow").html()
         flatEditedParsed = JSON.parse(flat);
         rooms = flatEditedParsed.rooms
@@ -30,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 let rowForInfo = $("<div class = 'col-sm-2'>")
                 let infoRow = $("<div class = 'infoRow'>");
                 let rowssborder = $("<div class='row-border'>")
+                rowssborder.attr("id", rooms[i].id)
 
                 //Construction
                 containerDiv.append(rowssborder);
@@ -245,6 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 infoRow3.append(infoRoomSquareMeters.clone(true))
                 infoRow3.append(p3.text(rooms[i].roomSquareMeters))
 
+                addEditAndDeleteButtons(rooms[i].id, row)
             }
 
         }
@@ -260,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function () {
         //TEMP
         // let flatIdRedirectUrl = "flats/addFlat/" + flats[i].id
 
-        let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='btnModalRoom'/>")
+        let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='btnModalEditRoom'/>")
         // editBtn.attr("href", flatIdRedirectUrl)
         let editEm = $("<em class='fa fa-pencil-alt'/>")
         let additionalPEdit = $("<p>")
@@ -298,8 +303,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
 
         editBtn.on("click", function () {
-            $("#modalRooms").modal
-            $("#btnAddFlat").attr("id", "btnConfirmFlat")
+            editRoom(roomId);
         })
 
         furBtn.on("click", function () {
@@ -315,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .done(function (data) {
                 console.log(data)
-                showRooms();
+                $("#1").remove()
             })
             .fail(function (xhr, status, err) {
                 console.log(xhr.statusText);
@@ -338,6 +342,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 //Next Func
                 $("#modalFurniture").modal()
 
+                removeActionFromFurnitureBtn()
                 //Process Modal
                 $("#btnSubmitFurnitureChange").on("click", function () {
                     updateFurnitureForFlat(roomId)
@@ -396,6 +401,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 $(this).parent().remove()
             })
 
+            $("#btnBackRoomsAll").on("click", function () {
+                backToRooms2()
+            })
+
         }
     }
 
@@ -452,6 +461,79 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#addFurnitureModal").modal('hide');
 
     }
+
+    function editRoom(roomId) {
+
+        $("#modalEditRooms").modal()
+        $.ajax({
+            type: 'get',
+            url: '../../rooms/' + roomId,
+            dataType: "json",
+            data: {},
+        })
+            .done(function (data) {
+                console.log(data)
+
+                // let descriptionEdit = $("#infoDescription").next().text()
+                // let roomSquareMetersEdit = $("#infoRoomSquareMeters").next().text()
+                // let expectedRentPriceEdit = $("#infoExpectedRentPrice").next().text()
+                // let roomTypeEdit = $("#infoRoomType").next().text()
+
+                $("#expectedRentPriceEdit").val(data.expectedRentPrice)
+                $("#roomSquareMetersEdit").val(data.roomSquareMeters)
+                $("#roomDescriptionEdit").val(data.description)
+                // $("#roomTypeSelectEdit").val(roomTypeEdit)
+                let typesOfRoom = ["ROOM", "BATHROOM", "TOILET", "KITCHEN", "HALL", "BALCONY", "GARDEN", "GARAGE", "BASEMENT"];
+                $("#roomTypeSelectEdit").select2({
+                    data: typesOfRoom
+                })
+            });
+
+
+        $("#btnConfirmFlat").on('click', function () {
+            saveEditedRoom(roomId)
+        })
+
+        $("#btnBackRoomsAll").on("click", function () {
+            backToRooms()
+        })
+
+
+    }
+
+    function backToRooms() {
+        $("#modalEditRooms").modal('hide');
+    }
+
+    function backToRooms2() {
+        $("#modalFurniture").modal('hide');
+    }
+
+
+    function saveEditedRoom(roomId) {
+        let data = {}
+        data.expectedRentPrice = $("#expectedRentPriceEdit").val()
+
+        $.ajax({
+            type: 'put',
+            url: '../../rooms/' + roomId,
+            dataType: "json",
+            data: data,
+        })
+            .done(function (data) {
+                let redirectPoint = '../../flats/showAllRooms/' + data.flatId;
+                window.location.replace(redirectPoint)
+            });
+
+
+    }
+
+    function removeActionFromFurnitureBtn() {
+        $("#btnSubmitFurnitureChange").off()
+        $("#btnModalFurniture").off()
+        $("#btnAddFurnitureModal").off()
+    }
+
 })
 
 

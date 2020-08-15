@@ -32,6 +32,15 @@ public class Room {
         this.expectedRentPrice = expectedRentPrice;
         this.occupable = occupable;
     }
+    public Room(long id, String description, double roomSquareMeters, double expectedRentPrice, RoomType roomType, int occupable, long flatId) {
+        this.id = id;
+        this.roomType = roomType;
+        this.description = description;
+        this.roomSquareMeters = roomSquareMeters;
+        this.expectedRentPrice = expectedRentPrice;
+        this.occupable = occupable;
+        this.flatId = flatId;
+    }
 
     @AllArgsConstructor
     @Getter

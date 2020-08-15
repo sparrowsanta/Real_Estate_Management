@@ -30,8 +30,10 @@
         <div class="containerDivRooms">
         </div>
 
-        <div class="containerDivRoomsNoOccupable">
-                <h2 class="flats-header"><spring:message code="rooms.show.all"/></h2>
+        <div class="mainContainerRooms">
+            <h2 class="flats-header"><spring:message code="rooms.show.all"/></h2>
+            <div class="containerDivRoomsNoOccupable">
+            </div>
         </div>
     </div>
     <div class="toHide">
@@ -41,8 +43,8 @@
         <p class="infoP" id="infoRoomSquareMeters" type="hidden"><spring:message code="rooms.add.roomSQM"/></p>
         <p class="infoP" id="infoExpectedRentPrice" type="hidden"><spring:message code="common.general.income"/></p>
         <p class="infoP" id="infoNotOccupable" type="hidden"><spring:message code="rooms.show.all"/></p>
-        <p class="infoPs" id="flatToShow" >${flat}</p>
-        <p class="infoPs" id="furnitureToShow" >${furnitures}</p>
+        <p class="infoPs" id="flatToShow">${flat}</p>
+        <p class="infoPs" id="furnitureToShow">${furnitures}</p>
     </div>
 </main>
 
@@ -51,6 +53,7 @@
 <jsp:include page="../util/deleteConfirm.jsp"/>
 <jsp:include page="../furniture/furnitureModal.jsp"/>
 <jsp:include page="../furniture/addFurnitureModal.jsp"/>
+<jsp:include page="../rooms/roomsEditModal.jsp"/>
 <footer>
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>
