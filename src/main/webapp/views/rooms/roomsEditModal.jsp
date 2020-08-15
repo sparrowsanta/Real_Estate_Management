@@ -3,14 +3,16 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <div class="container text-center">
-    <div class="modal fade " id="modalRooms" tabindex="-1" role="dialog" aria-labelledby="ModalRoom"
+    <div class="modal fade " id="modalEditRooms" tabindex="-1" role="dialog" aria-labelledby="modalEditRooms"
          data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg mw-90 w-90" role="document" id="modalDialogRoom">
             <div class="modal-content">
                 <div class="modal-header bg-dark-blue">
-                    <h4 class="room-title" id="myRoomLabel"><span><em class="fas fa-th-large"> </em></span>
-                        <spring:message code="rooms.add.header"/></h4>
+                    <h4 class="roomEdit-title" id="myRoomEditLabel"><span><em class="fas fa-th-large"> </em></span>
+                        <spring:message code="rooms.edit.rooms"/></h4>
                     <button class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
@@ -27,7 +29,7 @@
                                                     code="rooms.add.description"/></span>
                                         </h5>
                                         <div class="custom-file" id="customRoomDescription">
-                                            <input type="text" name="roomDescription" id="roomDescription"
+                                            <input type="text" name="roomDescription" id="roomDescriptionEdit"
                                                    class="form-control btn-dark-blue-outline is-valid">
                                         </div>
                                     </div>
@@ -37,7 +39,7 @@
                                         </h5>
                                         <div class="custom-file" id="customRoomSquareMeters">
                                             <input type="number" step='0.01' placeholder='0.00' name="roomSquareMeters"
-                                                   id="roomSquareMeters"
+                                                   id="roomSquareMetersEdit"
                                                    class="form-control btn-dark-blue-outline is-valid">
                                         </div>
                                     </div>
@@ -48,7 +50,7 @@
                                         </h5>
                                         <div class="custom-file" id="customExpectedRentPrice">
                                             <input type="number" step='1.0' placeholder='0.00' name="expectedRentPrice"
-                                                   id="expectedRentPrice"
+                                                   id="expectedRentPriceEdit"
                                                    class="form-control btn-dark-blue-outline is-valid">
                                         </div>
                                     </div>
@@ -73,7 +75,7 @@
 
                                         <select class='form-control js-example-basic' name='flatType[]'
                                                 aria-hidden="true"
-                                                id='roomTypeSelect'></select>
+                                                id='roomTypeSelectEdit'></select>
 
                                         <%--                                            class="form-control btn-dark-blue-outline is-valid">--%>
                                     </div>
@@ -83,10 +85,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-orange" id="btnAddFlat">
-                        <em class="fas fa-plus"></em>
-                        <spring:message code="flats.add.addFlat"/></button>
-                    <button type="button" class="btn btn-orange" id="btnBackRooms">
+                    <button type="button" class="btn btn-orange" id="btnConfirmFlat">
+                        <em class="fas fa-save"></em>
+                        <spring:message code="common.button.save"/></button>
+                    <button type="button" class="btn btn-orange" id="btnBackRoomsAll">
                         <em class="fas fa-backward"></em>
                         <spring:message code="common.button.back"/></button>
                 </div>

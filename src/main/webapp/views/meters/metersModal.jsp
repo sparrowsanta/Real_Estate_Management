@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-<link rel="stylesheet" href="css/metersHistory.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/metersHistory.css" type="text/css">
 <div class="container text-center">
     <div class="modal fade " id="ModalMeters" tabindex="-1" role="dialog" aria-labelledby="ModalMeters"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg mw-75 w-75" role="document">
@@ -71,4 +71,4 @@
 <jsp:include page="metersData.jsp"/>
 <jsp:include page="meterReadingData.jsp"/>
 </div>
-<script type="text/javascript" src="js/meters/metersModal.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/meters/metersModal.js"></script>
