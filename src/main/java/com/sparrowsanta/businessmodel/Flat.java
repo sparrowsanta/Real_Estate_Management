@@ -24,6 +24,9 @@ public class Flat {
     private List<Meters> meters;
     private String picUrl;
 
+//    Replacing picUrl
+    private byte[] pic;
+
 
 
 }

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,22 @@ public class RoomController {
     Furniture furniture2 = new Furniture(1, "Szafa", 1, LocalDate.now(), 350);
 
     List<Furniture> furnitureList = Arrays.asList(furniture, furniture2);
+
+
+    @GetMapping("/roomPicture/{id}")
+    @ResponseBody
+    public String getRoomPictures(Model model, @PathVariable(name = "id") String id) {
+
+        Room myFirstChanged = new Room(1, "myFirstChanged", 30.20, 1000, ROOM, 1, 1);
+
+        byte[] file =  null;
+        String image = "";
+        if (file != null && file.length > 0) {
+            image = Base64.getEncoder().encodeToString(file);
+        }
+
+        return new Gson().toJson(image);
+    }
 
     @GetMapping
     public String showRooms(Model model) {
@@ -41,7 +58,7 @@ public class RoomController {
         Room room = new Room(1, "myFirstChanged", 30.20, 1000, ROOM, 1, 1);
         rooms.add(room);
         Flat flat1 = new Flat(1, "Pierwsze", "Kraków", "Złota Podkowa", "5", "31-322", 2, null, 3, "Moje pierwsze mieszkanie",
-                34.4, 2010, 305000.00, 2000.0, null, "");
+                34.4, 2010, 305000.00, 2000.0, null, "", null);
         flat1.setRooms(rooms);
         model.addAttribute("flat", new Gson().toJson(flat1));
 

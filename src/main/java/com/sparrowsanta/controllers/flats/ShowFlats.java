@@ -15,10 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.sparrowsanta.businessmodel.Room.RoomType.KITCHEN;
@@ -31,10 +28,31 @@ public class ShowFlats {
 
 
     public static final List<Flat> flats = new ArrayList<>();
+    private final Flat flat3 = new Flat(2, "Trzecie", "Gdańsk", "Olejna", "4", "01-020", 2, null, 10, "Moje trzecie mieszkanie", 23.1, 2019, 355000.00, 1500.0, null, "", null);
 
-    //    getMeters(currentFlat);
+
+    @GetMapping("/flatPicture/{id}")
+    @ResponseBody
+    public String getFlatPictures(Model model, @PathVariable(name = "id") long id) {
+        byte[] file = flats.get(2).getPic();
+
+        String image = "";
+        if (file != null && file.length > 0) {
+            image = Base64.getEncoder().encodeToString(file);
+        }
+
+        return new Gson().toJson(image);
+    }
+
     @GetMapping
-    public String showFlats() {
+    public String showFlats(Model model) {
+        byte[] file = flats.get(2).getPic();
+        String image = "";
+        if (file != null && file.length > 0) {
+            image = Base64.getEncoder().encodeToString(file);
+        }
+        model.addAttribute("image", image);
+
         return "flats/showFlats";
     }
 
@@ -43,22 +61,21 @@ public class ShowFlats {
         List<Room> rooms = Arrays.asList(new Room(1, "myFirst", 30.20, 1000, ROOM, 1),
                 new Room(2, "mySec", 40.20, 2000, ROOM, 1), new Room(3, "Kitchen", 9.20, 0.00, KITCHEN, 0));
         Flat flat1 = new Flat(1, "Pierwsze", "Kraków", "Złota Podkowa", "5", "31-322", 2, null, 3, "Moje pierwsze mieszkanie",
-                34.4, 2010, 305000.00, 2000.0, null, "");
+                34.4, 2010, 305000.00, 2000.0, null, "", null);
         flat1.setRooms(rooms);
 
         Flat flat2 = new Flat(3, "Drugie", "Oświęcim", "Stawowa", "1", "11-322", 4, null, 1, "Moje drugie mieszkanie",
-                66.1, 2014, 255000.00, 1000.0, null, "");
-//      Flat flat3 = new Flat(2, "Trzecie", "Gdańsk", "Olejna", "4", "01-020", 2, null, 10, "Moje trzecie mieszkanie",
-//                23.1, 2019, 355000.00, 1500.0, null, "");
+                66.1, 2014, 255000.00, 1000.0, null, "", null);
 
         flats.add(flat1);
         flats.add(flat2);
-        //flats.add(flat3);
+        flats.add(flat3);
     }
+
 
     @GetMapping(value = "/allFlats", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String getAllFlats(HttpServletRequest request) {
+    public String getAllFlats(Model model, HttpServletRequest request) {
 
         request.setAttribute("flats", flats);
         return new Gson().toJson(flats);
@@ -73,12 +90,19 @@ public class ShowFlats {
 
     //    FOR MultiPartHTTPServlet https://www.jvt.me/posts/2019/09/08/spring-extract-multipart-request-parameters/
     @PostMapping(value = "/addFlat", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseBody
     public String addFlatPost(Model model, @RequestParam(value = "file") MultipartFile file, MultipartHttpServletRequest mrequest) throws IOException {
-        File convertFile = new File("/home/kuba/JAVA_COURSE/JAVA_1/Real_Estate_Management/src/main/webapp/dump/" + file.getOriginalFilename());
+       File convertFile = new File("/home/kuba/JAVA_COURSE/JAVA_1/Real_Estate_Management/src/main/webapp/dump/" + file.getOriginalFilename());
         convertFile.createNewFile();
         FileOutputStream fout = new FileOutputStream(convertFile);
         fout.write(file.getBytes());
         fout.close();
+
+
+//        testing
+        flat3.setPic(file.getBytes());
+
+
 //        ALL PARAMETERS FROM FORM instead of Select and File
         Map<String, String[]> parameterMap = mrequest.getParameterMap();
         Map<String, List<String>> collect = parameterMap.entrySet().stream()
@@ -98,6 +122,7 @@ public class ShowFlats {
 //        room1.setId(3);
 
         System.out.println(mrequest.getParameter("name"));
+        System.out.println(room1);
         System.out.println(mrequest.getParameter("meters"));
 
 
