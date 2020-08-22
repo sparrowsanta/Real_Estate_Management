@@ -10,7 +10,7 @@
 
     <jsp:include page="/views/util/header.jsp"></jsp:include>
 
-    <script type="text/javascript" src="js/flats.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/flats.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
     <title>Show Flats</title>
@@ -21,7 +21,9 @@
 
 </header>
 <main>
+
     <div class="mainContainer haveOpenMeterButtons haveOpenBillsButtons">
+
         <header>
             <h2 class="flats-header"><spring:message code="flats.show.header"/></h2>
         </header>

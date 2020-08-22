@@ -3,6 +3,7 @@ body {
     background-color: #EDE7E3;
 }
 
+
 main {
     width: 90vw;
     margin: 0 auto;
@@ -17,6 +18,7 @@ footer {
     background-color: #16697A;
     padding: 6px;
 }
+
 
 * {
     margin: 0;
@@ -201,6 +203,9 @@ main div {
     cursor: pointer;
 }
 
+#roompicpic {
+    color: transparent;
+}
 
 .btn-dark-blue-outline:hover {
     background-color: #054a58 !important;

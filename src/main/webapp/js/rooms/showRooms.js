@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     let containerDiv = $(".containerDivRooms")
+    let containerDivRoomsNoOccupable = $(".containerDivRoomsNoOccupable")
     containerDiv.empty();
     //Info - Hidden
     let infoForIcon = $("#infoForIcon")
@@ -9,21 +10,45 @@ document.addEventListener("DOMContentLoaded", function () {
     let infoDescription = $("#infoDescription")
     let infoRoomSquareMeters = $("#infoRoomSquareMeters")
     let infoExpectedRentPrice = $("#infoExpectedRentPrice")
+    let iterationId = 1;
 
+    //global roomID
+
+    let flat = $("#flatToShow").html()
+    flatEditedParsed = JSON.parse(flat);
+    let rooms = flatEditedParsed.rooms
 
     function showRooms() {
-        let flat = $("#flatToShow").html()
+        containerDiv.empty();
+        containerDivRoomsNoOccupable.empty()
+        flat = $("#flatToShow").html()
         flatEditedParsed = JSON.parse(flat);
-        let rooms = flatEditedParsed.rooms
+        rooms = flatEditedParsed.rooms
 
+
+        let figureGeneric = $("<figure><a href='#' ></a></figure>")
+        let imgGeneric = $("<img class='img-fluid' src='#'>")
         for (let i = 0; i < rooms.length; i++) {
             if (rooms[i].occupable == 1) {
-                let imgRoom = $("<figure><a href='#' id='roomPicture' ><img class='img-fluid' src='img/flat.jpg'></a></figure>")
+                let figureRoom = figureGeneric.clone(true).attr("id", "pictureFor" + rooms[i].id)
+                let roomPicture = getPictureForRoom(rooms[i].id);
+                let imgRoom = imgGeneric.clone(true)
+                if (roomPicture === "") {
+                    let uploadBtnRoom = $("<input id='fileid' type='file'/>")
+                    uploadRoomPicIfDoesNotHave(figureRoom.children(), rooms[i].id)
+
+                } else {
+                    imgRoom.attr("src", "data:image/png;base64," + roomPicture);
+                    figureRoom.children().append(imgRoom)
+                }
+
+
                 let row = $("<div class='row'>");
                 let rowForPic = $("<div class = 'col-sm-3 col3'>")
                 let rowForInfo = $("<div class = 'col-sm-2'>")
                 let infoRow = $("<div class = 'infoRow'>");
                 let rowssborder = $("<div class='row-border'>")
+                rowssborder.attr("id", rooms[i].id)
 
                 //Construction
                 containerDiv.append(rowssborder);
@@ -31,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 row.prepend(rowForPic)
                 row.append(rowForInfo);
                 //Picture
-                rowForPic.append(imgRoom)
+                rowForPic.append(figureRoom)
 
                 // FirstCol
                 //first row
@@ -182,8 +207,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
                 addEditAndDeleteButtons(rooms[i].id, row)
+
             } else {
-                let imgRoom = $("<figure><a href='#' id='roomPicture' ><img class='img-fluid' src='img/flat.jpg'></a></figure>")
+                let figureRoom = figureGeneric.clone(true)
+                let imgRoom = imgGeneric.clone(true)
+                figureRoom.children().append(imgRoom)
+
                 let row = $("<div class='row'>");
                 let rowForPic = $("<div class = 'col-sm-3 col3'>")
                 let rowForInfo = $("<div class = 'col-sm-2'>")
@@ -196,7 +225,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 row.prepend(rowForPic)
                 row.append(rowForInfo);
                 //Picture
-                rowForPic.append(imgRoom)
+                rowForPic.append(figureRoom)
 
 
                 // FirstCol
@@ -238,6 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 infoRow3.append(infoRoomSquareMeters.clone(true))
                 infoRow3.append(p3.text(rooms[i].roomSquareMeters))
 
+                addEditAndDeleteButtons(rooms[i].id, row)
             }
 
         }
@@ -246,14 +276,14 @@ document.addEventListener("DOMContentLoaded", function () {
     showRooms();
 
     function addEditAndDeleteButtons(roomId, row) {
-        //Edit/Delete
+
         let editDelCol = $("<div class = 'editDelCol mt-10'>")
         let editDelRowCol = $("<div class = 'col-sm-1 mt-10'>")
         let additionalDiv4 = $("<div class='additional'>");
         //TEMP
         // let flatIdRedirectUrl = "flats/addFlat/" + flats[i].id
 
-        let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='btnModalRoom'/>")
+        let editBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='btnModalEditRoom'/>")
         // editBtn.attr("href", flatIdRedirectUrl)
         let editEm = $("<em class='fa fa-pencil-alt'/>")
         let additionalPEdit = $("<p>")
@@ -262,13 +292,13 @@ document.addEventListener("DOMContentLoaded", function () {
         additionalPEdit.append(editBtn)
         editBtn.append(editEm)
 
-        let delBtn = $("<a class='btn btn-xs pull-right btn-red-outline mr-2' id='roomDelBtn'/>")
+        let delBtn2 = $("<a class='btn btn-xs pull-right btn-red-outline mr-2' id='roomDelBtn'/>")
         let delEm = $("<em class='fa fa-trash-alt'/>")
         let additionalPDel = $("<p>")
-        delBtn.attr("value", roomId)
+        delBtn2.attr("value", roomId)
         // delBtn.attr("flatName", flats[i].name)
-        additionalPDel.append(delBtn)
-        delBtn.append(delEm)
+        additionalPDel.append(delBtn2)
+        delBtn2.append(delEm)
 
         let furBtn = $("<a class='btn btn-xs pull-right btn-mixed-outline mr-2' id='furBtn'/>")
         let furEm = $("<em class='fa fa-couch'/>")
@@ -286,13 +316,13 @@ document.addEventListener("DOMContentLoaded", function () {
         editDelCol.append(additionalPFur)
 
         //Delete/Edit functions
-        delBtn.on("click", function () {
+        delBtn2.on("click", function () {
             deleteEntity("following room", deleteRoom, roomId)
         })
 
-        // editBtn.on("click", function () {
-        //     editFlat(hiddenName);
-        // })
+        editBtn.on("click", function () {
+            editRoom(roomId);
+        })
 
         furBtn.on("click", function () {
             getFurniture(roomId)
@@ -301,13 +331,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function deleteRoom(roomId) {
-        let deleteAddress = '/Real_Estate_Management/rooms/delete/' + roomId;
         $.ajax({
             type: 'delete',
-            url: deleteAddress,
+            url: '../../rooms/delete/' + roomId,
         })
-            .done(function () {
-                showRooms();
+            .done(function (data) {
+                console.log(data)
+                $("#1").remove()
             })
             .fail(function (xhr, status, err) {
                 console.log(xhr.statusText);
@@ -316,10 +346,12 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    function getFurniture(roomId){
+    function getFurniture(roomId) {
+        clearTheFurnitureModalList()
+        iterationId = 1;
         $.ajax({
             type: 'get',
-            url: 'rooms/furniture/' + roomId,
+            url: '../../rooms/furniture/' + roomId,
             dataType: 'json',
             data: {},
         })
@@ -328,25 +360,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 //Next Func
                 $("#modalFurniture").modal()
 
+                removeActionFromFurnitureBtn()
                 //Process Modal
-                $("#btnSubmitRoomChange").on("click", function () {
-                    // updateRoomsForFlat(flatId)
+                $("#btnSubmitFurnitureChange").on("click", function () {
+                    updateFurnitureForFlat(roomId)
                 })
-                addToShowTableFurniture()
+                //Add Furniture
+                $("#btnModalFurniture").on("click", function () {
+                    $("#addFurnitureModal").modal()
+
+                })
+                $("#btnAddFurnitureModal").on("click", function () {
+                    saveFurnitureInFrontEnd(roomId)
+                })
+                addToShowTableFurniture(data)
+
             })
             .fail(function (xhr, status, err) {
                 console.log(xhr)
             });
     }
 
-    function addToShowTableFurniture() {
+    function addToShowTableFurniture(data) {
         let furniture = $("#furnitureToShow").html()
-        let data = JSON.parse(furniture);
-        let defaultTr = $("<tr class='table-row'>")
+        let defaultTr = $("<tr class='table-row dataFurniture' >")
         let defaultTd = $("<td>")
         let defaultBtnTd = $("<td><a class='btn btn-xs pull-right btn-mixed-outline mr-2'><em class='fa fa-trash-alt'></em></a></td>")
         let flatTableAdd = $(".table-ro")
-        let iterationId = 1;
         for (let i = 0; i < data.length; i++) {
 
             let rowTr = defaultTr.clone(true);
@@ -369,16 +409,180 @@ document.addEventListener("DOMContentLoaded", function () {
 
             //Add value to column
             rowId.append(iterationId)
-            rowValueDesc.append(data.description)
-            rowValueSquareMeters.append(data.roomId)
-            rowValueRentPrice.append(data.dateOfPurchase)
-            rowValueTypeSelect.append(data.value)
+            rowValueDesc.append(data[i].description)
+            rowValueSquareMeters.append(data[i].roomId)
+            rowValueRentPrice.append(data[i].dateOfPurchase)
+            rowValueTypeSelect.append(data[i].value)
 
             iterationId++;
             deleteFlatBtn.on("click", function () {
                 $(this).parent().remove()
             })
 
+            $("#btnBackRoomsAll").on("click", function () {
+                backToRooms2()
+            })
+
         }
     }
+
+    function updateFurnitureForFlat(roomId) {
+        let dataFeedRoomsModal = $("#furnitureTheadOwn").children()
+        let dataToSend = feedFurnitureFromModalToJson(dataFeedRoomsModal)
+        console.log(dataToSend)
+
+        let urlToSend = '../../rooms/furniture/update/' + roomId
+        $.ajax({
+            type: 'post',
+            url: urlToSend,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(dataToSend),
+
+        })
+            .done(function (data) {
+                clearTheFurnitureModalList()
+                $("#modalFurniture").modal('hide');
+            })
+    }
+
+    function feedFurnitureFromModalToJson(dataFeedRoomsModal) {
+        let furnitureToSendT = []
+        for (let j = 1; j < dataFeedRoomsModal.length; j++) {
+            let furnitureToSendL = {}
+            furnitureToSendL.description = dataFeedRoomsModal.eq(j).find(':nth-child(2)').text();
+            furnitureToSendL.roomId = dataFeedRoomsModal.eq(j).find(':nth-child(3)').text();
+            furnitureToSendL.dateOfPurchase = dataFeedRoomsModal.eq(j).find(':nth-child(4)').text()
+            furnitureToSendL.value = dataFeedRoomsModal.eq(j).find(':nth-child(5)').text()
+            furnitureToSendT.push(furnitureToSendL)
+        }
+        return furnitureToSendT;
+    }
+
+    function clearTheFurnitureModalList() {
+        let toEmpty = $("#furnitureTheadOwn").find(".dataFurniture")
+        toEmpty.remove()
+    }
+
+    function saveFurnitureInFrontEnd(roomId) {
+        let furnitureToSendL = {}
+        let furnitureToSendT = []
+
+        furnitureToSendL.description = $("#furnitureDescription").val()
+        furnitureToSendL.roomId = roomId
+        furnitureToSendL.dateOfPurchase = $("#dateOfPurchase").val()
+        furnitureToSendL.value = $("#value").val()
+        furnitureToSendT.push(furnitureToSendL)
+
+        addToShowTableFurniture(furnitureToSendT)
+
+        $("#addFurnitureModal").modal('hide');
+
+    }
+
+    function editRoom(roomId) {
+        $("#btnBackRoomsEdit").off()
+        $("#modalEditRooms").modal()
+        $.ajax({
+            type: 'get',
+            url: '../../rooms/' + roomId,
+            dataType: "json",
+            data: {},
+        })
+            .done(function (data) {
+
+                // let descriptionEdit = $("#infoDescription").next().text()
+                // let roomSquareMetersEdit = $("#infoRoomSquareMeters").next().text()
+                // let expectedRentPriceEdit = $("#infoExpectedRentPrice").next().text()
+                // let roomTypeEdit = $("#infoRoomType").next().text()
+
+                $("#expectedRentPriceEdit").val(data.expectedRentPrice)
+                $("#roomSquareMetersEdit").val(data.roomSquareMeters)
+                $("#roomDescriptionEdit").val(data.description)
+                // $("#roomTypeSelectEdit").val(roomTypeEdit)
+                let typesOfRoom = ["ROOM", "BATHROOM", "TOILET", "KITCHEN", "HALL", "BALCONY", "GARDEN", "GARAGE", "BASEMENT"];
+                $("#roomTypeSelectEdit").select2({
+                    data: typesOfRoom
+                })
+            });
+
+
+        $("#btnConfirmFlat").on('click', function () {
+            saveEditedRoom(roomId)
+        })
+
+        $("#btnBackRoomsEdit").on("click", function () {
+            backToRooms()
+        })
+
+
+    }
+
+    function backToRooms() {
+        $("#modalEditRooms").modal('hide');
+    }
+
+    function backToRooms2() {
+        $("#modalFurniture").modal('hide');
+    }
+
+
+    function saveEditedRoom(roomId) {
+        let data = {}
+        data.expectedRentPrice = $("#expectedRentPriceEdit").val()
+
+        $.ajax({
+            type: 'put',
+            url: '../../rooms/' + roomId,
+            dataType: "json",
+            data: data,
+        })
+            .done(function (data) {
+                let redirectPoint = '../../flats/showAllRooms/' + data.flatId;
+                window.location.replace(redirectPoint)
+            });
+
+
+    }
+
+    function removeActionFromFurnitureBtn() {
+        $("#btnSubmitFurnitureChange").off()
+        $("#btnModalFurniture").off()
+        $("#btnAddFurnitureModal").off()
+
+
+    }
+
+    function getPictureForRoom(roomId) {
+        let pictureUrl = null;
+        $.ajax({
+            async: false,
+            type: 'get',
+            url: '../../rooms/roomPicture/' + roomId,
+            dataType: "json",
+            data: {}
+        })
+            .done(function (data) {
+                pictureUrl = data
+            })
+        return pictureUrl;
+    }
+
+    function uploadRoomPicIfDoesNotHave(data, roomId) {
+        let formUpload = $("<form method='post' enctype='multipart/form-data' action='#'></form>")
+        formUpload.attr("action", "../../rooms/roomPicture/" + roomId)
+        let tableUpload = $("<table></table>")
+        let uploadPicRoom = $("<tr><td><input  class='btn-dark-blue mt-4 ml-5'  id='fileuploadRoom' style='display: none' type='file' name='roomFilePic'></td></tr>")
+        let submitPicRoom = $("<tr><td><input class='btn-dark-blue mt-4 ml-5' type='submit' style='width: 100px' value='Upload'></td></tr>")
+        let buttonToUpload = $("<button class='btn-dark-blue addfiles ml-5 mt-5' style='width: 100px'>Choose File</button>")
+        data.append(formUpload.append(tableUpload.append(uploadPicRoom).append(buttonToUpload).append(submitPicRoom)))
+
+        $('.addfiles').on('click', function () {
+            $('#fileuploadRoom').click();
+            return false;
+        });
+    }
+
 })
+
+

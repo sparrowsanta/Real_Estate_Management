@@ -13,8 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#roomTypeSelect").select2({
             data: typesOfRoom
         })
-
-
     })
 
     $('#btnAddFlat').on("click", saveRoomInFrontEnd)

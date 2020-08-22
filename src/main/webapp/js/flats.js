@@ -5,11 +5,17 @@ document.addEventListener("DOMContentLoaded", function () {
     function showFlatsInformation(flats) {
         containerDiv.empty();
 
-
+        let figureGeneric = $("<figure ><a href='#'></a></figure>")
+        let imgGeneric = $("<img class='img-fluid' src='#'/>")
         for (let i = 0; i < flats.length; i++) {
-            let imgFlat = $("<figure><a href='#' id='flatPicture' ><img class='img-fluid' src='img/flat.jpg'></a></figure>")
+            let figureMainFlat = figureGeneric.clone(true).attr("id", "pictureFor" + flats[i].id)
+            let imgMainFlat = imgGeneric.clone(true)
+            let flatPicture = getPictureForFlat(flats[i].id);
+            imgMainFlat.attr("src", "data:image/png;base64," + flatPicture);
+            figureMainFlat.children().append(imgMainFlat)
+
             let row = $("<div class='row'>");
-            let rowForPic = $("<div class = 'col-sm-3 col3'>")
+            let rowForPic = $("<div class = 'col-sm-3 col3 pr-0'>")
             let rowForInfo = $("<div class = 'col-sm-2'>")
             let infoRow = $("<div class = 'infoRow'>");
             let rowssborder = $("<div class='row-border'>")
@@ -32,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
             row.prepend(rowForPic)
 
             //Picture
-            rowForPic.append(imgFlat)
+            rowForPic.append(figureMainFlat)
 
             // FirstCol
             //first row
@@ -290,9 +296,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
 
             }
+
             function showAllRoomsView(flatId) {
-                    let redirectPoint = 'flats/showAllRooms/' + flatId;
-                    window.location.replace(redirectPoint)
+                let redirectPoint = 'flats/showAllRooms/' + flatId;
+                window.location.replace(redirectPoint)
 
             }
 
@@ -395,6 +402,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function emptyTheModalShowRoomTable() {
         $(".thead-own").find(".table-row").empty()
+    }
+
+    function getPictureForFlat(flatId) {
+        let pictureUrl = null;
+        $.ajax({
+            async: false,
+            type: 'get',
+            url: 'flats/flatPicture/' + flatId,
+            dataType: "json",
+            data: {}
+        })
+            .done(function (data) {
+                pictureUrl = data
+            })
+        return pictureUrl;
     }
 
 
