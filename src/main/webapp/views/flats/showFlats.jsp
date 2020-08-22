@@ -21,6 +21,7 @@
 
 </header>
 <main>
+
     <div class="mainContainer haveOpenMeterButtons">
         <header>
             <h2 class="flats-header"><spring:message code="flats.show.header"/></h2>

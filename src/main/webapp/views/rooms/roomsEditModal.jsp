@@ -88,7 +88,7 @@
                     <button type="button" class="btn btn-orange" id="btnConfirmFlat">
                         <em class="fas fa-save"></em>
                         <spring:message code="common.button.save"/></button>
-                    <button type="button" class="btn btn-orange" id="btnBackRoomsAll">
+                    <button type="button" class="btn btn-orange" id="btnBackRoomsEdit">
                         <em class="fas fa-backward"></em>
                         <spring:message code="common.button.back"/></button>
                 </div>
