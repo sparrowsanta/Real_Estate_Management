@@ -76,7 +76,6 @@ public class ShowFlats {
     @GetMapping(value = "/allFlats", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getAllFlats(Model model, HttpServletRequest request) {
-
         request.setAttribute("flats", flats);
         return new Gson().toJson(flats);
     }

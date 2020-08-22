@@ -8,11 +8,9 @@
     <title>Add Client</title>
 
     <jsp:include page="/views/util/header.jsp"></jsp:include>
-    <jsp:include page="/views/rooms/roomsModal.jsp"></jsp:include>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/addFlat.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/rooms/addRooms.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/client/addClients.js"></script>
 
 </head>
 <body>
@@ -29,82 +27,101 @@
             <div class="form-row" id="rowAddClientTable">
                 <div class="form-group col-md-3 firstPage">
                     <h5 class="control-label" for="firstName">
-                        <span class="input-group-addon"><em style="vertical-align: middle" class="fas fa-dice-one fa-2x em" aria-hidden="true"></em></span>
+                        <span class="input-group-addon"><em style="vertical-align: middle"
+                                                            class="fas fa-dice-one fa-2x em"
+                                                            aria-hidden="true"></em></span>
                         <spring:message code="client.add.firstName"/>
                     </h5>
                     <div class="custom-file ml-4">
-                        <input type="text" id="firstName" name="firstName" required="" class="form-control btn-dark-blue-outline is-valid"/>
+                        <input type="text" id="firstName" name="firstName" required=""
+                               class="form-control btn-dark-blue-outline is-valid"/>
                     </div>
                 </div>
                 <div class="form-group col-md-3 firstPage">
                     <h5 class="control-label" for="lastName">
-                        <span class="input-group-addon"><em style="vertical-align: middle" class="fas fa-dice-two fa-2x em" aria-hidden="true"></em></span>
+                        <span class="input-group-addon"><em style="vertical-align: middle"
+                                                            class="fas fa-dice-two fa-2x em"
+                                                            aria-hidden="true"></em></span>
                         <spring:message code="client.add.lastName"/>
                     </h5>
                     <div class="custom-file ml-4">
-                        <input type="text" id="lastName" name="lastName" required="" class="form-control btn-dark-blue-outline is-valid"/>
+                        <input type="text" id="lastName" name="lastName" required=""
+                               class="form-control btn-dark-blue-outline is-valid"/>
                     </div>
                 </div>
                 <div class="form-group col-md-3 firstPage">
                     <h5 class="control-label" for="age">
-                        <span class="input-group-addon"><em style="vertical-align: middle" class="fas fa-male fa-2x em" aria-hidden="true"></em></span>
+                        <span class="input-group-addon"><em style="vertical-align: middle" class="fas fa-male fa-2x em"
+                                                            aria-hidden="true"></em></span>
                         <spring:message code="client.add.age"/>
                     </h5>
                     <div class="custom-file ml-4">
-                        <input type="number" id="age" step='1' name="age" required="" class="form-control btn-dark-blue-outline is-valid"/>
+                        <input type="number" id="age" step='1' name="age" required=""
+                               class="form-control btn-dark-blue-outline is-valid"/>
                     </div>
                 </div>
                 <div class="form-group col-md-3 firstPage">
                     <h5 class="control-label" for="email">
-                        <span class="input-group-addon"><em style="vertical-align: middle" class="fas fa-envelope fa-2x em" aria-hidden="true"></em></span>
+                        <span class="input-group-addon"><em style="vertical-align: middle"
+                                                            class="fas fa-envelope fa-2x em"
+                                                            aria-hidden="true"></em></span>
                         <spring:message code="client.add.email"/>
                     </h5>
                     <div class="custom-file ml-4">
-                        <input type="email" id="clientEmail" name="clientEmail" required="" class="form-control btn-dark-blue-outline is-valid"/>
+                        <input type="email" id="clientEmail" name="clientEmail" required=""
+                               class="form-control btn-dark-blue-outline is-valid"/>
                     </div>
                 </div>
             </div>
             <div class="form-row" id="rowAddClientTable2">
-                <div class="form-group col-md-3 firstPage">
+                <div class="form-group col-md-3 secPage">
                     <h5 class="control-label" for="telNumber">
-                        <span class="input-group-addon"><em style="vertical-align: middle" class="fas fa-envelope fa-2x em" aria-hidden="true"></em></span>
+                        <span class="input-group-addon"><em style="vertical-align: middle"
+                                                            class="fas fa-phone fa-2x em"
+                                                            aria-hidden="true"></em></span>
                         <spring:message code="client.add.telNumber"/>
                     </h5>
                     <div class="custom-file ml-4">
-                        <input type="number" id="telNumber" name="telNumber" required="" class="form-control btn-dark-blue-outline is-valid"/>
+                        <input type="number" id="telNumber" name="telNumber" required=""
+                               class="form-control btn-dark-blue-outline is-valid"/>
                     </div>
                 </div>
-                <div class="form-group col-md-3 firstPage">
+                <div class="form-group col-md-3 secPage">
                     <h5 class="control-label" for="city">
-                        <span class="input-group-addon"><em style="vertical-align: middle" class="fas fa-city fa-2x em" aria-hidden="true"></em></span>
+                        <span class="input-group-addon"><em style="vertical-align: middle" class="fas fa-city fa-2x em"
+                                                            aria-hidden="true"></em></span>
                         <spring:message code="client.add.city"/>
                     </h5>
                     <div class="custom-file ml-4">
-                        <input type="text" id="city" name="city" required="" class="form-control btn-dark-blue-outline is-valid"/>
+                        <input type="text" id="city" name="city" required=""
+                               class="form-control btn-dark-blue-outline is-valid"/>
                     </div>
                 </div>
-                <div class="form-group col-md-3 firstPage">
                     <h5 class="control-label" for="street">
-                        <span class="input-group-addon"><em style="vertical-align: middle" class="fas fa-road fa-2x em" aria-hidden="true"></em></span>
+                        <span class="input-group-addon"><em style="vertical-align: middle" class="fas fa-road fa-2x em"
+                                                            aria-hidden="true"></em></span>
                         <spring:message code="client.add.street"/>
                     </h5>
                     <div class="custom-file ml-4">
-                        <input type="text" id="street" name="street" required="" class="form-control btn-dark-blue-outline is-valid"/>
+                        <input type="text" id="street" name="street" required=""
+                               class="form-control btn-dark-blue-outline is-valid"/>
                     </div>
                 </div>
             </div>
+            <div class="form-row" id="rowAddClientTable3">
+                <div class="form-group col-md-3 thirdPage">
+                    <button class="btn btn-orange mt-4 ml-4" type="button" id="btnSubmitClient">Submit</button>
+                </div>
+            </div>
+
         </div>
-        <div class="alert alert-success">
-            File Uploaded Successfully
+        <div class="alert alert-success ml-4" style="display: none">
+            <spring:message code="client.add.info.success"/>
         </div>
-        <div class="alert alert-danger">
-            File is not uploaded
+        <div class="alert alert-danger" style="display: none">
+            <spring:message code="client.add.info.fail"/>
         </div>
 
-    </div>
-    <div style="text-align:center;margin-bottom:40px">
-        <span class="step"></span>
-        <span class="step"></span>
     </div>
 </main>
 <footer>

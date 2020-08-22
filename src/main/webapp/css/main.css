@@ -258,8 +258,13 @@ main div {
     margin-top: 20px;
     text-align: center;
     min-height: 380px;
-
-
+}
+#rowShowClientsTable {
+    vertical-align: center;
+    width: auto;
+    margin-top: 20px;
+    text-align: center;
+    min-height: 380px;
 }
 
 #dataRoomFeed{
