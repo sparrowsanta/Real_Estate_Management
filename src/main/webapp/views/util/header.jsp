@@ -45,7 +45,7 @@
             class="d-inline-block float-left mr-2 align-bottom p-0"
             alt=""> Real Estate<br>Management
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu"
+    <button class="navbar-toggler btn-orange" type="button" data-toggle="collapse" data-target="#mainmenu"
             aria-controls="mainmenu" aria-expanded="false">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -76,7 +76,7 @@
                    aria-expanded="false"><spring:message code="homepage.navbar.clients"/></a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="${pageContext.request.contextPath}/clients/addClient"><spring:message code="homepage.navbar.clients.addClient"/></a>
-                    <a class="dropdown-item" href="#"><spring:message code="homepage.navbar.clients.editClient"/></a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/clients/showClients"><spring:message code="homepage.navbar.clients.showClients"/></a>
                 </div>
             </li>
         </ul>
