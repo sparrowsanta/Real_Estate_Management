@@ -3,8 +3,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <div class="container text-center">
-    <div class="modal fade " id="modalBills" tabindex="-1" role="dialog" aria-labelledby="modalBills"
-         data-backdrop="static" data-keyboard="false">
+    <div class="modal fade " id="modalBills" tabindex="-1" role="dialog" aria-labelledby="modalBills" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg mw-75 w-75" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-dark-blue">
@@ -47,7 +46,17 @@
             </div>
         </div>
     </div>
+
+    <input id="noBillsMessage" type="hidden" value="<spring:message code='bills.bill.message.noBills'/>"/>
+    <input id="billDeleteTooltip" type="hidden" value="<spring:message code='bills.button.deleteBill'/>"/>
+    <input id="billHistoryTooltip" type="hidden" value="<spring:message code='bills.button.history'/>"/>
+    <input id="billAddPaymentTooltip" type="hidden" value="<spring:message code='bills.button.addPayment'/>"/>
+    <input id="billDeletePaymentTooltip" type="hidden" value="<spring:message code='bills.button.deletePayment'/>"/>
+    <input id="billEditPaymentTooltip" type="hidden" value="<spring:message code='bills.button.editPayment'/>"/>
+    <input id="billEditTooltip" type="hidden" value="<spring:message code='bills.button.editBill'/>"/>
+    <input id="paymentDateLabel" type="hidden" value="<spring:message code='bills.payments.paymentDate'/>"/>
+    <input id="paymentAmountLabel" type="hidden" value="<spring:message code='bills.payments.paymentAmount'/>"/>
+    <input id="paymentDeleteMessage" type="hidden" value="<spring:message code='bills.payments.delete.message'/>"/>
 </div>
 
-<jsp:include page="../util/deleteConfirm.jsp"/>
 <script type="text/javascript" src="js/bills/billsModal.js"></script>

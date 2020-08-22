@@ -91,6 +91,4 @@ public class MetersController {
         testData.addReading(reading);
         return new Gson().toJson("Ok");
     }
-
-
 }

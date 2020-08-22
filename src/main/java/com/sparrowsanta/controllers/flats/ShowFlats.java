@@ -25,7 +25,7 @@ import static com.sparrowsanta.businessmodel.Room.RoomType.KITCHEN;
 import static com.sparrowsanta.businessmodel.Room.RoomType.ROOM;
 
 @Controller
-@SessionAttributes("flatEdited")
+//@SessionAttributes("flatEdited")
 @RequestMapping("flats")
 public class ShowFlats {
 

@@ -21,8 +21,7 @@
                                 <label class="control-label" for="meterType"><strong><spring:message
                                         code='meters.label.meterType'/></strong></label>
                                 <div class="input-group mb-3">
-
-                                    <select class="form-control js-example-basic-single is-valid input-white" style="width: 90%;"
+                                    <select class="form-control js-example-basic-single is-valid input-white " style="width: 91%;"
                                             id="meterType">
                                         <option></option>
                                     </select>
@@ -31,9 +30,9 @@
                                               title="<spring:message code='common.tooltip.requiredField'/>">★</span>
                                     </div>
 
-                                    <div class="alert invalid-feedback">
-                                        <span><stromg><em class="fas fa-exclamation-triangle text-orange"></em>
-                                             <spring:message code='common.error.field.required'/></stromg>
+                                    <div class="alert invalid-feedback col-md-11 bg-dark-blue">
+                                        <span><strong><em class="fas fa-exclamation-triangle text-orange"></em>
+                                             <spring:message code='common.error.field.required'/></strong>
                                         </span>
                                     </div>
                                 </div>

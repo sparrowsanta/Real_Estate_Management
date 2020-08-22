@@ -201,7 +201,9 @@ document.addEventListener("DOMContentLoaded", function () {
             let b1 = $("<p><button class='btn btn-orange rooms' style='width: 120px'>More Details</button></p>");
             let button2 = $(b1).find("button");
             button2.attr("value", flats[i].id)
-            let b3 = $("<p><button class='btn btn-mixed-outline ' style='width: 120px'>Bills</button></p>");
+            let b3 = $("<p><button class='btn btn-mixed-outline openBills' style='width: 120px'>Bills</button></p>");
+            let button3 = $(b3).find("button");
+            button3.attr("value", flats[i].id)
             // let b4 = $("<p><button class='btn btn-orange'>Something</button></p>");
 
             let additionalDiv3 = $("<div class='additional'>");

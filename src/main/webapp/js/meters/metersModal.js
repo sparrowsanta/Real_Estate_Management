@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         buttonBack.on("click", backToMetersList);
         buttonAddMeter.on("click", addNewMeter);
 
+
         initModalOpenButtons();
         initMetersTypesSelect();
 

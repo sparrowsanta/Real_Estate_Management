@@ -21,7 +21,7 @@
 
 </header>
 <main>
-    <div class="mainContainer haveOpenMeterButtons">
+    <div class="mainContainer haveOpenMeterButtons haveOpenBillsButtons">
         <header>
             <h2 class="flats-header"><spring:message code="flats.show.header"/></h2>
         </header>
@@ -41,11 +41,11 @@
                 code="flats.show.info.flatDescription"/></p>
         <input id="readDeleteMessage" type="hidden" value="<spring:message code='meters.history.delete.message'/>"/>
     </div>
-    </div>
 </main>
 
 </body>
 <jsp:include page="../meters/metersModal.jsp"/>
+<jsp:include page="../bills/billsModal.jsp"/>
 <jsp:include page="../rooms/showRooms.jsp"/>
 <jsp:include page="../util/deleteConfirm.jsp"/>
 <footer>
