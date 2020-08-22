@@ -6,9 +6,12 @@ import com.sparrowsanta.businessmodel.Furniture;
 import com.sparrowsanta.businessmodel.Room;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,13 +37,28 @@ public class RoomController {
 
         Room myFirstChanged = new Room(1, "myFirstChanged", 30.20, 1000, ROOM, 1, 1);
 
-        byte[] file =  null;
+        byte[] file = null;
         String image = "";
         if (file != null && file.length > 0) {
             image = Base64.getEncoder().encodeToString(file);
         }
 
         return new Gson().toJson(image);
+    }
+
+
+    @PostMapping("/roomPicture/{id}")
+    public String postRoomPictures(@RequestParam("roomFilePic") MultipartFile roomFilePic, Model model, @PathVariable(name = "id") String id) {
+
+        Room myFirstChanged = new Room(1, "myFirstChanged", 30.20, 1000, ROOM, 1, 1);
+        String fileName = StringUtils.cleanPath(roomFilePic.getOriginalFilename());
+        try {
+            myFirstChanged.setRoomPicture(roomFilePic.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/flats/showAllRooms/" + id;
     }
 
     @GetMapping

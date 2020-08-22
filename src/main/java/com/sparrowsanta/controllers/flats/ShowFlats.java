@@ -90,7 +90,6 @@ public class ShowFlats {
 
     //    FOR MultiPartHTTPServlet https://www.jvt.me/posts/2019/09/08/spring-extract-multipart-request-parameters/
     @PostMapping(value = "/addFlat", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @ResponseBody
     public String addFlatPost(Model model, @RequestParam(value = "file") MultipartFile file, MultipartHttpServletRequest mrequest) throws IOException {
        File convertFile = new File("/home/kuba/JAVA_COURSE/JAVA_1/Real_Estate_Management/src/main/webapp/dump/" + file.getOriginalFilename());
         convertFile.createNewFile();

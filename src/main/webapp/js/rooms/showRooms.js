@@ -25,15 +25,23 @@ document.addEventListener("DOMContentLoaded", function () {
         flatEditedParsed = JSON.parse(flat);
         rooms = flatEditedParsed.rooms
 
+
         let figureGeneric = $("<figure><a href='#' ></a></figure>")
         let imgGeneric = $("<img class='img-fluid' src='#'>")
         for (let i = 0; i < rooms.length; i++) {
             if (rooms[i].occupable == 1) {
-                let figureRoom = figureGeneric.clone(true).attr("id", "pictureFor" + flats[i].id)
-                let imgRoom = imgGeneric.clone(true)
-                figureRoom.children().append(imgRoom)
+                let figureRoom = figureGeneric.clone(true).attr("id", "pictureFor" + rooms[i].id)
                 let roomPicture = getPictureForRoom(rooms[i].id);
-                imgRoom.attr("src", "data:image/png;base64," + roomPicture);
+                let imgRoom = imgGeneric.clone(true)
+                if (roomPicture === "") {
+                    let uploadBtnRoom = $("<input id='fileid' type='file'/>")
+                    uploadRoomPicIfDoesNotHave(figureRoom.children(), rooms[i].id)
+
+                } else {
+                    imgRoom.attr("src", "data:image/png;base64," + roomPicture);
+                    figureRoom.children().append(imgRoom)
+                }
+
 
                 let row = $("<div class='row'>");
                 let rowForPic = $("<div class = 'col-sm-3 col3'>")
@@ -202,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             } else {
                 let figureRoom = figureGeneric.clone(true)
-                let imgRoom = img.clone(true)
+                let imgRoom = imgGeneric.clone(true)
                 figureRoom.children().append(imgRoom)
 
                 let row = $("<div class='row'>");
@@ -473,7 +481,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function editRoom(roomId) {
-
+        $("#btnBackRoomsEdit").off()
         $("#modalEditRooms").modal()
         $.ajax({
             type: 'get',
@@ -482,7 +490,6 @@ document.addEventListener("DOMContentLoaded", function () {
             data: {},
         })
             .done(function (data) {
-                console.log(data)
 
                 // let descriptionEdit = $("#infoDescription").next().text()
                 // let roomSquareMetersEdit = $("#infoRoomSquareMeters").next().text()
@@ -504,7 +511,7 @@ document.addEventListener("DOMContentLoaded", function () {
             saveEditedRoom(roomId)
         })
 
-        $("#btnBackRoomsAll").on("click", function () {
+        $("#btnBackRoomsEdit").on("click", function () {
             backToRooms()
         })
 
@@ -542,6 +549,8 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#btnSubmitFurnitureChange").off()
         $("#btnModalFurniture").off()
         $("#btnAddFurnitureModal").off()
+
+
     }
 
     function getPictureForRoom(roomId) {
@@ -549,7 +558,7 @@ document.addEventListener("DOMContentLoaded", function () {
         $.ajax({
             async: false,
             type: 'get',
-            url: 'rooms/roomPicture/' + roomId,
+            url: '../../rooms/roomPicture/' + roomId,
             dataType: "json",
             data: {}
         })
@@ -557,6 +566,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 pictureUrl = data
             })
         return pictureUrl;
+    }
+
+    function uploadRoomPicIfDoesNotHave(data, roomId) {
+        let formUpload = $("<form method='post' enctype='multipart/form-data' action='#'></form>")
+        formUpload.attr("action", "../../rooms/roomPicture/" + roomId)
+        let tableUpload = $("<table></table>")
+        let uploadPicRoom = $("<tr><td><input  class='btn-dark-blue mt-4 ml-5'  id='fileuploadRoom' style='display: none' type='file' name='roomFilePic'></td></tr>")
+        let submitPicRoom = $("<tr><td><input class='btn-dark-blue mt-4 ml-5' type='submit' style='width: 100px' value='Upload'></td></tr>")
+        let buttonToUpload = $("<button class='btn-dark-blue addfiles ml-5 mt-5' style='width: 100px'>Choose File</button>")
+        data.append(formUpload.append(tableUpload.append(uploadPicRoom).append(buttonToUpload).append(submitPicRoom)))
+
+        $('.addfiles').on('click', function () {
+            $('#fileuploadRoom').click();
+            return false;
+        });
     }
 
 })

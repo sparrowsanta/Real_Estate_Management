@@ -75,7 +75,7 @@
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"
                    aria-expanded="false"><spring:message code="homepage.navbar.clients"/></a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#"><spring:message code="homepage.navbar.clients.addClient"/></a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/clients/addClient"><spring:message code="homepage.navbar.clients.addClient"/></a>
                     <a class="dropdown-item" href="#"><spring:message code="homepage.navbar.clients.editClient"/></a>
                 </div>
             </li>
