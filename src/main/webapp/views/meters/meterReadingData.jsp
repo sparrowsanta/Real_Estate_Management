@@ -21,14 +21,14 @@
 
                                 <div class="input-group mb-3">
 
-                                    <input class="form-control input-white" id="readingDate" type="date" autocomplete="off"/>
+                                    <input class="form-control input-white col-md-11" id="readingDate" type="date" autocomplete="off"/>
                                     <div class="input-group-append">
                                         <span class="input-group-text required-field"
                                               title="<spring:message code='common.tooltip.requiredField'/>">★</span>
                                     </div>
-                                    <div class="alert invalid-feedback">
-                                        <span><stromg><em class="fas fa-exclamation-triangle text-orange"></em>
-                                             <spring:message code='common.error.field.required'/></stromg>
+                                    <div class="alert invalid-feedback bg-dark-blue col-md-11">
+                                        <span><strong><em class="fas fa-exclamation-triangle text-orange"></em>
+                                             <spring:message code='common.error.field.required'/></strong>
                                         </span>
                                     </div>
                                 </div>
@@ -41,14 +41,14 @@
                                         code='meters.label.readingValue'/></strong></label>
                                 <div class="input-group mb-3">
 
-                                    <input class="form-control input-white" id="readingValue" type="number" autocomplete="off"/>
-                                    <div class="input-group-append">
+                                    <input class="form-control input-white col-md-11" id="readingValue" type="number" autocomplete="off"/>
+                                    <div class="input-group-append" id="readingValueAppend">
                                         <span class="input-group-text required-field"
                                               title="<spring:message code='common.tooltip.requiredField'/>">★</span>
                                     </div>
-                                    <div class="alert invalid-feedback">
-                                        <span><stromg><em class="fas fa-exclamation-triangle text-orange"></em>
-                                             <spring:message code='common.error.field.required'/></stromg>
+                                    <div class="alert invalid-feedback bg-dark-blue col-md-11">
+                                        <span><strong><em class="fas fa-exclamation-triangle text-orange"></em>
+                                             <spring:message code='common.error.field.required'/></strong>
                                         </span>
                                     </div>
                                 </div>

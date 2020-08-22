@@ -1,6 +1,7 @@
 package com.sparrowsanta.utils;
 
 import com.google.gson.*;
+import com.sparrowsanta.businessmodel.FlatBillsDefinitions;
 import com.sparrowsanta.businessmodel.Meters;
 import com.sparrowsanta.businessmodel.MetersHistory;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,9 @@ import java.util.List;
 public class TestData {
     private final List<Meters> flatMeters = new ArrayList<>();
     private final List<MetersHistory> metersHistory = new ArrayList<>();
+    private final List<FlatBillsDefinitions> flatBills = new ArrayList<>();
     private int nextMeterId;
+    private int nextBillId;
     private int nextReadingId;
 
     private TestData() {
@@ -38,6 +41,13 @@ public class TestData {
         metersHistory.add(new MetersHistory(7, 1, LocalDate.now().minus(Period.ofMonths(31)), 90.54));
         metersHistory.add(new MetersHistory(8, 1, LocalDate.now().minus(Period.ofMonths(36)), 44.0));
         this.nextReadingId = metersHistory.size() + 1;
+
+        flatBills.add(new FlatBillsDefinitions(1, 1, "Czynsz - spółdzielnia mieszkaniowa", 525.00, "PLN", 1, 0));
+        flatBills.add(new FlatBillsDefinitions(2, 1, "Energia - Tauron", 125.00, "PLN", 1, 10));
+        flatBills.add(new FlatBillsDefinitions(3, 1, "Internet T-mobile", 80.00, "PLN", 1, 10));
+        flatBills.add(new FlatBillsDefinitions(4, 1, "TV - NC+", 95.50, "PLN", 1, 10));
+
+
     }
 
     public List<Meters> getFlatMeters() {
@@ -48,6 +58,9 @@ public class TestData {
         return metersHistory;
     }
 
+    public List<FlatBillsDefinitions> getFlatBills() {
+        return flatBills;
+    }
 
     public void addReading(String readingString) {
         Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
@@ -56,7 +69,6 @@ public class TestData {
                 return LocalDate.parse(json.getAsJsonPrimitive().getAsString());
             }
         }).create();
-
 
 
         MetersHistory reading = gson.fromJson(readingString, MetersHistory.class);
