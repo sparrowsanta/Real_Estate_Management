@@ -29,7 +29,7 @@ public class RoomController {
     Furniture furniture2 = new Furniture(1, "Szafa", 1, LocalDate.now(), 350);
 
     List<Furniture> furnitureList = Arrays.asList(furniture, furniture2);
-
+    private List<Room> rooms = new ArrayList<>();
 
     @GetMapping("/roomPicture/{id}")
     @ResponseBody
@@ -72,7 +72,6 @@ public class RoomController {
     public String updateRoomById(@PathVariable(name = "id") long id, Model model) {
 //        only for testing:
         System.out.println(id);
-        List<Room> rooms = new ArrayList<>();
         Room room = new Room(1, "myFirstChanged", 30.20, 1000, ROOM, 1, 1);
         rooms.add(room);
         Flat flat1 = new Flat(1, "Pierwsze", "Kraków", "Złota Podkowa", "5", "31-322", 2, null, 3, "Moje pierwsze mieszkanie",
@@ -120,4 +119,16 @@ public class RoomController {
         System.out.println(data);
         return new Gson().toJson("OK");
     }
+
+    @GetMapping(value = "/getRoomDesc/{roomId}", produces = "text/plain;charset=UTF-8")
+    public String getRoomDescription(@PathVariable(name = "roomId") long roomId) {
+        Room room = rooms.stream()
+                .filter(r -> r.getId() == roomId)
+                .findFirst()
+                .orElse(null);
+        String description;
+        description = "test";
+        return new Gson().toJson(description);
+    }
+
 }

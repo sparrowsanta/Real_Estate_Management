@@ -67,6 +67,7 @@
 <div id="meterForms">
     <jsp:include page="../util/deleteConfirm.jsp"/>
     <jsp:include page="../rooms/roomsModal.jsp"/>
+    <jsp:include page="../rent/rentModal.jsp"/>
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/flats.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/rooms/addRooms.js"></script>

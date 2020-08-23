@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let infoRoomSquareMeters = $("#infoRoomSquareMeters")
     let infoExpectedRentPrice = $("#infoExpectedRentPrice")
     let iterationId = 1;
+    let b1 = $("<p><button class='btn btn-mixed-outline addRent' style='width: 120px'>Add Rent</button></p>");
 
     //global roomID
 
@@ -78,6 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 //sec row
                 let p2 = $("<p>");
+                p2.addClass("roomDescription");
                 let icon2 = $("<em class='fas fa-file-alt ml-2 fa-2x mr-3 em'></em>")
                 let infoRow2 = $("<div class = 'infoRow3'>")
                 let iconDiv2 = $("<div class='float-left'>")
@@ -101,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 //Sec Col
                 //First Row
-                let icon4 = $("<em class='fas fa-square fa-2x ml-1 mr-3 em'></em>")
+                let icon4 = $("<em class='fas fa-square fa-2x mr-3 em'></em>")
                 let infoRow4 = $("<div class = 'infoRow4 mt-10'>")
                 let rowForInfo2 = $("<div class = 'col-sm-2 mt-10'>")
                 let iconDiv4 = $("<div class='float-left'>")
@@ -117,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 //sec row
                 let p5 = $("<p>");
-                let icon5 = $("<em class='fas fa-th-large fa-2x mr-3 em'></em>")
+                let icon5 = $("<em class='fas fa-male fa-2x mr-2 em'></em>")
                 let infoRow5 = $("<div class = 'infoRow5'>")
                 let iconDiv5 = $("<div class='float-left'>")
                 rowForInfo2.append(infoRow5)
@@ -206,6 +208,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     })
 
                 }
+                addAdditionalButtons(rooms[i], rooms[i].id, row)
                 addEditAndDeleteButtons(rooms[i].id, row)
 
             } else {
@@ -308,6 +311,7 @@ document.addEventListener("DOMContentLoaded", function () {
         additionalPFur.append(furBtn)
         furBtn.append(furEm)
 
+
         row.append(editDelRowCol)
         editDelRowCol.append(additionalDiv4)
         additionalDiv4.append(editDelCol)
@@ -328,6 +332,35 @@ document.addEventListener("DOMContentLoaded", function () {
             getFurniture(roomId)
         })
 
+    }
+
+    function addAdditionalButtons(room, roomId, row) {
+
+        let additionalBtnCol = $("<div class = 'editDelCol mt-10'>")
+        let additionalBtnRowCol = $("<div class = 'col-sm-1 mt-10'>")
+        let additionalDiv5 = $("<div class='additional'>");
+        let btn1 = b1.clone(true)
+        let button1 = $(btn1).find("button");
+        button1.attr("value", roomId)
+
+        row.append(additionalBtnRowCol)
+        additionalBtnRowCol.append(additionalDiv5)
+        additionalDiv5.append(additionalBtnCol)
+        additionalBtnCol.append(btn1)
+
+        $(".addRent").on("click", function () {
+            $("#modalRent").modal()
+            showAvailableClientsToAssign()
+            $("#rentRoom").val(room.description)
+
+            $("#btnBackRoomsRent").on("click", function () {
+                backToRooms3()
+            })
+
+            $("#btnSaveRent").on("click", function () {
+                saveRentForRoom(roomId)
+            })
+        })
     }
 
     function deleteRoom(roomId) {
@@ -490,12 +523,6 @@ document.addEventListener("DOMContentLoaded", function () {
             data: {},
         })
             .done(function (data) {
-
-                // let descriptionEdit = $("#infoDescription").next().text()
-                // let roomSquareMetersEdit = $("#infoRoomSquareMeters").next().text()
-                // let expectedRentPriceEdit = $("#infoExpectedRentPrice").next().text()
-                // let roomTypeEdit = $("#infoRoomType").next().text()
-
                 $("#expectedRentPriceEdit").val(data.expectedRentPrice)
                 $("#roomSquareMetersEdit").val(data.roomSquareMeters)
                 $("#roomDescriptionEdit").val(data.description)
@@ -524,6 +551,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function backToRooms2() {
         $("#modalFurniture").modal('hide');
+    }
+
+    function backToRooms3() {
+        $("#modalRent").modal('hide');
     }
 
 
@@ -572,16 +603,94 @@ document.addEventListener("DOMContentLoaded", function () {
         let formUpload = $("<form method='post' enctype='multipart/form-data' action='#'></form>")
         formUpload.attr("action", "../../rooms/roomPicture/" + roomId)
         let tableUpload = $("<table></table>")
-        let uploadPicRoom = $("<tr><td><input  class='btn-dark-blue mt-4 ml-5'  id='fileuploadRoom' style='display: none' type='file' name='roomFilePic'></td></tr>")
+        let uploadPicRoom = $("<tr><td><input  class='btn-dark-blue mt-4 ml-5 fileuploadRoom' style='display: none' type='file' name='roomFilePic'></td></tr>")
+        uploadPicRoom.children().children().attr("id", "fileuploadRoom" + roomId)
         let submitPicRoom = $("<tr><td><input class='btn-dark-blue mt-4 ml-5' type='submit' style='width: 100px' value='Upload'></td></tr>")
         let buttonToUpload = $("<button class='btn-dark-blue addfiles ml-5 mt-5' style='width: 100px'>Choose File</button>")
         data.append(formUpload.append(tableUpload.append(uploadPicRoom).append(buttonToUpload).append(submitPicRoom)))
 
         $('.addfiles').on('click', function () {
-            $('#fileuploadRoom').click();
+            $('.fileuploadRoom').click();
             return false;
         });
     }
+
+    function showAvailableClientsToAssign() {
+        $.ajax({
+            type: 'get',
+            url: '../../clients/showClientsAll',
+            dataType: 'json',
+            data: {},
+        })
+            .done(function (clients) {
+                let clientsData = []
+                for (let i = 0; i < clients.length; i++) {
+                    let singleClient = {}
+                    singleClient.id = clients[i].id
+                    singleClient.text = clients[i].firstName + " " + clients[i].lastName
+                    clientsData.push(singleClient)
+                }
+
+                $("#clientTypeSelect").select2({
+                    data: clientsData
+                })
+
+                $("#clientTypeSelect").on("change", function (){
+                    console.log($("#clientTypeSelect").val())
+                })
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
+
+
+    function saveRentForRoom(roomId) {
+        console.log($("#clientTypeSelect").val())
+        let dataRent = {};
+        feedDataFromRentModal();
+        // dataRent =
+        /*            $.ajax({
+                        type: 'post',
+                        url: '../../rents/saveRent/' + roomId,
+                        dataType: 'json',
+                        data: dataRent,
+                    })
+                        .done(function (roomDescription) {
+                            return JSON.stringify(roomDescription)
+                        })
+                        .fail(function (xhr, status, err) {
+                            console.log(xhr.statusText);
+                            console.log(status);
+                            console.log(err);
+                        });*/
+
+    }
+
+    function feedDataFromRentModal() {
+        let rentModalForm = $("#rentEditForm")
+        
+    }
+
+    /*    function getRoomDescription(roomId) {
+            $.ajax({
+                type: 'get',
+                url: '../../rooms/getRoomDesc/' + roomId,
+                dataType: 'json',
+                data: {},
+            })
+                .done(function (roomDescription) {
+                    return JSON.stringify(roomDescription)
+                })
+                .fail(function (xhr, status, err) {
+                    console.log(xhr.statusText);
+                    console.log(status);
+                    console.log(err);
+                });
+        }*/
+
 
 })
 

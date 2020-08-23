@@ -57,14 +57,4 @@
 <footer>
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>
-
-
-<%--<input id="infoStreet" type="hidden" value="<spring:message code="flats.show.info.street"/>"/>
-<input id="infoZipCode" type="hidden" value="<spring:message code="flats.show.info.zipCode"/>"/>
-<input id="infoYearOfConstruction" type="hidden" value="<spring:message code="flats.show.info.yearOfConstruction"/>"/>
-<input id="infoFlatSquareMeters" type="hidden" value="<spring:message code="flats.show.info.flatSquareMeters"/>"/>
-<input id="infoRoomsNumber" type="hidden" value="<spring:message code="flats.show.info.roomsNumber"/>"/>
-<input id="infoFlatDescription" type="hidden" value="<spring:message code='common.meterType.undefined'/>"/>
-<input id="infoForIcon" class="mt-2" type="hidden" value="<spring:message code="flats.show.header.info"/>"/>--%>
-
 </html>

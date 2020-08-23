@@ -97,6 +97,7 @@
                                class="form-control btn-dark-blue-outline is-valid"/>
                     </div>
                 </div>
+                <div class="form-group col-md-3">
                     <h5 class="control-label" for="street">
                         <span class="input-group-addon"><em style="vertical-align: middle" class="fas fa-road fa-2x em"
                                                             aria-hidden="true"></em></span>

@@ -35,6 +35,13 @@ public class ClientController {
         return new Gson().toJson("OK");
     }
 
+    @PutMapping(value = "/addClient/{id}", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String editClient(@PathVariable(name = "id") long id, @RequestBody String data) {
+        System.out.println(data);
+        return new Gson().toJson("OK");
+    }
+
     @GetMapping(value = "/showClients", produces = "text/plain;charset=UTF-8")
     public String showClients(Model model) {
         return "client/showClients";

@@ -9,7 +9,7 @@
         <div class="modal-dialog modal-lg mw-90 w-90" role="document" id="modalDialogRoom">
             <div class="modal-content">
                 <div class="modal-header bg-dark-blue">
-                    <h4 class="client-title" id="myClientLabel"><span><em class="fas fa-th-large"> </em></span>
+                    <h4 class="client-title" id="myClientLabel"><span><em class="fas fa-user"> </em></span>
                         <spring:message code="client.edit.header"/></h4>
                     <button class="close" data-dismiss="modal">
                         <span>&times;</span>
@@ -102,8 +102,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-orange" id="btnEditClient">
-                        <em class="fas fa-plus"></em>
-                        <spring:message code="client.edit.header"/></button>
+                        <em class="fas fa-save"></em>
+                        <spring:message code="common.button.save"/></button>
                     <button type="button" class="btn btn-orange" id="btnBackClients">
                         <em class="fas fa-backward"></em>
                         <spring:message code="common.button.back"/></button>
@@ -114,4 +114,4 @@
 
 </div>
 
-<%--<script type="text/javascript" src="js/meters/metersModal.js"></script>--%>
+<script type="text/javascript" src="../js/client/addClient.js"></script>
