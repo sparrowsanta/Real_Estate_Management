@@ -69,7 +69,7 @@ footer {
 
 /* 3 - Main*/
 .chart img {
-    padding: 30px 0px;
+    padding: 30px 0;
 }
 
 main div {
@@ -84,7 +84,7 @@ main div {
 }
 
 .row-border figure {
-    margin: 0px;
+    margin: 0;
 }
 
 .infoP {
@@ -135,7 +135,7 @@ main div {
 }
 
 .containerDiv {
-    border-style: solid;
+    border: solid;
     border-width: 5px;
     border: #1c7430;
 }
@@ -225,8 +225,8 @@ main div {
 
 .select2-selection__choice {
     line-height: 25px;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
 }
 
 .select2-selection {
@@ -236,19 +236,19 @@ main div {
 
 /*ROOMS*/
 .modalH5 {
-    text-align: left!important;
+    text-align: left !important;
     margin-bottom: 1px;
 }
 
 
 .select2-selection select2-selection--single {
     width: 200px;
-    text-align: left!important;
+    text-align: left !important;
 }
 
 .js-example-basic {
     width: 230px;
-    text-align: left!important;
+    text-align: left !important;
 }
 
 
@@ -259,6 +259,7 @@ main div {
     text-align: center;
     min-height: 380px;
 }
+
 #rowShowClientsTable {
     vertical-align: center;
     width: auto;
@@ -267,21 +268,23 @@ main div {
     min-height: 380px;
 }
 
-#dataRoomFeed{
+#dataRoomFeed {
     outline: 2px solid rgba(22, 105, 122, 0.5);
-    padding: 0px;
+    padding: 0;
     margin-bottom: 10px;
     box-shadow: 0 8px 6px -6px rgba(22, 105, 122, 0.5);
 }
-.thead-own th{
+
+.thead-own th {
     background-color: #16697A;
     color: #F7F4F3;
 }
-.thead-own td{
+
+.thead-own td {
     background-color: rgba(22, 105, 122, 0.5);
-    padding: 0px;
-    margin: 0px;
-    vertical-align : baseline;
+    padding: 0;
+    margin: 0;
+    vertical-align: baseline;
 }
 
 
@@ -309,9 +312,65 @@ main div {
 }
 
 .table-row td {
-    vertical-align : baseline;
+    vertical-align: baseline;
 
 }
+
+
+/* Timeline holder */
+#rentHistoryList.timeline {
+    list-style-type: none;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+/* Timeline vertical line */
+#rentHistoryList.timeline:before {
+    content: ' ';
+    background: #FFA62B;
+    display: inline-block;
+    position: absolute;
+    left: 25px;
+    width: 4px;
+    height: 100%;
+    z-index: 400;
+    border-radius: 1rem;
+}
+
+#rentHistoryList.timeline-item {
+    margin: 20px 0;
+    border: #16697A;
+}
+
+/* Timeline item arrow */
+.timeline-arrow-rent {
+    border-top: 0.5rem solid transparent;
+    border-right: 0.5rem solid #16697A;
+    border-bottom: 0.5rem solid transparent;
+    display: block;
+    position: absolute;
+    left: 1.3rem;
+}
+
+/* Timeline item circle marker */
+#rentHistoryList li.timeline-item::before {
+    content: ' ';
+    background: #16697A;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #16697A;
+    left: 0.031rem;
+    width: 14px;
+    height: 14px;
+    z-index: 400;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+#modalDelete {
+    z-index: 2000;
+}
+
 /*
 .select2-selection select2-selection--single {
     width: 100%;

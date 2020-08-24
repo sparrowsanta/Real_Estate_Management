@@ -21,7 +21,7 @@
                     <div class="modalContainer" id="room">
                         <h4><spring:message code="rooms.add.roomsParameter"/></h4>
                         <div class="modaContainerDiv" id="roomContainerDiv">
-                            <form method="post" class="form" id="roomCreateForm">
+                            <form method="post" class="form" id="roomCreateFormEdit">
                                 <div class="form-row mr-5" id="roomFormRow">
                                     <div class="form-group col-md-4">
                                         <h5 class="modalH5">

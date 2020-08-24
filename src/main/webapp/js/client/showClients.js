@@ -89,8 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
             type: "delete",
             url: "../clients/deleteClient/" + clientId
         }).done(function () {
-            $(".deleteClientBtn").parent().parent().remove()
-            getAllClients
+            getAllClients()
         }).fail(function (xhr, status, err) {
             console.log(xhr.statusText);
             console.log(status);

@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let infoExpectedRentPrice = $("#infoExpectedRentPrice")
     let iterationId = 1;
     let b1 = $("<p><button class='btn btn-mixed-outline addRent' style='width: 120px'>Add Rent</button></p>");
-
+    let formRentsHistory = $("#rentHistoryForm");
     //global roomID
 
     let flat = $("#flatToShow").html()
@@ -341,25 +341,18 @@ document.addEventListener("DOMContentLoaded", function () {
         let additionalDiv5 = $("<div class='additional'>");
         let btn1 = b1.clone(true)
         let button1 = $(btn1).find("button");
+        let attrForBtn = "rentShow" + roomId
         button1.attr("value", roomId)
+        button1.attr("id", attrForBtn)
 
         row.append(additionalBtnRowCol)
         additionalBtnRowCol.append(additionalDiv5)
         additionalDiv5.append(additionalBtnCol)
         additionalBtnCol.append(btn1)
-
-        $(".addRent").on("click", function () {
-            $("#modalRent").modal()
-            showAvailableClientsToAssign()
-            $("#rentRoom").val(room.description)
-
-            $("#btnBackRoomsRent").on("click", function () {
-                backToRooms3()
-            })
-
-            $("#btnSaveRent").on("click", function () {
-                saveRentForRoom(roomId)
-            })
+        document.getElementById(attrForBtn).addEventListener("click", function () {
+            //History
+            console.log("test")
+            getRentHistory(roomId)
         })
     }
 
@@ -370,7 +363,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .done(function (data) {
                 console.log(data)
-                $("#1").remove()
+                // $("#1").remove()
             })
             .fail(function (xhr, status, err) {
                 console.log(xhr.statusText);
@@ -529,6 +522,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 // $("#roomTypeSelectEdit").val(roomTypeEdit)
                 let typesOfRoom = ["ROOM", "BATHROOM", "TOILET", "KITCHEN", "HALL", "BALCONY", "GARDEN", "GARAGE", "BASEMENT"];
                 $("#roomTypeSelectEdit").select2({
+                    placeholder: "Select a type",
+                    allowClear: true,
                     data: typesOfRoom
                 })
             });
@@ -554,13 +549,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function backToRooms3() {
-        $("#modalRent").modal('hide');
+        $("#modalRentAdd").modal('hide')
+    }
+
+    function backToRooms4() {
+        $("#modalRent").modal('hide')
     }
 
 
     function saveEditedRoom(roomId) {
         let data = {}
         data.expectedRentPrice = $("#expectedRentPriceEdit").val()
+        data.description = $("#roomDescriptionEdit").val()
+        data.roomSquareMeters = $("#roomSquareMetersEdit").val()
+        data.roomType = $("#roomTypeSelectEdit").val()
 
         $.ajax({
             type: 'put',
@@ -624,19 +626,17 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .done(function (clients) {
                 let clientsData = []
+
                 for (let i = 0; i < clients.length; i++) {
                     let singleClient = {}
                     singleClient.id = clients[i].id
                     singleClient.text = clients[i].firstName + " " + clients[i].lastName
                     clientsData.push(singleClient)
                 }
-
+                clientsData.push({})
                 $("#clientTypeSelect").select2({
-                    data: clientsData
-                })
-
-                $("#clientTypeSelect").on("change", function (){
-                    console.log($("#clientTypeSelect").val())
+                    data: clientsData,
+                    placeholder: "Choose Client"
                 })
             })
             .fail(function (xhr, status, err) {
@@ -648,50 +648,253 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function saveRentForRoom(roomId) {
-        console.log($("#clientTypeSelect").val())
-        let dataRent = {};
-        feedDataFromRentModal();
-        // dataRent =
-        /*            $.ajax({
-                        type: 'post',
-                        url: '../../rents/saveRent/' + roomId,
-                        dataType: 'json',
-                        data: dataRent,
-                    })
-                        .done(function (roomDescription) {
-                            return JSON.stringify(roomDescription)
-                        })
-                        .fail(function (xhr, status, err) {
-                            console.log(xhr.statusText);
-                            console.log(status);
-                            console.log(err);
-                        });*/
-
-    }
-
-    function feedDataFromRentModal() {
-        let rentModalForm = $("#rentEditForm")
-        
-    }
-
-    /*    function getRoomDescription(roomId) {
-            $.ajax({
-                type: 'get',
-                url: '../../rooms/getRoomDesc/' + roomId,
-                dataType: 'json',
-                data: {},
+        let dataRent = feedDataFromRentModal(roomId);
+        console.log(dataRent)
+        $.ajax({
+            type: 'post',
+            url: '../../rents/' + roomId,
+            dataType: 'json',
+            data: dataRent,
+        })
+            .done(function (data) {
+                $("#modalRentAdd").modal('hide')
+                getRentHistory(data.room.id)
             })
-                .done(function (roomDescription) {
-                    return JSON.stringify(roomDescription)
-                })
-                .fail(function (xhr, status, err) {
-                    console.log(xhr.statusText);
-                    console.log(status);
-                    console.log(err);
-                });
-        }*/
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
 
+    }
+
+    function feedDataFromRentModal(roomId) {
+        dataRent = {}
+        dataRent.clientId = $("#clientTypeSelect").val()
+        dataRent.rentDateFrom = $("#rentDateFrom").val()
+        dataRent.rentDateTo = $("#rentDateTo").val()
+        dataRent.rentAmount = $("#rentAmount").val()
+        dataRent.rentRoom = roomId
+
+        return dataRent;
+
+    }
+
+    function assignButtonsOnRentScreen(roomId) {
+        let btnSaveRent = $("#btnSaveRent")
+        btnSaveRent.off()
+        $("#btnBackRoomsRent").on("click", function () {
+            backToRooms3()
+        })
+        btnSaveRent.attr("value", roomId)
+        btnSaveRent.val(roomId).on("click", function () {
+            saveRentForRoom(roomId)
+        })
+    }
+
+
+    function createHistoryList(data, roomId) {
+        let btnBackRoomsRentAssign = $("#btnBackRoomsRentAssign")
+        let btnAssignRent = $("#btnAssignRent")
+        btnAssignRent.off()
+
+
+        let infoRentDateFrom = $("#infoRentDateFrom").text()
+        let infoRentClient = $("#infoRentClient").text()
+        let infoRentDateTo = $("#infoRentDateTo").text()
+        let infoRentAmount = $("#infoRentAmount").text()
+
+        let rentHistoryList = $("#rentHistoryList")
+
+        rentHistoryList.empty();
+
+        if (data.length > 0) {
+            for (let i = 0; i < data.length; i++) {
+                let newLi = $("<li>");
+                let newDiv = $("<div>");
+                let newDiv2 = $("<div>");
+                let newP1 = $("<p>");
+                let newP2 = $("<p>");
+                let newP3 = $("<p>");
+                let newEmFrom = $("<em>");
+                let newEmTo = $("<em>");
+                let newEmValue = $("<em>");
+                let newEmClient = $("<em>");
+                let btnDelete = $("<a>");
+                let btnDeleteEm = $("<em>");
+                let btnEdit = $("<a>");
+                let btnEditEm = $("<em>");
+                let divFormRow = $("<div class='form-row' id='rentFormRow'>")
+                let divFormGroup = $("<div class='form-group mr-3 col-md-12'>")
+
+
+                newLi.addClass("timeline-item bg-main-theme rounded ml-4 p-4 shadow");
+                newDiv.addClass("timeline-arrow-rent");
+                newP1.addClass("text-small mt-2 font-weight-light");
+                newP2.addClass("text-small mt-2 font-weight-light");
+                newP3.addClass("text-small mt-2 font-weight-light");
+                newEmFrom.addClass("far fas fa-calendar-day mr-3");
+                newEmTo.addClass("far fas fa-calendar-check mr-3");
+                newEmValue.addClass("fas fa-hand-holding-usd mr-3");
+                newEmClient.addClass("fas fa-male ml-4 mr-3");
+                newP1.append(newEmFrom);
+                newP2.append(newEmTo);
+                newP3.append(newEmValue);
+                let rentDateFrom = data[i].rentDateFrom.year + "." +
+                    (data[i].rentDateFrom.month > 9 ? data[i].rentDateFrom.month : "0" + data[i].rentDateFrom.month) + "." +
+                    (data[i].rentDateFrom.day > 9 ? data[i].rentDateFrom.day : "0" + data[i].rentDateFrom.day);
+                let rentDateTo = data[i].rentDateTo.year + "." +
+                    (data[i].rentDateTo.month > 9 ? data[i].rentDateTo.month : "0" + data[i].rentDateTo.month) + "." +
+                    (data[i].rentDateTo.day > 9 ? data[i].rentDateTo.day : "0" + data[i].rentDateTo.day);
+                newP1.append(infoRentDateFrom + ": " + rentDateFrom);
+                newP1.append(newEmClient)
+                newP1.append(infoRentClient + ": " + data[i].client.firstName + " " + data[i].client.lastName)
+                newP2.append(infoRentDateTo + ": " + rentDateTo);
+                newP3.append(infoRentAmount + ": " + data[i].rentAmount);
+
+
+                btnDeleteEm.addClass("fas fa-trash-alt");
+                btnEditEm.addClass("fas fa-pencil-alt");
+                btnDelete.addClass("btn btn-xs float-right btn-mixed-outline mr-2").attr("value", data[i].id).on("click", function () {
+                    deleteEntity(" rent for that client: " + data[i].client.firstName + " " + data[i].client.lastName, deleteRent, data[i].id)
+                });
+                btnEdit.addClass("btn btn-xs float-right btn-mixed-outline mr-2").attr("value", data[i].id);
+                btnEdit.append(btnEditEm);
+                btnDelete.append(btnDeleteEm);
+
+                newDiv2.append(btnEdit);
+                newDiv2.append(btnDelete);
+                newDiv2.append(newP1);
+                newDiv2.append(newP2);
+                newDiv2.append(newP3);
+                newLi.append(newDiv);
+                newLi.append(newDiv2);
+
+                divFormRow.append(divFormGroup.append(newLi))
+                rentHistoryList.append(divFormRow);
+
+                btnAssignRent.on("click", function () {
+                    addNewRentToRoom(data[i].room, roomId)
+                })
+                btnEdit.off()
+                btnEdit.on("click", function () {
+                    editRentToRoom(data[i], roomId)
+                })
+
+                btnBackRoomsRentAssign.on("click", function () {
+                    backToRooms4()
+                })
+            }
+        }
+    }
+
+
+    function getRentHistory(roomId) {
+        $("#modalRent").modal()
+        $.ajax({
+            type: 'get',
+            url: '../../rooms/roomRentHistory/' + roomId,
+            dataType: 'json',
+            data: {},
+        })
+            .done(function (data) {
+                createHistoryList(data, roomId);
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
+
+    function deleteRent(rentId) {
+        $.ajax({
+            type: 'delete',
+            url: '../../rooms/rentHistory/' + rentId,
+        })
+            .done(function (data) {
+                $(this).parent().parent().remove()
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
+
+    function getRentHistoryById(rentId) {
+        $.ajax({
+            type: 'get',
+            url: '../../rents/rentHistory/' + rentId,
+            dataType: 'json',
+            data: {},
+        })
+            .done(function (data) {
+                // dataRent.clientId = $("#clientTypeSelect").val()
+                $("#rentDateFrom").val(parseLocalDateToYYYYmmDD(data.rentDateFrom))
+                $("#rentDateTo").val(parseLocalDateToYYYYmmDD(data.rentDateTo))
+                $("#rentAmount").val(data.rentAmount)
+                $("#rentRoom").val(data.room.description)
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
+
+    function addNewRentToRoom(room, roomId) {
+        $("#modalRentAdd").modal()
+        showAvailableClientsToAssign()
+        assignButtonsOnRentScreen(roomId)
+        $("#rentRoom").val(room.description)
+    }
+
+    function editRentToRoom(rent, roomId) {
+        $("#modalRentAdd").modal()
+        showAvailableClientsToAssign()
+        getRentHistoryById(rent.id)
+        assignButtonsOnRentScreenEdit(rent.room.id)
+        // $("#rentRoom").val(room.description)
+
+    }
+
+
+    function assignButtonsOnRentScreenEdit(rent, roomId) {
+        let btnSaveRent = $("#btnSaveRent")
+        btnSaveRent.off()
+        $("#btnBackRoomsRent").on("click", function () {
+            backToRooms3()
+        })
+        btnSaveRent.attr("value", roomId)
+        btnSaveRent.val(roomId).on("click", function () {
+            editRentForRoom(rent.id, roomId)
+        })
+    }
+
+    function editRentForRoom(rentId, roomId) {
+        let data = feedDataFromRentModal(roomId)
+        $.ajax({
+            type: 'put',
+            url: '../../rents/' + rentId,
+            dataType: "json",
+            data: data,
+        })
+            .done(function (data) {
+                $("#modalRentAdd").modal('hide')
+                getRentHistory(roomId)
+            });
+
+    }
 
 })
+
+function parseLocalDateToYYYYmmDD(entity) {
+    let parsedDate = entity.year + "-" +
+        (entity.month > 9 ? entity.month : "0" + entity.month) + "-" +
+        (entity.day > 9 ? entity.day : "0" + entity.day);
+
+    return parsedDate;
+}
 
 
