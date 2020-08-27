@@ -11,7 +11,7 @@
     <jsp:include page="/views/rooms/roomsModal.jsp"></jsp:include>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/addFlat.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/flats/addFlat.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/rooms/addRooms.js"></script>
 
 </head>

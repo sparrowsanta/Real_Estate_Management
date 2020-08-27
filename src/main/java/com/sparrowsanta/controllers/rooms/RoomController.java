@@ -8,12 +8,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,12 +22,22 @@ import static com.sparrowsanta.businessmodel.Room.RoomType.ROOM;
 @RequestMapping("rooms")
 @SessionAttributes("furnitures")
 public class RoomController {
-    Furniture furniture = new Furniture(1, "Szafa", 1, LocalDate.now(), 350);
-    Furniture furniture2 = new Furniture(1, "Szafa", 1, LocalDate.now(), 350);
 
-    List<Furniture> furnitureList = Arrays.asList(furniture, furniture2);
     private List<Room> rooms = new ArrayList<>();
     private List<Rent> rents = new ArrayList<>();
+    private Client client = new Client(1L, "Jakub", "Wróbel", 30, "jakubw.rrw@wm.pl", "Krakow", "Zlota", 73893987L);
+    private List<Furniture> furnitureList = new ArrayList<>();
+    private Room room;
+
+    public RoomController() {
+        Furniture furniture = new Furniture(1, "Szafa", 1, LocalDate.now(), 350);
+        Furniture furniture2 = new Furniture(2, "Szafa", 1, LocalDate.now(), 350);
+
+        furnitureList.add(furniture);
+        furnitureList.add(furniture2);
+        room = new Room(1, "myFirstChanged", 30.20, 1000, ROOM, 1, 1);
+        rooms.add(room);
+    }
 
     @GetMapping("/roomPicture/{id}")
     @ResponseBody
@@ -72,8 +80,7 @@ public class RoomController {
     public String updateRoomById(@PathVariable(name = "id") long id, Model model) {
 //        only for testing:
         System.out.println(id);
-        Room room = new Room(1, "myFirstChanged", 30.20, 1000, ROOM, 1, 1);
-        rooms.add(room);
+
         Flat flat1 = new Flat(1, "Pierwsze", "Kraków", "Złota Podkowa", "5", "31-322", 2, null, 3, "Moje pierwsze mieszkanie",
                 34.4, 2010, 305000.00, 2000.0, null, "", null);
         flat1.setRooms(rooms);
@@ -100,6 +107,15 @@ public class RoomController {
 
     }
 
+    @DeleteMapping(value = "/furniture/{furnitureId}", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String deleteFurniture(@PathVariable(name = "furnitureId") long furnitureId) {
+        System.out.println(furnitureId);
+        furnitureList.removeIf(f -> f.getId() == furnitureId);
+        return new Gson().toJson(furnitureList);
+
+    }
+
     @RequestMapping(value = "/furniture/{roomId}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String showAllFurniture(Model model, @PathVariable(name = "roomId") long roomId) {
@@ -123,8 +139,18 @@ public class RoomController {
         return new Gson().toJson(roomId);
     }
 
+    @GetMapping(value = "/furnitureById/{furnitureId}", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String getFurnitureById(@PathVariable(name = "furnitureId") long furnitureId) {
+        Furniture furniture = furnitureList.stream()
+                .filter(f -> f.getId() == furnitureId)
+                .findFirst()
+                .orElse(null);
+        return new Gson().toJson(furniture);
+    }
 
-    @GetMapping("/roomRentHistory/{roomId}")
+
+    @GetMapping(value = "/roomRentHistory/{roomId}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getRentHistoryByRoomId(@PathVariable(name = "roomId") long roomId, Model model) {
         rents.clear();
@@ -146,6 +172,15 @@ public class RoomController {
     public String deleteRentHistory(@PathVariable(name = "rentId") long rentId) {
         rents.removeIf(r -> r.getId() == rentId);
         return new Gson().toJson("OK");
+    }
+
+    @GetMapping("/roomsForFlat/{flatId}")
+    @ResponseBody
+    public String getAllRoomsForFlat(@PathVariable(name = "flatId") long flatId) {
+        List<Room> roomsList = rooms.stream()
+                .filter(r -> r.getFlatId() == flatId)
+                .collect(Collectors.toList());
+        return new Gson().toJson(roomsList);
     }
 
 

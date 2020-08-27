@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let btnSubmitClient = $("#btnSubmitClient")
     btnSubmitClient.on("click", function () {
         saveClient()
+        console.log("test")
 
     })
 

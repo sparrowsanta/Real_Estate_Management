@@ -32,6 +32,7 @@ public class ClientController {
     @ResponseBody
     public String saveClient(@RequestBody String data) {
         System.out.println(data);
+//        return "forward:RealEstateManagementRest-env.eba-u4wqr2f3.eu-central-1.elasticbeanstalk.com";
         return new Gson().toJson("OK");
     }
 

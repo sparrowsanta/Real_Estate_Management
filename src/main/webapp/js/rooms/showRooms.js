@@ -6,12 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
     //Info - Hidden
     let infoForIcon = $("#infoForIcon")
     let infoNotOccupable = $("#infoNotOccupable")
+    let infoTenant = $("#infoTenant")
     let infoRoomType = $("#infoRoomType")
     let infoDescription = $("#infoDescription")
     let infoRoomSquareMeters = $("#infoRoomSquareMeters")
     let infoExpectedRentPrice = $("#infoExpectedRentPrice")
+    let infoShowRents = $("#infoShowRents")
+
     let iterationId = 1;
-    let b1 = $("<p><button class='btn btn-mixed-outline addRent' style='width: 120px'>Add Rent</button></p>");
+    let b1 = $("<p><button class='btn btn-mixed-outline addRent' style='width: 120px'></button></p>");
     let formRentsHistory = $("#rentHistoryForm");
     //global roomID
 
@@ -24,8 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
         containerDivRoomsNoOccupable.empty()
         flat = $("#flatToShow").html()
         flatEditedParsed = JSON.parse(flat);
-        rooms = flatEditedParsed.rooms
 
+        let test = getAllRoomsForFlat(flatEditedParsed.id)
 
         let figureGeneric = $("<figure><a href='#' ></a></figure>")
         let imgGeneric = $("<img class='img-fluid' src='#'>")
@@ -125,8 +128,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 rowForInfo2.append(infoRow5)
                 infoRow5.prepend(iconDiv5)
                 iconDiv5.prepend(icon5)
-                // infoRow5.append(infoRoomsNumber.clone(true))
-                // infoRow5.append(p5.text(flats[i].roomsNumber))
+                infoRow5.append(infoTenant.clone(true))
+                infoRow5.append(p5.text(rooms[i]))
 
 
                 //thrid row
@@ -278,6 +281,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     showRooms();
 
+    function getAllRoomsForFlat(flatId) {
+        $.ajax({
+            type: 'get',
+            url: '../../rooms/roomsForFlat/' + flatId,
+            dataType: "json",
+            data: {},
+        })
+            .done(function (data) {
+                console.log(data)
+            });
+    }
+
     function addEditAndDeleteButtons(roomId, row) {
 
         let editDelCol = $("<div class = 'editDelCol mt-10'>")
@@ -344,6 +359,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let attrForBtn = "rentShow" + roomId
         button1.attr("value", roomId)
         button1.attr("id", attrForBtn)
+        button1.text(infoShowRents.text())
 
         row.append(additionalBtnRowCol)
         additionalBtnRowCol.append(additionalDiv5)
@@ -351,7 +367,6 @@ document.addEventListener("DOMContentLoaded", function () {
         additionalBtnCol.append(btn1)
         document.getElementById(attrForBtn).addEventListener("click", function () {
             //History
-            console.log("test")
             getRentHistory(roomId)
         })
     }
@@ -382,7 +397,6 @@ document.addEventListener("DOMContentLoaded", function () {
             data: {},
         })
             .done(function (data) {
-                console.log(data)
                 //Next Func
                 $("#modalFurniture").modal()
 
@@ -408,20 +422,33 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function addToShowTableFurniture(data) {
-        let furniture = $("#furnitureToShow").html()
+        clearTheFurnitureModalList()
         let defaultTr = $("<tr class='table-row dataFurniture' >")
         let defaultTd = $("<td>")
-        let defaultBtnTd = $("<td><a class='btn btn-xs pull-right btn-mixed-outline mr-2'><em class='fa fa-trash-alt'></em></a></td>")
+        let defaultBtnTd = $("<td><a class='btn btn-xs pull-right btn-mixed-outline delFurnitureBtn mr-2'><em class='fa fa-trash-alt'></em></a></td>")
+        let defaultBtnEdit = $("<a class='btn btn-xs pull-right btn-mixed-outline editFurnitureBtn mr-2'><em class='fa fa-pencil-alt'></em></a>")
         let flatTableAdd = $(".table-ro")
         for (let i = 0; i < data.length; i++) {
 
             let rowTr = defaultTr.clone(true);
+
             let rowId = defaultTd.clone(true)
             let rowValueDesc = defaultTd.clone(true)
             let rowValueSquareMeters = defaultTd.clone(true)
             let rowValueRentPrice = defaultTd.clone(true)
             let rowValueTypeSelect = defaultTd.clone(true)
-            let deleteFlatBtn = defaultBtnTd.clone(true)
+            let editClientBtn = defaultBtnEdit.clone(true).on("click", function () {
+                $("#addFurnitureModal").modal()
+                $("#btnBackFurniture").on("click", function () {
+                    $("#addFurnitureModal").modal('hide')
+                })
+                getFurnitureById(data[i].id)
+            })
+
+            let deleteFlatBtn = defaultBtnTd.clone(true).on("click", function () {
+                deleteEntity("furniture ", deleteFurnitureById, data[i].id)
+            })
+            deleteFlatBtn.attr("value", data[i].id)
 
             flatTableAdd.after(rowTr)
 
@@ -431,7 +458,7 @@ document.addEventListener("DOMContentLoaded", function () {
             rowTr.append(rowValueSquareMeters)
             rowTr.append(rowValueRentPrice)
             rowTr.append(rowValueTypeSelect)
-            rowTr.append(deleteFlatBtn)
+            rowTr.append(deleteFlatBtn.append(editClientBtn))
 
             //Add value to column
             rowId.append(iterationId)
@@ -441,15 +468,48 @@ document.addEventListener("DOMContentLoaded", function () {
             rowValueTypeSelect.append(data[i].value)
 
             iterationId++;
-            deleteFlatBtn.on("click", function () {
-                $(this).parent().remove()
-            })
+            /*            $(".delFurnitureBtn").on("click", function () {
+                            deleteEntity("furniture ", deleteFurnitureById, data[i].id)
+                            $(this).parent().parent().remove()
+                        })*/
 
             $("#btnBackRoomsAll").on("click", function () {
+                console.log("test")
                 backToRooms2()
             })
 
         }
+    }
+
+    function deleteFurnitureById(furnitureId) {
+        $.ajax({
+            type: 'delete',
+            url: '../../rooms/furniture/' + furnitureId,
+        })
+            .done(function () {
+                addToShowTableFurniture(data)
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
+
+    function getFurnitureById(furnitureId) {
+        $.ajax({
+            type: 'get',
+            url: '../../rooms/furnitureById/' + furnitureId,
+            dataType: "json",
+            contentType: "application/json",
+            data: {},
+
+        })
+            .done(function (data) {
+                $("#furnitureDescription").val(data.description)
+                $("#dateOfPurchase").val(parseLocalDateToYYYYmmDD(data.dateOfPurchase))
+                $("#value").val(data.value)
+            })
     }
 
     function updateFurnitureForFlat(roomId) {
@@ -831,10 +891,12 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .done(function (data) {
                 // dataRent.clientId = $("#clientTypeSelect").val()
-                $("#rentDateFrom").val(parseLocalDateToYYYYmmDD(data.rentDateFrom))
-                $("#rentDateTo").val(parseLocalDateToYYYYmmDD(data.rentDateTo))
-                $("#rentAmount").val(data.rentAmount)
-                $("#rentRoom").val(data.room.description)
+                if (data !== null) {
+                    $("#rentDateFrom").val(parseLocalDateToYYYYmmDD(data.rentDateFrom))
+                    $("#rentDateTo").val(parseLocalDateToYYYYmmDD(data.rentDateTo))
+                    $("#rentAmount").val(data.rentAmount)
+                    $("#rentRoom").val(data.room.description)
+                }
             })
             .fail(function (xhr, status, err) {
                 console.log(xhr.statusText);
@@ -844,6 +906,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function addNewRentToRoom(room, roomId) {
+        $("#modalRentAdd").find("input").val("")
         $("#modalRentAdd").modal()
         showAvailableClientsToAssign()
         assignButtonsOnRentScreen(roomId)

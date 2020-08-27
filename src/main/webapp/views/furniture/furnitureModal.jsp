@@ -32,7 +32,7 @@
                                             <th scope="col"><spring:message code="furniture.show.room.id"/></th>
                                             <th scope="col"><spring:message code="furniture.show.dateOfPurchase"/></th>
                                             <th scope="col"><spring:message code="furniture.show.value"/></th>
-                                            <th scope="col"><spring:message code="common.button.delete"/></th>
+                                            <th scope="col"><spring:message code="client.show.edit"/></th>
 
                                         </tr>
                                         </thead>

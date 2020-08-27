@@ -9,7 +9,7 @@
         <div class="modal-dialog modal-lg mw-90 w-90" role="document" id="modalDialogRent">
             <div class="modal-content">
                 <div class="modal-header bg-dark-blue">
-                    <h4 class="rent-title" id="myRentLabel"><span><em class="fas fa-handshake"> </em></span>
+                    <h4 class="rent-title" id="myRentLabel"><span><em class="fas fa-people-arrows"> </em></span>
                         <spring:message code="rent.show.rent"/></h4>
                     <button class="close" data-dismiss="modal">
                         <span>&times;</span>
