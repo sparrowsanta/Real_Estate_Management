@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // -------- Initialize select with meter types
         function initMetersTypesSelect() {
             createMeterTypes();
-            $('.js-example-basic-single').select2({
+            $('#meterType').select2({
                 placeholder: $("#meterSelectTypePlaceholder").val(),
                 data: meterTypes,
                 escapeMarkup: function (markup) {
@@ -56,10 +56,11 @@ document.addEventListener("DOMContentLoaded", function () {
             //find containers with class "haveOpenMeterButtons" and bind listener tracking changes in subtree. Add function to search
             // for buttons "openMeters" if container subtree dynamically changes, and and add onclick event to open MeterModal to those buttons.
             let containerDiv = $(".haveOpenMeterButtons")
-            containerDiv.bind('DOMSubtreeModified', function () {
-                let openMetersButtons = $(".openMeters");
+            containerDiv.bind('DOMNodeInserted', function (e) {
+                let openMetersButtons = $(e.target).find($(".openMeters"));
                 openMetersButtons.on("click", openMetersModal);
             });
+
         }
 
         function openMetersModal() {

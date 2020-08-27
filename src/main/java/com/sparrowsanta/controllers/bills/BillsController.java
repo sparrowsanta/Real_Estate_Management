@@ -1,6 +1,7 @@
 package com.sparrowsanta.controllers.bills;
 
 import com.google.gson.Gson;
+import com.sparrowsanta.businessmodel.FlatBills;
 import com.sparrowsanta.businessmodel.FlatBillsDefinitions;
 import com.sparrowsanta.utils.TestData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +18,33 @@ public class BillsController {
 
     @GetMapping(value = "/getAll/{flatId}", produces = "text/plain;charset=UTF-8")
     public String getBills(@PathVariable(name = "flatId") long flatId) {
-        return new Gson().toJson(testData.getFlatBills().stream()
+        return new Gson().toJson(testData.getFlatBillsDefinitions().stream()
                 .filter(bill -> bill.getFlatId() == flatId)
                 .collect(Collectors.toList()));
     }
 
     @GetMapping(value = "/{billId}", produces = "text/plain;charset=UTF-8")
     public String getBillById(@PathVariable(name = "billId") long billId) {
-        FlatBillsDefinitions bill = testData.getFlatBills().stream()
+        FlatBillsDefinitions bill = testData.getFlatBillsDefinitions().stream()
                 .filter(m -> m.getId() == billId)
                 .findFirst()
                 .orElse(null);
         return new Gson().toJson(bill);
+    }
+
+    @GetMapping(value = "/payment/all/{flatId}/{filter}", produces = "text/plain;charset=UTF-8")
+    public String getPaymentByFlatId(@PathVariable(name = "flatId") long flatId,
+                                     @PathVariable(name = "filter") String filter) {
+
+        boolean onlyPayed = filter.equals("paid");
+        boolean onlyNotPayed = filter.equals("notPaid");
+        return new Gson().toJson(testData.getFlatBills().stream().filter(x -> x.getFlatId() == flatId)
+                .filter(onlyPayed ? FlatBills::isPaid : x -> true)
+                .filter(onlyNotPayed ? x-> !x.isPaid() : x -> true)
+                .sorted((x, y) -> y.getPaymentDate().compareTo(x.getPaymentDate()))
+                .collect(Collectors.toList()));
+
+//        return new Gson().toJson("Ok");
     }
 
     @GetMapping(value = "/payment/{paymentId}", produces = "text/plain;charset=UTF-8")

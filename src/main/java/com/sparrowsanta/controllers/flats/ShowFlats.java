@@ -3,11 +3,13 @@ package com.sparrowsanta.controllers.flats;
 import com.google.gson.Gson;
 import com.sparrowsanta.businessmodel.Flat;
 import com.sparrowsanta.businessmodel.Room;
+import com.sparrowsanta.utils.RestUrls;
 import org.springframework.boot.Banner;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -75,9 +77,9 @@ public class ShowFlats {
 
     @GetMapping(value = "/allFlats", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String getAllFlats(Model model, HttpServletRequest request) {
-        request.setAttribute("flats", flats);
-        return new Gson().toJson(flats);
+    public String getAllFlats() {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(RestUrls.getGetAllFlats(), String.class);
     }
 
     @GetMapping(value = "/addFlat", produces = "text/plain;charset=UTF-8")

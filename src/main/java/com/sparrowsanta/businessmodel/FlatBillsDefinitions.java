@@ -3,7 +3,6 @@ package com.sparrowsanta.businessmodel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -15,4 +14,5 @@ public class FlatBillsDefinitions {
     private String currency;
     private int billFrequencyInMonths;
     private int paymentTillDayOfMonth;
+
 }

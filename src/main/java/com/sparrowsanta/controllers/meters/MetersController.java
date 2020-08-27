@@ -1,12 +1,19 @@
 package com.sparrowsanta.controllers.meters;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sparrowsanta.businessmodel.Meters;
 import com.sparrowsanta.businessmodel.MetersHistory;
+import com.sparrowsanta.utils.RestUrls;
 import com.sparrowsanta.utils.TestData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Comparator;
 import java.util.stream.Collectors;
@@ -23,6 +30,7 @@ public class MetersController {
                 .filter(meter -> meter.getFlatId() == flatId)
                 .sorted(Comparator.comparing(Meters::getMeterType))
                 .collect(Collectors.toList()));
+
     }
 
     @GetMapping(value = "/{meterId}", produces = "text/plain;charset=UTF-8")
@@ -68,8 +76,19 @@ public class MetersController {
 
     @PostMapping(value = "/add", produces = "text/plain;charset=UTF-8")
     public String addMeter(@RequestBody String meter) {
-        testData.addMeter(meter);
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request =
+                new HttpEntity<String>(meter, headers);
+       restTemplate.postForEntity(RestUrls.getAddMeter(), request, String.class);
+
+
         return new Gson().toJson("Ok");
+
+
+
+
     }
 
     @GetMapping(value = "/history/{meterId}", produces = "text/plain;charset=UTF-8")
