@@ -32,6 +32,14 @@ public class ClientController {
     @ResponseBody
     public String saveClient(@RequestBody String data) {
         System.out.println(data);
+//        return "forward:RealEstateManagementRest-env.eba-u4wqr2f3.eu-central-1.elasticbeanstalk.com";
+        return new Gson().toJson("OK");
+    }
+
+    @PutMapping(value = "/addClient/{id}", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String editClient(@PathVariable(name = "id") long id, @RequestBody String data) {
+        System.out.println(data);
         return new Gson().toJson("OK");
     }
 

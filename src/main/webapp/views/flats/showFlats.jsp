@@ -10,7 +10,7 @@
 
     <jsp:include page="/views/util/header.jsp"></jsp:include>
 
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/flats.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/flats/flats.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
     <title>Show Flats</title>
@@ -55,12 +55,5 @@
 </footer>
 
 
-<%--<input id="infoStreet" type="hidden" value="<spring:message code="flats.show.info.street"/>"/>
-<input id="infoZipCode" type="hidden" value="<spring:message code="flats.show.info.zipCode"/>"/>
-<input id="infoYearOfConstruction" type="hidden" value="<spring:message code="flats.show.info.yearOfConstruction"/>"/>
-<input id="infoFlatSquareMeters" type="hidden" value="<spring:message code="flats.show.info.flatSquareMeters"/>"/>
-<input id="infoRoomsNumber" type="hidden" value="<spring:message code="flats.show.info.roomsNumber"/>"/>
-<input id="infoFlatDescription" type="hidden" value="<spring:message code='common.meterType.undefined'/>"/>
-<input id="infoForIcon" class="mt-2" type="hidden" value="<spring:message code="flats.show.header.info"/>"/>--%>
 
 </html>

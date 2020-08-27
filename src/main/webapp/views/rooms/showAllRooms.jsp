@@ -43,6 +43,8 @@
         <p class="infoP" id="infoRoomSquareMeters" type="hidden"><spring:message code="rooms.add.roomSQM"/></p>
         <p class="infoP" id="infoExpectedRentPrice" type="hidden"><spring:message code="common.general.income"/></p>
         <p class="infoP" id="infoNotOccupable" type="hidden"><spring:message code="rooms.show.all"/></p>
+        <p class="infoP" id="infoTenant" type="hidden"><spring:message code="rooms.show.tenant"/></p>
+        <p class="infoP" id="infoShowRents" type="hidden"><spring:message code="rent.show.rent"/></p>
         <p class="infoPs" id="flatToShow">${flat}</p>
         <p class="infoPs" id="furnitureToShow">${furnitures}</p>
     </div>
@@ -57,14 +59,4 @@
 <footer>
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>
-
-
-<%--<input id="infoStreet" type="hidden" value="<spring:message code="flats.show.info.street"/>"/>
-<input id="infoZipCode" type="hidden" value="<spring:message code="flats.show.info.zipCode"/>"/>
-<input id="infoYearOfConstruction" type="hidden" value="<spring:message code="flats.show.info.yearOfConstruction"/>"/>
-<input id="infoFlatSquareMeters" type="hidden" value="<spring:message code="flats.show.info.flatSquareMeters"/>"/>
-<input id="infoRoomsNumber" type="hidden" value="<spring:message code="flats.show.info.roomsNumber"/>"/>
-<input id="infoFlatDescription" type="hidden" value="<spring:message code='common.meterType.undefined'/>"/>
-<input id="infoForIcon" class="mt-2" type="hidden" value="<spring:message code="flats.show.header.info"/>"/>--%>
-
 </html>

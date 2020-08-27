@@ -25,8 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showClientsInformation(clients) {
+        $(".clientDataRow").empty()
         for (let i = 0; i < clients.length; i++) {
-            let rowTr = defaultTr.clone(true);
+            let rowTr = defaultTr.clone(true).addClass("clientDataRow");
             let rowId = defaultTd.clone(true)
             let rowValueFirstName = defaultTd.clone(true)
             let rowValueLastName = defaultTd.clone(true)
@@ -35,7 +36,9 @@ document.addEventListener("DOMContentLoaded", function () {
             let rowValueTelNumber = defaultTd.clone(true)
             let rowValueCity = defaultTd.clone(true)
             let rowValueStreet = defaultTd.clone(true)
-            let deleteClientBtn = defaultBtnTd.clone(true)
+            let deleteClientBtn = defaultBtnTd.clone(true).on("click", function () {
+                deleteEntity("following client:", deleteClient, clients[i].id)
+            })
             let editClientBtn = defaultBtnEdit.clone(true)
             let flatTableAdd = $("#headersClientsShow")
 
@@ -51,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
             rowTr.append(rowValueCity)
             rowTr.append(rowValueStreet)
             rowTr.append(deleteClientBtn.append(editClientBtn))
-            // rowTr.append(editClientBtn)
 
             //Add value to column
             rowId.append(iterationId)
@@ -65,9 +67,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             iterationId++;
 
-            $(".deleteClientBtn").on("click", function () {
-                deleteEntity("following client:", deleteClient, clients[i].id)
-            })
+            // $(".deleteClientBtn").on("click", function () {
+            //     deleteEntity("following client:", deleteClient, clients[i].id)
+            // })
 
             $(".editClientBtn").on("click", function () {
                 $("#modalClients").modal()
@@ -75,6 +77,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     $("#modalClients").modal('hide')
                 })
                 getClientById(clients[i].id)
+                $("#btnEditClient").on("click", function () {
+                    editClient(clients[i].id)
+                })
             })
 
         }
@@ -86,8 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
             type: "delete",
             url: "../clients/deleteClient/" + clientId
         }).done(function () {
-            $(".deleteClientBtn").parent().parent().remove()
-            getAllClients
+            getAllClients()
         }).fail(function (xhr, status, err) {
             console.log(xhr.statusText);
             console.log(status);
@@ -111,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function feedDataToClient(data) {
-        console.log(data.firstName)
         $("#firstName").val(data.firstName)
         $("#lastName").val(data.lastName)
         $("#age").val(data.age)
@@ -120,4 +123,31 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#city").val(data.city)
         $("#street").val(data.street)
     }
+
+    function editClient(clientId) {
+        saveEditedClient(clientId)
+    }
+
+    function saveEditedClient(clientId) {
+        data = {};
+        feedClientDataToSend(data)
+        $.ajax({
+            type: 'put',
+            url: '../clients/addClient/' + clientId,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+        }).done(function (data) {
+            console.log(data)
+            if (data === "OK") {
+                $(".alert-success").css('display', 'inline-block');
+            }
+        }).fail(function (xhr, status, err) {
+            console.log(xhr.statusText);
+            console.log(status);
+            console.log(err);
+        });
+
+    }
 })
+
