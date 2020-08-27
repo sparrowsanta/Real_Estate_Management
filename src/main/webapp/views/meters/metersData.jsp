@@ -21,7 +21,7 @@
                                 <label class="control-label" for="meterType"><strong><spring:message
                                         code='meters.label.meterType'/></strong></label>
                                 <div class="input-group mb-3">
-                                    <select class="form-control js-example-basic-single is-valid input-white " style="width: 91%;"
+                                    <select class="form-control is-valid input-white " style="width: 91%;"
                                             id="meterType">
                                         <option></option>
                                     </select>

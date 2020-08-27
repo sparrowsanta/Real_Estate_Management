@@ -34,7 +34,7 @@ public class Meters {
             return Arrays.stream(values())
                     .filter(meterType -> meterType.value == value)
                     .findFirst()
-                    .orElse(null);
+                    .orElseThrow(RuntimeException::new);
         }
     }
 
