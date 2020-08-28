@@ -3,6 +3,7 @@ package com.sparrowsanta.controllers.flats;
 import com.google.gson.Gson;
 import com.sparrowsanta.businessmodel.Flat;
 import com.sparrowsanta.businessmodel.Room;
+import com.sparrowsanta.utils.BasicRestTemplate;
 import com.sparrowsanta.utils.RestUrls;
 import org.springframework.boot.Banner;
 import org.springframework.http.*;
@@ -80,8 +81,8 @@ public class ShowFlats {
     @GetMapping(value = "/allFlats", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getAllFlats() {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(RestUrls.getGetAllFlats(), String.class);
+        ResponseEntity<String> forEntity = BasicRestTemplate.getForEntity("http://localhost:8081/flats/getAllFlats");
+        return forEntity.getBody();
     }
 
     @GetMapping(value = "/addFlat", produces = "text/plain;charset=UTF-8")
@@ -91,53 +92,35 @@ public class ShowFlats {
     }
 
     //    FOR MultiPartHTTPServlet https://www.jvt.me/posts/2019/09/08/spring-extract-multipart-request-parameters/
-    @PostMapping(value = "/addFlat", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String addFlatPost(Model model, @RequestParam(value = "file") MultipartFile file, MultipartHttpServletRequest mrequest) throws IOException {
+    @PostMapping(value = "/addFlat", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String addFlatPost(@RequestBody String data) {
 /*        File convertFile = new File("/home/kuba/JAVA_COURSE/JAVA_1/Real_Estate_Management/src/main/webapp/dump/" + file.getOriginalFilename());
         convertFile.createNewFile();
         FileOutputStream fout = new FileOutputStream(convertFile);
         fout.write(file.getBytes());
         fout.close();*/
 
-
-        byte[] fileToSend = file.getBytes();
+/*        byte[] fileToSend = file.getBytes();
         String image = "";
         if (fileToSend != null && fileToSend.length > 0) {
             image = Base64.getEncoder().encodeToString(fileToSend);
-        }
+        }*/
 
 
 //        ALL PARAMETERS FROM FORM instead of Select and File
 
-        Map<String, String[]> parameterMap = mrequest.getParameterMap();
+/*        Map<String, String[]> parameterMap = mrequest.getParameterMap();
         Map<String, List<String>> collect = parameterMap.entrySet().stream()
-                .collect(Collectors.toMap(entry -> entry.getKey(), entry -> Arrays.asList(entry.getValue())));
+                .collect(Collectors.toMap(entry -> entry.getKey(), entry -> Arrays.asList(entry.getValue())));*/
 /*                for (int i = 0; i < collect.size(); i++) {
             System.out.println(collect.keySet());
         }*/
-        HttpHeaders headers = new HttpHeaders();
 
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        HttpEntity<Map <String, List<String>>> request = new HttpEntity<>(collect, headers);
-        RestTemplate restTemplate = new RestTemplate();
 //        restTemplate.postForEntity(RestUrls.getAddFlat(), request, String.class);
-
-
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
-
-        MultiValueMap<String, Object> form = new LinkedMultiValueMap<>();
-        form.add("test", "test");
-        form.add("sendTo", "test");
-        form.add("subject", "test");
-        form.add("content", "test");
-        form.add("files", image);
-
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(form, httpHeaders);
-
-
-        restTemplate.postForEntity(RestUrls.getAddFlat(), requestEntity, String.class);
+//
+        System.out.println(data);
+        ResponseEntity<String> stringResponseEntity = BasicRestTemplate.postForEntity(data, "http://localhost:8081/flats/addFlat");
 
 /*        Gson gson = new Gson();
         String stringOfRooms = mrequest.getParameter("roomsNumber");
@@ -155,10 +138,22 @@ public class ShowFlats {
         ResponseEntity<String> response = restTemplate.postForEntity(RestUrls.getAddFlat(), request2, String.class);*/
 
 
+        return new Gson().toJson(1);
 
+    }
 
-        return "flats/addFlat";
-
+    @PostMapping(value = "/addRoomsForFlat/{flatId}", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String addRoomForFlats(@RequestBody String data, @PathVariable(name = "flatId") long flatId) {
+        System.out.println(data);
+        String[] tableOfRooms = data.split("},\\{");
+        String[] tableOfRoomsReplaced = Arrays.stream(tableOfRooms)
+                .map(s -> s.replaceAll("(\\[)|(\\])|(\\{)|(\\})", ""))
+                .map(s -> s.replaceAll("", ""))
+                .toArray(size -> new String[size]);
+        Gson gson = new Gson();
+        Room room1 = gson.fromJson("{" + tableOfRoomsReplaced[0] + "}", Room.class);
+        return new Gson().toJson("OK");
     }
 
 
