@@ -79,8 +79,7 @@ public class MetersController {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> request =
-                new HttpEntity<String>(meter, headers);
+        HttpEntity<String> request = new HttpEntity<String>(meter, headers);
        restTemplate.postForEntity(RestUrls.getAddMeter(), request, String.class);
 
 

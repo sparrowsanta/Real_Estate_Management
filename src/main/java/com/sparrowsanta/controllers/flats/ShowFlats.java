@@ -5,9 +5,11 @@ import com.sparrowsanta.businessmodel.Flat;
 import com.sparrowsanta.businessmodel.Room;
 import com.sparrowsanta.utils.RestUrls;
 import org.springframework.boot.Banner;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -85,45 +87,74 @@ public class ShowFlats {
     @GetMapping(value = "/addFlat", produces = "text/plain;charset=UTF-8")
     public String addFlat(Model model) {
         model.addAttribute("flatEdited", 0);
-
         return "flats/addFlat";
     }
 
     //    FOR MultiPartHTTPServlet https://www.jvt.me/posts/2019/09/08/spring-extract-multipart-request-parameters/
     @PostMapping(value = "/addFlat", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String addFlatPost(Model model, @RequestParam(value = "file") MultipartFile file, MultipartHttpServletRequest mrequest) throws IOException {
-       File convertFile = new File("/home/kuba/JAVA_COURSE/JAVA_1/Real_Estate_Management/src/main/webapp/dump/" + file.getOriginalFilename());
+/*        File convertFile = new File("/home/kuba/JAVA_COURSE/JAVA_1/Real_Estate_Management/src/main/webapp/dump/" + file.getOriginalFilename());
         convertFile.createNewFile();
         FileOutputStream fout = new FileOutputStream(convertFile);
         fout.write(file.getBytes());
-        fout.close();
+        fout.close();*/
 
 
-//        testing
-        flat3.setPic(file.getBytes());
+        byte[] fileToSend = file.getBytes();
+        String image = "";
+        if (fileToSend != null && fileToSend.length > 0) {
+            image = Base64.getEncoder().encodeToString(fileToSend);
+        }
 
 
 //        ALL PARAMETERS FROM FORM instead of Select and File
+
         Map<String, String[]> parameterMap = mrequest.getParameterMap();
         Map<String, List<String>> collect = parameterMap.entrySet().stream()
                 .collect(Collectors.toMap(entry -> entry.getKey(), entry -> Arrays.asList(entry.getValue())));
-        /*        for (int i = 0; i < collect.size(); i++) {
+/*                for (int i = 0; i < collect.size(); i++) {
             System.out.println(collect.keySet());
         }*/
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        HttpEntity<Map <String, List<String>>> request = new HttpEntity<>(collect, headers);
+        RestTemplate restTemplate = new RestTemplate();
+//        restTemplate.postForEntity(RestUrls.getAddFlat(), request, String.class);
 
 
-        Gson gson = new Gson();
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        MultiValueMap<String, Object> form = new LinkedMultiValueMap<>();
+        form.add("test", "test");
+        form.add("sendTo", "test");
+        form.add("subject", "test");
+        form.add("content", "test");
+        form.add("files", image);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(form, httpHeaders);
+
+
+        restTemplate.postForEntity(RestUrls.getAddFlat(), requestEntity, String.class);
+
+/*        Gson gson = new Gson();
         String stringOfRooms = mrequest.getParameter("roomsNumber");
         String[] tableOfRooms = stringOfRooms.split("},\\{");
         String[] tableOfRoomsReplaced = Arrays.stream(tableOfRooms)
                 .map(s -> s.replaceAll("(\\[)|(\\])|(\\{)|(\\})", ""))
                 .toArray(size -> new String[size]);
-        Room room1 = gson.fromJson("{" + tableOfRoomsReplaced[1] + "}", Room.class);
-//        room1.setId(3);
+        Room room1 = gson.fromJson("{" + tableOfRoomsReplaced[1] + "}", Room.class);*/
+/*        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        System.out.println(mrequest.getParameter("name"));
-        System.out.println(room1);
-        System.out.println(mrequest.getParameter("meters"));
+
+        HttpEntity<Map<String, List<String>>> request2 = new HttpEntity<>(collect, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(RestUrls.getAddFlat(), request2, String.class);*/
+
+
 
 
         return "flats/addFlat";

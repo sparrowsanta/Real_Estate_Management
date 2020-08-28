@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     let defaultTr = $("<tr class='table-row'>")
     let defaultTd = $("<td>")
-    let defaultBtnTd = $("<td><a class='btn btn-xs pull-right btn-red-outline deleteClientBtn mr-2'><em class='fa fa-trash-alt'></em></a></td>")
+    let defaultBtnTd = $("<a class='btn btn-xs pull-right btn-red-outline deleteClientBtn mr-2'><em class='fa fa-trash-alt'></em></a>")
     let defaultBtnEdit = $("<a class='btn btn-xs pull-right btn-mixed-outline editClientBtn mr-2'><em class='fa fa-pencil-alt'></em></a>")
     let iterationId = 1;
     getAllClients()
@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showClientsInformation(clients) {
+        iterationId = 1;
         $(".clientDataRow").empty()
         for (let i = 0; i < clients.length; i++) {
             let rowTr = defaultTr.clone(true).addClass("clientDataRow");
@@ -36,10 +37,20 @@ document.addEventListener("DOMContentLoaded", function () {
             let rowValueTelNumber = defaultTd.clone(true)
             let rowValueCity = defaultTd.clone(true)
             let rowValueStreet = defaultTd.clone(true)
+            let rowButtons = defaultTd.clone(true)
             let deleteClientBtn = defaultBtnTd.clone(true).on("click", function () {
                 deleteEntity("following client:", deleteClient, clients[i].id)
             })
-            let editClientBtn = defaultBtnEdit.clone(true)
+            let editClientBtn = defaultBtnEdit.clone(true).on("click", function () {
+                $("#modalClients").modal()
+                $("#btnBackClients").on("click", function () {
+                    $("#modalClients").modal('hide')
+                })
+                getClientById(clients[i].id)
+                $("#btnEditClient").on("click", function () {
+                    editClient(clients[i].id)
+                })
+            })
             let flatTableAdd = $("#headersClientsShow")
 
             flatTableAdd.after(rowTr)
@@ -53,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
             rowTr.append(rowValueTelNumber)
             rowTr.append(rowValueCity)
             rowTr.append(rowValueStreet)
-            rowTr.append(deleteClientBtn.append(editClientBtn))
+            rowTr.append(rowButtons.append(deleteClientBtn).append(editClientBtn))
 
             //Add value to column
             rowId.append(iterationId)
@@ -70,17 +81,6 @@ document.addEventListener("DOMContentLoaded", function () {
             // $(".deleteClientBtn").on("click", function () {
             //     deleteEntity("following client:", deleteClient, clients[i].id)
             // })
-
-            $(".editClientBtn").on("click", function () {
-                $("#modalClients").modal()
-                $("#btnBackClients").on("click", function () {
-                    $("#modalClients").modal('hide')
-                })
-                getClientById(clients[i].id)
-                $("#btnEditClient").on("click", function () {
-                    editClient(clients[i].id)
-                })
-            })
 
         }
         return iterationId;
@@ -106,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
             dataType: 'json',
             data: {},
         }).done(function (data) {
+            console.log(data)
             feedDataToClient(data)
         }).fail(function (xhr, status, err) {
             console.log(xhr.statusText);
