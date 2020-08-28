@@ -1,22 +1,15 @@
 package com.sparrowsanta.controllers.meters;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.sparrowsanta.businessmodel.Meters;
-import com.sparrowsanta.businessmodel.MetersHistory;
 import com.sparrowsanta.utils.RestUrls;
 import com.sparrowsanta.utils.TestData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Comparator;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("meters")
@@ -26,51 +19,46 @@ public class MetersController {
 
     @GetMapping(value = "/getAll/{flatId}", produces = "text/plain;charset=UTF-8")
     public String getMeters(@PathVariable(name = "flatId") long flatId) {
-        return new Gson().toJson(testData.getFlatMeters().stream()
-                .filter(meter -> meter.getFlatId() == flatId)
-                .sorted(Comparator.comparing(Meters::getMeterType))
-                .collect(Collectors.toList()));
-
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(RestUrls.getGetMetersByFlatId() + flatId, String.class);
     }
 
     @GetMapping(value = "/{meterId}", produces = "text/plain;charset=UTF-8")
     public String getMeterById(@PathVariable(name = "meterId") long meterId) {
-        Meters meter = testData.getFlatMeters().stream()
-                .filter(m -> m.getId() == meterId)
-                .findFirst()
-                .orElse(null);
-        return new Gson().toJson(meter);
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(RestUrls.getGetMeterById() + meterId, String.class);
     }
 
     @GetMapping(value = "/reading/{readingId}", produces = "text/plain;charset=UTF-8")
     public String getMeterReadingById(@PathVariable(name = "readingId") long readingId) {
-        MetersHistory reading = testData.getMetersHistory().stream()
-                .filter(m -> m.getId() == readingId)
-                .findFirst()
-                .orElse(null);
-
-        return new GsonBuilder()
-                .setDateFormat("MM-dd-yyyy")
-                .create()
-                .toJson(reading);
-
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(RestUrls.getGetMeterReadingByReadingId() + readingId, String.class);
     }
 
     @DeleteMapping(value = "/delete/{meterId}", produces = "text/plain;charset=UTF-8")
     public String delMeter(@PathVariable(name = "meterId") long meterId) {
-        testData.deleteMeter(meterId);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(RestUrls.getDeleteMeterByMeterId()+meterId);
         return new Gson().toJson("Ok");
     }
 
     @PutMapping(value = "/edit/{meterId}", produces = "text/plain;charset=UTF-8")
-    public String editMeter(@RequestBody String meter) {
-        testData.editMeter(meter);
+    public String editMeter(@RequestBody String meter, @PathVariable(name = "meterId") long meterId) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request = new HttpEntity<String>(meter, headers);
+        restTemplate.exchange(RestUrls.getEditMeterByMeterId() + meterId, HttpMethod.PUT, request, Void.class);
         return new Gson().toJson("Ok");
     }
 
     @PutMapping(value = "/reading/edit/{readingId}", produces = "text/plain;charset=UTF-8")
-    public String editMeterReading(@RequestBody String meter) {
-        testData.editReading(meter);
+    public String editMeterReading(@RequestBody String reading, @PathVariable(name = "readingId") long readingId) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request = new HttpEntity<String>(reading, headers);
+        restTemplate.exchange(RestUrls.getEditMeterReadingByReadingId() + readingId, HttpMethod.PUT, request, Void.class);
         return new Gson().toJson("Ok");
     }
 
@@ -79,35 +67,32 @@ public class MetersController {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> request =
-                new HttpEntity<String>(meter, headers);
-       restTemplate.postForEntity(RestUrls.getAddMeter(), request, String.class);
-
-
+        HttpEntity<String> request = new HttpEntity<String>(meter, headers);
+        restTemplate.postForEntity(RestUrls.getAddMeter(), request, String.class);
         return new Gson().toJson("Ok");
-
-
-
-
     }
 
     @GetMapping(value = "/history/{meterId}", produces = "text/plain;charset=UTF-8")
     public String getMeterHistory(@PathVariable(name = "meterId") long meterId) {
-
-        return new Gson().toJson(testData.getMetersHistory().stream().filter(x -> x.getMeterId() == meterId)
-                .sorted((x, y) -> y.getMeterReadingDate().compareTo(x.getMeterReadingDate()))
-                .collect(Collectors.toList()));
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(RestUrls.getGetMeterReadingsByMeterId() + meterId, String.class);
     }
 
     @DeleteMapping(value = "/history/delete/{readingId}", produces = "text/plain;charset=UTF-8")
     public String delMeterReading(@PathVariable(name = "readingId") long readingId) {
-        testData.deleteMeterReading(readingId);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(RestUrls.getDeleteMeterReadingByReadingId()+readingId);
         return new Gson().toJson("Ok");
     }
 
     @PostMapping(value = "/reading/add", produces = "text/plain;charset=UTF-8")
     public String addMeterReading(@RequestBody String reading) {
-        testData.addReading(reading);
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request = new HttpEntity<String>(reading, headers);
+        restTemplate.postForEntity(RestUrls.getAddMeterReadingByMeterId(), request, String.class);
         return new Gson().toJson("Ok");
+
     }
 }
