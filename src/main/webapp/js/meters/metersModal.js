@@ -235,9 +235,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     newEm.addClass("far fa-calendar-check mr-3");
                     newP.addClass("text-small mt-2 font-weight-light");
                     newH2.append(newEm);
-                    let readingDate = data[i].meterReadingDate.year + "." +
-                        (data[i].meterReadingDate.month > 9 ? data[i].meterReadingDate.month : "0" + data[i].meterReadingDate.month) + "." +
-                        (data[i].meterReadingDate.day > 9 ? data[i].meterReadingDate.day : "0" + data[i].meterReadingDate.day);
+
+                    let readingDate = data[i].meterReadingDate.replace("-/g", ".")
                     newH2.append($("#readDateLabel").val() + ": " + readingDate);
                     newP.text($("#readValueLabel").val() + ": " + data[i].readingValue);
 
@@ -387,10 +386,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: {},
             })
                 .done(function (data) {
-                    let readingDate = data.meterReadingDate.year + "-" +
-                        (data.meterReadingDate.month > 9 ? data.meterReadingDate.month : "0" + data.meterReadingDate.month) + "-" +
-                        (data.meterReadingDate.day > 9 ? data.meterReadingDate.day : "0" + data.meterReadingDate.day);
-
+                    let readingDate = data.meterReadingDate.replace("-/g", ".");
                     $('#readingDate').val(readingDate);
                     $('#readingValue').val(data.readingValue);
                     currentReading = data.id;
@@ -539,7 +535,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        // ----------- required fields checks and reset errors for meters and eradings
+        // ----------- required fields checks and reset errors for meters and readings
         function checkRequiredFieldsMeter() {
             let passedValidation = true;
             let meterType = $('#meterType');
@@ -578,5 +574,6 @@ document.addEventListener("DOMContentLoaded", function () {
             readingDate.addClass("is-valid").removeClass("is-invalid");
             readingValue.addClass("is-valid").removeClass("is-invalid");
         }
+
     }
 );
