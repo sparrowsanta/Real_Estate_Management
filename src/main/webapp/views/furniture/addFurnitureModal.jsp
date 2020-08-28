@@ -53,29 +53,14 @@
                                         </div>
                                     </div>
                                 </div>
-<%--                                <div class="form-row mr-5" id="roomFormRow2">
-
-                                    <div class="form-group col-md-4">
-                                        <h5 class="modalH5">
-                                            <span><em class="fas fa-border-style"></em> <spring:message
-                                                    code="rooms.add.roomType"/></span>
-                                        </h5>
-
-                                        <select class='form-control js-example-basic' name='flatType[]'
-                                                aria-hidden="true"
-                                                id='roomTypeSelect'></select>
-
-                                        &lt;%&ndash;                                            class="form-control btn-dark-blue-outline is-valid">&ndash;%&gt;
-                                    </div>
-                                </div>--%>
                             </form>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-orange" id="btnAddFurnitureModal">
-                        <em class="fas fa-plus"></em>
-                        <spring:message code="furniture.add.furniture"/></button>
+                        <em class="fas fa-save"></em>
+                        <spring:message code="common.button.save"/></button>
                     <button type="button" class="btn btn-orange" id="btnBackFurniture">
                         <em class="fas fa-backward"></em>
                         <spring:message code="common.button.back"/></button>
@@ -88,4 +73,3 @@
 <div id="roomsDelete">
     <jsp:include page="../util/deleteConfirm.jsp"/>
 </div>
-<%--<script type="text/javascript" src="js/meters/metersModal.js"></script>--%>

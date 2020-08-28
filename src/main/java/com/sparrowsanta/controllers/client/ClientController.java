@@ -2,9 +2,13 @@ package com.sparrowsanta.controllers.client;
 
 import com.google.gson.Gson;
 import com.sparrowsanta.businessmodel.Client;
+import com.sparrowsanta.utils.BasicRestTemplate;
+import com.sparrowsanta.utils.RestUrls;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +21,7 @@ public class ClientController {
 
     public ClientController() {
         Client client = new Client(1L, "Jakub", "Wróbel", 30, "jakubw.rrw@wm.pl", "Krakow", "Zlota", 73893987L);
-        Client client2 = new Client(2L, "Marek", "Mikołaczyk", 30, "Mikołaj.rrw@wm.pl", "Zabierzów", "Srebrna", 2323222L);
+        Client client2 = new Client(2L, "Marek", "Mikołajczak", 30, "Mikołaj.rrw@wm.pl", "Zabierzów", "Srebrna", 2323222L);
 
         clientList.add(client);
         clientList.add(client2);
@@ -31,7 +35,17 @@ public class ClientController {
     @PostMapping(value = "/addClient", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String saveClient(@RequestBody String data) {
-        System.out.println(data);
+        ResponseEntity<String> jsonTemplate = BasicRestTemplate.postForEntity(data, RestUrls.getAddClient());
+        if (jsonTemplate.getStatusCodeValue() == 200) {
+            System.out.println("Request Successful");
+        }
+        return new Gson().toJson("OK");
+    }
+
+    @PutMapping(value = "/addClient/{id}", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String editClient(@PathVariable(name = "id") long id, @RequestBody String data) {
+        ResponseEntity<String> jsonTemplate = BasicRestTemplate.postForEntity(data, RestUrls.getAddClient() + id);
         return new Gson().toJson("OK");
     }
 
@@ -43,23 +57,24 @@ public class ClientController {
     @GetMapping(value = "/showClientsAll", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String showAllClients() {
-        return new Gson().toJson(clientList);
+        ResponseEntity<String> jsonTemplate = BasicRestTemplate.getForEntity(RestUrls.getGetAllClients());
+        if (jsonTemplate.getStatusCodeValue() == 200) {
+            System.out.println("Request Successful");
+        }
+        return jsonTemplate.getBody();
     }
 
     @GetMapping(value = "/getClient/{id}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getClientById(@PathVariable(name = "id") long id) {
-        Client client = clientList.stream()
-                .filter(c -> c.getId() == id)
-                .findFirst()
-                .orElse(null);
-        return new Gson().toJson(client);
+        ResponseEntity<String> jsonTemplate = BasicRestTemplate.getForEntity(RestUrls.getGetClient() + id);
+        return jsonTemplate.getBody();
     }
 
     @DeleteMapping(value = "/deleteClient/{id}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String deleteClient(@PathVariable(name = "id") long id) {
-        clientList.removeIf(c -> c.getId() == id);
+        BasicRestTemplate.deleteForEntity(RestUrls.getDeleteClient(), id);
         return new Gson().toJson("Ok");
     }
 }
