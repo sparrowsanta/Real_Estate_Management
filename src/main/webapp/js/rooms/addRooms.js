@@ -21,9 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
         let roomDescription = $("#roomDescription").val()
         let roomSquareMeters = $("#roomSquareMeters").val()
         let expectedRentPrice = $("#expectedRentPrice").val()
+        let occupiable = $("#roomOccupiable").val()
         let roomTypeSelect = $("#roomTypeSelect").val()
 
-        addToShowTable(roomDescription, roomSquareMeters, expectedRentPrice, roomTypeSelect, iterationId)
+        addToShowTable(roomDescription, roomSquareMeters, expectedRentPrice, roomTypeSelect, iterationId, occupiable)
         $("#modalRooms").modal('hide');
 
     }
@@ -37,12 +38,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     $("#btnBackRooms").on("click", backToFlats)
 
-    function addToShowTable(roomDescription, roomSquareMeters, expectedRentPrice, roomTypeSelect) {
+    function addToShowTable(roomDescription, roomSquareMeters, expectedRentPrice, roomTypeSelect, occupiable) {
         let rowTr = defaultTr.clone(true);
         let rowId = defaultTd.clone(true)
         let rowValueDesc = defaultTd.clone(true)
         let rowValueSquareMeters = defaultTd.clone(true)
         let rowValueRentPrice = defaultTd.clone(true)
+        let rowOccupiable = defaultTd.clone(true)
         let rowValueTypeSelect = defaultTd.clone(true)
         let deleteFlatBtn = defaultBtnTd.clone(true)
 
@@ -53,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         rowTr.append(rowValueDesc)
         rowTr.append(rowValueSquareMeters)
         rowTr.append(rowValueRentPrice)
+        rowTr.append(rowOccupiable)
         rowTr.append(rowValueTypeSelect)
         rowTr.append(deleteFlatBtn)
 
@@ -61,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
         rowValueDesc.append(roomDescription)
         rowValueSquareMeters.append(roomSquareMeters)
         rowValueRentPrice.append(expectedRentPrice)
+        rowOccupiable.append(occupiable)
         rowValueTypeSelect.append(roomTypeSelect)
 
         iterationId++;
@@ -82,6 +86,7 @@ function addToShowTable() {
     let defaultBtnTd = $("<td><a class='btn btn-xs pull-right btn-mixed-outline mr-2'><em class='fa fa-trash-alt'></em></a></td>")
     let flatTableAdd = $(".table-ro")
     let iterationId = 1;
+
     for (let i = 0; i < data.rooms.length; i++) {
 
         let rowTr = defaultTr.clone(true);
@@ -115,4 +120,6 @@ function addToShowTable() {
         })
 
     }
+
+
 }

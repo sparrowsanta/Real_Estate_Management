@@ -54,17 +54,18 @@
                                     </div>
                                 </div>
                                 <div class="form-row mr-5" id="roomFormRow2">
-                                    <%--                                <div class="form-group col-md-4">
-                                                                        <h5 class="modalH5">
-                                                                            <span id="roomFlatIdSpan"><em class="fas fa-flag em"></em> <spring:message
-                                                                                    code="rooms.add.flatId"/></span>
-                                                                        </h5>
-                                                                        <div class="custom-file" id="customRoomFlatId">
-                                                                            <input readonly type="text" name="roomDescription" id="roomFlatId"
-                                                                                   value="Flat ID VALUE"
-                                                                                   class="form-control btn-dark-blue-outline is-valid">
-                                                                        </div>
-                                                                    </div>--%>
+                                    <div class="form-group col-md-4">
+                                        <h5 class="modalH5">
+                                                                            <span id="occupiableIdSpan"><em
+                                                                                    class="fas fa-map-pin em"></em> <spring:message
+                                                                                    code="rooms.show.all.occupiable"/></span>
+                                        </h5>
+                                        <div class="custom-control form-control-lg custom-checkbox" id="customOccupiable">
+                                            <input readonly type="checkbox" name="occupiable" id="roomOccupiable"
+                                                   class="form-control custom-control-input">
+                                            <label class="custom-control-label ml-3" for="roomOccupiable"><spring:message code="common.button.yes"></spring:message></label>
+                                        </div>
+                                    </div>
                                     <div class="form-group col-md-4">
                                         <h5 class="modalH5">
                                             <span><em class="fas fa-border-style"></em> <spring:message

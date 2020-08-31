@@ -5,6 +5,9 @@ import com.sparrowsanta.businessmodel.Flat;
 import com.sparrowsanta.businessmodel.Room;
 import com.sparrowsanta.utils.BasicRestTemplate;
 import com.sparrowsanta.utils.RestUrls;
+import net.minidev.json.JSONValue;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.boot.Banner;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
@@ -94,7 +97,7 @@ public class ShowFlats {
     //    FOR MultiPartHTTPServlet https://www.jvt.me/posts/2019/09/08/spring-extract-multipart-request-parameters/
     @PostMapping(value = "/addFlat", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String addFlatPost(@RequestBody String data) {
+    public String addFlatPost(Model model, @RequestBody String data) throws JSONException {
 /*        File convertFile = new File("/home/kuba/JAVA_COURSE/JAVA_1/Real_Estate_Management/src/main/webapp/dump/" + file.getOriginalFilename());
         convertFile.createNewFile();
         FileOutputStream fout = new FileOutputStream(convertFile);
@@ -120,6 +123,7 @@ public class ShowFlats {
 //        restTemplate.postForEntity(RestUrls.getAddFlat(), request, String.class);
 //
         System.out.println(data);
+        model.addAttribute("flatEdited", 0);
         ResponseEntity<String> stringResponseEntity = BasicRestTemplate.postForEntity(data, "http://localhost:8081/flats/addFlat");
 
 /*        Gson gson = new Gson();
@@ -138,21 +142,16 @@ public class ShowFlats {
         ResponseEntity<String> response = restTemplate.postForEntity(RestUrls.getAddFlat(), request2, String.class);*/
 
 
-        return new Gson().toJson(1);
+        return new Gson().toJson(stringResponseEntity.getBody());
 
     }
 
     @PostMapping(value = "/addRoomsForFlat/{flatId}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String addRoomForFlats(@RequestBody String data, @PathVariable(name = "flatId") long flatId) {
+    public String addRoomForFlats(@PathVariable(name = "flatId") Long flatId, @RequestBody String data) {
         System.out.println(data);
-        String[] tableOfRooms = data.split("},\\{");
-        String[] tableOfRoomsReplaced = Arrays.stream(tableOfRooms)
-                .map(s -> s.replaceAll("(\\[)|(\\])|(\\{)|(\\})", ""))
-                .map(s -> s.replaceAll("", ""))
-                .toArray(size -> new String[size]);
-        Gson gson = new Gson();
-        Room room1 = gson.fromJson("{" + tableOfRoomsReplaced[0] + "}", Room.class);
+        ResponseEntity<String> stringResponseEntity = BasicRestTemplate.postForEntity(data, "http://localhost:8081/rooms/addRoomsForFlat/" + flatId);
+
         return new Gson().toJson("OK");
     }
 
@@ -163,7 +162,7 @@ public class ShowFlats {
         System.out.println(id);
         flats.removeIf(s -> s.getId() == id);
 
-        return new Gson().toJson("Ok");
+        return new Gson().toJson("OK");
     }
 
 

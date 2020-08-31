@@ -31,10 +31,10 @@
             <div class="containerDiv"></div>
         </div>
         <div class="alert alert-success">
-            File Uploaded Successfully
+            <spring:message code="flat.add.info.success"/>
         </div>
         <div class="alert alert-danger">
-            File is not uploaded
+            <spring:message code="flat.add.info.fail"/>
         </div>
         <div class="form-row" id="rowAddFlatTable">
 
@@ -47,6 +47,7 @@
                         <th scope="col"><spring:message code="common.general.description"/></th>
                         <th scope="col"><spring:message code="rooms.add.roomSQM"/></th>
                         <th scope="col"><spring:message code="common.general.income"/></th>
+                        <th scope="col"><spring:message code="rooms.show.all.occupiable"/></th>
                         <th scope="col"><spring:message code="rooms.add.roomType"/></th>
                         <th scope="col"><spring:message code="common.button.delete"/></th>
 

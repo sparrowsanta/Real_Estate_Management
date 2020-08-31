@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let infoMissingCity = $("#infoMissingCity")
     let infoMissingStreet = $("#infoMissingStreet")
     let infoMissingFlatNumber = $("#infoMissingFlatNumber")
-    let infoMissingFoto = $("#infoMissingFoto")
+
     //Flat received
     let flatEditedParsed;
 
@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     $("#rowAddFlatTable").show()
 
 
-                    addToShowTable()
+                    // addToShowTable()
 
                 }
 
@@ -391,7 +391,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     roomToSendL.description = roomsTable.eq(i).find(':nth-child(2)').text();
                     roomToSendL.roomSquareMeters = roomsTable.eq(i).find(':nth-child(3)').text();
                     roomToSendL.expectedRentPrice = roomsTable.eq(i).find(':nth-child(4)').text()
-                    roomToSendL.roomType = roomsTable.eq(i).find(':nth-child(5)').text()
+                    roomToSendL.occupiable = roomsTable.eq(i).find(':nth-child(5)').text()
+                    roomToSendL.roomType = roomsTable.eq(i).find(':nth-child(6)').text()
+                    roomToSendL.flatId = submitBtn.attr("data-flat")
                     roomToSendT.push(roomToSendL)
                 }
                 let string = JSON.stringify(roomToSendT)
@@ -429,17 +431,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     .done(function (data) {
                         currentTab++;
                         checkThePage(currentTab)
-                        $("#submitForm").attr("value", data)
-                        // $(".alert-success").css('display', 'inline-block');
+                        submitBtn.attr("data-flat", String(data))
+                        $(".alert-success").show();
 
                     })
             }
 
             function saveRoomsForFlat() {
+                let flatId = submitBtn.attr("data-flat")
                 data = takeDataFromRoomsTable();
-                let test = submitBtn.attr("room")
-                console.log(test)
-                console.log(data)
                 $.ajax({
                     type: 'post',
                     url: 'addRoomsForFlat/' + flatId,
