@@ -1,14 +1,20 @@
 package com.sparrowsanta.utils;
 
 public class RestUrls {
-    private static final String SERVER_URL = "http://realestatemanagementrest-env.eba-u4wqr2f3.eu-central-1.elasticbeanstalk.com/";
-    private static final String GET_METERS_BY_FLAT_ID = SERVER_URL + "meters/getAll";
+        private static final String SERVER_URL = "http://realestatemanagementrest-env.eba-u4wqr2f3.eu-central-1.elasticbeanstalk.com/";
+//    private static final String SERVER_URL = "http://localhost:8081/";
+
+    private static final String GET_METERS_BY_FLAT_ID = SERVER_URL + "meters/getAll/";
     private static final String ADD_METER = SERVER_URL + "meters/add";
-    private static final String GET_METER_READINGS_BY_METER_ID = SERVER_URL + "meters/history";
+    private static final String GET_METER_READINGS_BY_METER_ID = SERVER_URL + "meters/history/";
     private static final String GET_METER_READING_BY_READING_ID = SERVER_URL + "meters/reading/";
+    private static final String GET_METER_BY_ID = SERVER_URL + "meters/";
+    private static final String EDIT_METER_BY_METER_ID = SERVER_URL + "meters/edit/";
+    private static final String DELETE_METER_BY_METER_ID = SERVER_URL + "meters/delete/";
+
     private static final String ADD_METER_READING_BY_METER_ID = SERVER_URL + "meters/reading/add";
-    private static final String EDIT_METER_READING_BY_READING_ID = SERVER_URL + "meters/reading/edit";
-    private static final String DELETE_METER_READING_BY_READING_ID = SERVER_URL + "meters/history/delete";
+    private static final String EDIT_METER_READING_BY_READING_ID = SERVER_URL + "meters/reading/edit/";
+    private static final String DELETE_METER_READING_BY_READING_ID = SERVER_URL + "meters/history/delete/";
 
     //Flats
     private static final String GET_ALL_FLATS = SERVER_URL + "getAllFlats";
@@ -68,8 +74,12 @@ public class RestUrls {
         return DELETE_METER_READING_BY_READING_ID;
     }
 
-    public static String getAddMeter() {
-        return ADD_METER;
-    }
+    public static String getGetMeterById() { return GET_METER_BY_ID; }
+
+    public static String getEditMeterByMeterId() { return EDIT_METER_BY_METER_ID; }
+
+    public static String getAddMeter() { return ADD_METER; }
+
+    public static String getDeleteMeterByMeterId() { return DELETE_METER_BY_METER_ID; }
 }
 
