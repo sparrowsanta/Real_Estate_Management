@@ -18,10 +18,11 @@ document.addEventListener("DOMContentLoaded", function () {
     $('#btnAddFlat').on("click", saveRoomInFrontEnd)
 
     function saveRoomInFrontEnd() {
+        $("#roomOccupiable").empty()
         let roomDescription = $("#roomDescription").val()
         let roomSquareMeters = $("#roomSquareMeters").val()
         let expectedRentPrice = $("#expectedRentPrice").val()
-        let occupiable = $("#roomOccupiable").val()
+        let occupiable = $("#roomOccupiable").prop('checked')
         let roomTypeSelect = $("#roomTypeSelect").val()
 
         addToShowTable(roomDescription, roomSquareMeters, expectedRentPrice, roomTypeSelect, iterationId, occupiable)
@@ -38,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     $("#btnBackRooms").on("click", backToFlats)
 
-    function addToShowTable(roomDescription, roomSquareMeters, expectedRentPrice, roomTypeSelect, occupiable) {
+    function addToShowTable(roomDescription, roomSquareMeters, expectedRentPrice, roomTypeSelect, iterationId, occupiable) {
         let rowTr = defaultTr.clone(true);
         let rowId = defaultTd.clone(true)
         let rowValueDesc = defaultTd.clone(true)
@@ -64,7 +65,8 @@ document.addEventListener("DOMContentLoaded", function () {
         rowValueDesc.append(roomDescription)
         rowValueSquareMeters.append(roomSquareMeters)
         rowValueRentPrice.append(expectedRentPrice)
-        rowOccupiable.append(occupiable)
+
+        rowOccupiable.append(String(occupiable))
         rowValueTypeSelect.append(roomTypeSelect)
 
         iterationId++;

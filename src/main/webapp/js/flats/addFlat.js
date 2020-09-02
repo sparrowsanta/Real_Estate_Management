@@ -391,6 +391,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     roomToSendL.description = roomsTable.eq(i).find(':nth-child(2)').text();
                     roomToSendL.roomSquareMeters = roomsTable.eq(i).find(':nth-child(3)').text();
                     roomToSendL.expectedRentPrice = roomsTable.eq(i).find(':nth-child(4)').text()
+      /*              if(roomsTable.eq(i).find(':nth-child(5)').text() == "true"){
+                        roomToSendL.occupiable = 1;
+                    }else {
+                        roomToSendL.occupiable = 0;
+                    }*/
                     roomToSendL.occupiable = roomsTable.eq(i).find(':nth-child(5)').text()
                     roomToSendL.roomType = roomsTable.eq(i).find(':nth-child(6)').text()
                     roomToSendL.flatId = submitBtn.attr("data-flat")
@@ -420,7 +425,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 // takeDataFromRoomsTable();
                 data = {};
                 feedClientDataToSend(data)
-                console.log(data)
                 $.ajax({
                     type: 'post',
                     url: 'addFlat',
@@ -448,9 +452,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     data: JSON.stringify(data),
                 })
                     .done(function (data) {
-                        let redirectPoint = '../mainpage'
-                        window.location.replace(redirectPoint)
+                        console.log(data)
                     })
+
             }
 
             function feedClientDataToSend(dataToSend) {

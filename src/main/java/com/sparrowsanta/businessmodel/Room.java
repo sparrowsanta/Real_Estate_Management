@@ -16,7 +16,7 @@ public class Room {
     private int occupable;
     private double roomSquareMeters;
     private double expectedRentPrice;
-    private byte[] roomPicture;
+
 //Testowy
     public Room(long id, String description, double roomSquareMeters, double expectedRentPrice, RoomType roomType) {
         this.id = id;
@@ -50,7 +50,7 @@ public class Room {
         this.expectedRentPrice = expectedRentPrice;
         this.occupable = occupable;
         this.flatId = flatId;
-        this.roomPicture = roomPicture;
+
     }
 
     @AllArgsConstructor

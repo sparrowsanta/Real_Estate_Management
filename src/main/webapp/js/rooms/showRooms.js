@@ -16,28 +16,22 @@ document.addEventListener("DOMContentLoaded", function () {
     let iterationId = 1;
     let b1 = $("<p><button class='btn btn-mixed-outline addRent' style='width: 120px'></button></p>");
     let formRentsHistory = $("#rentHistoryForm");
+
     //global roomID
 
-    let flat = $("#flatToShow").html()
-    flatEditedParsed = JSON.parse(flat);
-    let rooms = flatEditedParsed.rooms
 
-    function showRooms() {
+    function showRooms(rooms) {
         containerDiv.empty();
         containerDivRoomsNoOccupable.empty()
-        flat = $("#flatToShow").html()
-        flatEditedParsed = JSON.parse(flat);
-
-        let test = getAllRoomsForFlat(flatEditedParsed.id)
 
         let figureGeneric = $("<figure><a href='#' ></a></figure>")
         let imgGeneric = $("<img class='img-fluid' src='#'>")
         for (let i = 0; i < rooms.length; i++) {
-            if (rooms[i].occupable == 1) {
+            if (rooms[i].occupiable == 1) {
                 let figureRoom = figureGeneric.clone(true).attr("id", "pictureFor" + rooms[i].id)
                 let roomPicture = getPictureForRoom(rooms[i].id);
                 let imgRoom = imgGeneric.clone(true)
-                if (roomPicture === "") {
+                if (roomPicture === null) {
                     let uploadBtnRoom = $("<input id='fileid' type='file'/>")
                     uploadRoomPicIfDoesNotHave(figureRoom.children(), rooms[i].id)
 
@@ -279,7 +273,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    showRooms();
+    if ($("#flatToShow").html() !== "") {
+        getAllRoomsForFlat($("#flatToShow").html())
+    }
 
     function getAllRoomsForFlat(flatId) {
         $.ajax({
@@ -289,7 +285,7 @@ document.addEventListener("DOMContentLoaded", function () {
             data: {},
         })
             .done(function (data) {
-                console.log(data)
+                showRooms(data);
             });
     }
 
@@ -665,16 +661,16 @@ document.addEventListener("DOMContentLoaded", function () {
         let formUpload = $("<form method='post' enctype='multipart/form-data' action='#'></form>")
         formUpload.attr("action", "../../rooms/roomPicture/" + roomId)
         let tableUpload = $("<table></table>")
-        let uploadPicRoom = $("<tr><td><input  class='btn-dark-blue mt-4 ml-5 fileuploadRoom' style='display: none' type='file' name='roomFilePic'></td></tr>")
-        uploadPicRoom.children().children().attr("id", "fileuploadRoom" + roomId)
-        let submitPicRoom = $("<tr><td><input class='btn-dark-blue mt-4 ml-5' type='submit' style='width: 100px' value='Upload'></td></tr>")
-        let buttonToUpload = $("<button class='btn-dark-blue addfiles ml-5 mt-5' style='width: 100px'>Choose File</button>")
-        data.append(formUpload.append(tableUpload.append(uploadPicRoom).append(buttonToUpload).append(submitPicRoom)))
+        let inputUpload = $("<input class='btn-dark-blue mt-4 ml-5' style='display: none' type='file' name='roomFilePic'>")
+        inputUpload.attr("id", "fileuploadRoom")
+        let labelForUpload = $("<tr><td><label class='btn-dark-blue mt-4 ml-5' style='width: 100px; text-align: center'  for='fileuploadRoom'>Select file</label></tr></td>")
+        let inputSubmit = $("<tr><td><input class='btn-dark-blue mt-4 ml-5' style='width: 100px' type='submit'/></tr></td>")
 
-        $('.addfiles').on('click', function () {
-            $('.fileuploadRoom').click();
+        data.append(formUpload.append(tableUpload.append(labelForUpload).append(inputUpload).append(inputSubmit)))
+        labelForUpload.on("click", function () {
+            inputUpload.click();
             return false;
-        });
+        })
     }
 
     function showAvailableClientsToAssign() {
@@ -718,7 +714,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .done(function (data) {
                 $("#modalRentAdd").modal('hide')
-                getRentHistory(data.room.id)
+                getRentHistory(roomId)
             })
             .fail(function (xhr, status, err) {
                 console.log(xhr.statusText);
@@ -833,19 +829,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 divFormRow.append(divFormGroup.append(newLi))
                 rentHistoryList.append(divFormRow);
 
-                btnAssignRent.on("click", function () {
-                    addNewRentToRoom(data[i].room, roomId)
-                })
+
                 btnEdit.off()
                 btnEdit.on("click", function () {
                     editRentToRoom(data[i], roomId)
                 })
-
-                btnBackRoomsRentAssign.on("click", function () {
-                    backToRooms4()
-                })
             }
         }
+        btnAssignRent.on("click", function () {
+            addNewRentToRoom( roomId)
+        })
+        btnBackRoomsRentAssign.on("click", function () {
+            backToRooms4()
+        })
     }
 
 
@@ -853,7 +849,7 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#modalRent").modal()
         $.ajax({
             type: 'get',
-            url: '../../rooms/roomRentHistory/' + roomId,
+            url: '../../rents/roomRentHistory/' + roomId,
             dataType: 'json',
             data: {},
         })
@@ -905,19 +901,19 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    function addNewRentToRoom(room, roomId) {
+    function addNewRentToRoom(roomId, room) {
         $("#modalRentAdd").find("input").val("")
         $("#modalRentAdd").modal()
         showAvailableClientsToAssign()
         assignButtonsOnRentScreen(roomId)
-        $("#rentRoom").val(room.description)
+        // $("#rentRoom").val(room.description)
     }
 
     function editRentToRoom(rent, roomId) {
         $("#modalRentAdd").modal()
         showAvailableClientsToAssign()
         getRentHistoryById(rent.id)
-        assignButtonsOnRentScreenEdit(rent.room.id)
+        assignButtonsOnRentScreenEdit(rent.room.id, roomId)
         // $("#rentRoom").val(room.description)
 
     }

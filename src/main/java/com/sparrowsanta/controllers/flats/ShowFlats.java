@@ -4,16 +4,19 @@ import com.google.gson.Gson;
 import com.sparrowsanta.businessmodel.Flat;
 import com.sparrowsanta.businessmodel.Room;
 import com.sparrowsanta.utils.BasicRestTemplate;
+import com.sparrowsanta.utils.MultiPartFileConverter;
 import com.sparrowsanta.utils.RestUrls;
 import net.minidev.json.JSONValue;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.boot.Banner;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,15 +45,38 @@ public class ShowFlats {
     @GetMapping("/flatPicture/{id}")
     @ResponseBody
     public String getFlatPictures(Model model, @PathVariable(name = "id") long id) {
-        byte[] file = flats.get(2).getPic();
+        String url = "http://localhost:8081/flats/flatPicture/" + id;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
-        String image = "";
-        if (file != null && file.length > 0) {
-            image = Base64.getEncoder().encodeToString(file);
-        }
-
-        return new Gson().toJson(image);
+        return new Gson().toJson(response.getBody());
     }
+
+    @PostMapping(value = "/flatPicture/{id}")
+    public String postRoomPictures(@RequestParam("flatFilePic") MultipartFile flatFilePic, Model model, @PathVariable(name = "id") Long id) {
+
+        String fileName = StringUtils.cleanPath(flatFilePic.getOriginalFilename());
+
+        String url = "http://localhost:8081/flats/flatPicture/" + id;
+        MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<>();
+        bodyMap.add("flatFilePic", new FileSystemResource(MultiPartFileConverter.convert(flatFilePic)));
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(bodyMap, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
+
+
+
+
+//            myFirstChanged.setRoomPicture(flatFilePic.getBytes());
+
+
+        return "redirect:/flats";
+    }
+
 
     @GetMapping
     public String showFlats(Model model) {
@@ -97,7 +123,7 @@ public class ShowFlats {
     //    FOR MultiPartHTTPServlet https://www.jvt.me/posts/2019/09/08/spring-extract-multipart-request-parameters/
     @PostMapping(value = "/addFlat", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String addFlatPost(Model model, @RequestBody String data) throws JSONException {
+    public String addFlatPost(Model model, @RequestBody String data) {
 /*        File convertFile = new File("/home/kuba/JAVA_COURSE/JAVA_1/Real_Estate_Management/src/main/webapp/dump/" + file.getOriginalFilename());
         convertFile.createNewFile();
         FileOutputStream fout = new FileOutputStream(convertFile);
@@ -159,9 +185,9 @@ public class ShowFlats {
     @DeleteMapping(value = "/delete/{id}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String deleteFlat(@PathVariable(name = "id") long id) {
-        System.out.println(id);
-        flats.removeIf(s -> s.getId() == id);
-
+/*        System.out.println(id);
+        flats.removeIf(s -> s.getId() == id);*/
+        BasicRestTemplate.deleteForEntity("http://localhost:8081/flats/delete/", id);
         return new Gson().toJson("OK");
     }
 
@@ -173,7 +199,7 @@ public class ShowFlats {
                 .findFirst()
                 .orElse(null);
         model.addAttribute("flatEdited", new Gson().toJson(flat));
-//        new Gson().toJson(flat);"forward:addFlat";
+
         return "flats/addFlat";
     }
 
@@ -211,11 +237,9 @@ public class ShowFlats {
 
     @RequestMapping(value = "/showAllRooms/{flatId}", produces = "text/plain;charset=UTF-8")
     public String showAllRoomsForFlat(Model model, @PathVariable(name = "flatId") long flatId) {
-        Flat flat = flats.stream()
-                .filter(s -> s.getId() == flatId)
-                .findFirst()
-                .orElse(null);
-        model.addAttribute("flat", new Gson().toJson(flat));
+//        ResponseEntity<String> forEntity = BasicRestTemplate.getForEntity("http://localhost:8081/flats/getFlatById/" + flatId);
+
+            model.addAttribute("flatEdited", flatId);
         return "rooms/showAllRooms";
     }
 
