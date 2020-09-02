@@ -271,7 +271,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: {},
             })
                 .done(function (data) {
-                    createMetersList(data);
+                    if (data.message === "Authentication needed") {
+                        window.location.replace(data.redirectUrl);
+                    } else {
+                        createMetersList(data);
+                    }
                 })
                 .fail(function (xhr, status, err) {
                     logFailedAjax(xhr, status, err)
@@ -286,15 +290,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: {},
             })
                 .done(function (data) {
-                    $('#meterType').val(data.meterType).trigger('change');
-                    $('#meterDescription').val(data.description);
-                    currentMeter = data.id;
-                    buttonSave.prop("onclick", null).off("click");
-                    buttonSave.on("click", function () {
-                        saveMeterChanges(currentMeter)
-                    });
+                    if (data.message === "Authentication needed") {
+                        window.location.replace(data.redirectUrl);
+                    } else {
+                        $('#meterType').val(data.meterType).trigger('change');
+                        $('#meterDescription').val(data.description);
+                        currentMeter = data.id;
+                        buttonSave.prop("onclick", null).off("click");
+                        buttonSave.on("click", function () {
+                            saveMeterChanges(currentMeter)
+                        });
 
-                    $('#meterDataModal').modal();
+                        $('#meterDataModal').modal();
+                    }
 
                 })
                 .fail(function (xhr, status, err) {
@@ -316,8 +324,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: JSON.stringify(meter),
             })
                 .done(function (data) {
-                    $('#meterDataModal').modal('hide');
-                    getMeters(currentFlat);
+                    if (data.message === "Authentication needed") {
+                        window.location.replace(data.redirectUrl);
+                    } else {
+                        $('#meterDataModal').modal('hide');
+                        getMeters(currentFlat);
+                    }
                 })
                 .fail(function (xhr, status, err) {
                     logFailedAjax(xhr, status, err)
@@ -339,8 +351,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: JSON.stringify(meter),
             })
                 .done(function (data) {
-                    $('#meterDataModal').modal('hide');
-                    getMeters(currentFlat);
+                    if (data.message === "Authentication needed") {
+                        window.location.replace(data.redirectUrl);
+                    } else {
+                        $('#meterDataModal').modal('hide');
+                        getMeters(currentFlat);
+                    }
                 })
                 .fail(function (xhr, status, err) {
                     logFailedAjax(xhr, status, err)
@@ -353,7 +369,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 url: 'meters/delete/' + meterId,
             })
                 .done(function (data) {
-                    getMeters(currentFlat);
+                    if (data.message === "Authentication needed") {
+                        window.location.replace(data.redirectUrl);
+                    } else {
+                        getMeters(currentFlat);
+                    }
                 })
                 .fail(function (xhr, status, err) {
                     logFailedAjax(xhr, status, err)
@@ -369,7 +389,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: {},
             })
                 .done(function (data) {
-                    createHistoryList(data, meterName);
+                    if (data.message === "Authentication needed") {
+                        window.location.replace(data.redirectUrl);
+                    } else {
+                        createHistoryList(data, meterName);
+                    }
                 })
                 .fail(function (xhr, status, err) {
                     console.log(xhr.statusText);
@@ -386,15 +410,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: {},
             })
                 .done(function (data) {
-                    $('#readingDate').val(data.meterReadingDate);
-                    $('#readingValue').val(data.readingValue);
-                    currentReading = data.id;
-                    buttonSaveReading.prop("onclick", null).off("click");
-                    buttonSaveReading.on("click", function () {
-                        saveReadingChanges(currentReading)
-                    });
+                    if (data.message === "Authentication needed") {
+                        window.location.replace(data.redirectUrl);
+                    } else {
+                        $('#readingDate').val(data.meterReadingDate);
+                        $('#readingValue').val(data.readingValue);
+                        currentReading = data.id;
+                        buttonSaveReading.prop("onclick", null).off("click");
+                        buttonSaveReading.on("click", function () {
+                            saveReadingChanges(currentReading)
+                        });
 
-                    $('#meterReadingDataModal').modal();
+                        $('#meterReadingDataModal').modal();
+                    }
                 })
                 .fail(function (xhr, status, err) {
                     console.log(xhr.statusText);
@@ -417,8 +445,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: JSON.stringify(reading),
             })
                 .done(function (data) {
-                    $('#meterReadingDataModal').modal('hide');
-                    getMeters(currentFlat);
+                    if (data.message === "Authentication needed") {
+                        window.location.replace(data.redirectUrl);
+                    } else {
+                        $('#meterReadingDataModal').modal('hide');
+                        getMeters(currentFlat);
+                    }
                 })
                 .fail(function (xhr, status, err) {
                     console.log(xhr.statusText);
@@ -442,8 +474,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: JSON.stringify(reading),
             })
                 .done(function (data) {
-                    $('#meterReadingDataModal').modal('hide');
-                    getMeterReadings(currentMeter, currentMeterName);
+                    if (data.message === "Authentication needed") {
+                        window.location.replace(data.redirectUrl);
+                    } else {
+                        $('#meterReadingDataModal').modal('hide');
+                        getMeterReadings(currentMeter, currentMeterName);
+                    }
                 })
                 .fail(function (xhr, status, err) {
                     console.log(xhr.statusText);
@@ -458,7 +494,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 url: 'meters/history/delete/' + readingId,
             })
                 .done(function (data) {
-                    getMeterReadings(currentMeter, currentMeterName);
+                    if (data.message === "Authentication needed") {
+                        window.location.replace(data.redirectUrl);
+                    } else {
+                        getMeterReadings(currentMeter, currentMeterName);
+                    }
                 })
                 .fail(function (xhr, status, err) {
                     console.log(xhr.statusText);

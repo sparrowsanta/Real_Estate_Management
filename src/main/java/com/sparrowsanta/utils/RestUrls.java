@@ -19,6 +19,8 @@ public class RestUrls {
     public static final String EDIT_METER_READING_BY_READING_ID = SERVER_URL + "meters/reading/edit/";
     public static final String DELETE_METER_READING_BY_READING_ID = SERVER_URL + "meters/history/delete/";
 
+    public static final String AUTHENTICATE = SERVER_URL + "authenticate";
+
     //Bills definitions and FlatBills
     public static final String GET_BILLS_DEFINITIONS_BY_FLAT_ID = SERVER_URL + "bills/getAll/";
     public static final String GET_BILL_DEFINITIONS_BY_BILL_DEFINITION_ID = SERVER_URL + "bills/";

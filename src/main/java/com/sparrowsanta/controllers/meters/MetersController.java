@@ -2,6 +2,7 @@ package com.sparrowsanta.controllers.meters;
 
 import com.google.gson.Gson;
 import com.sparrowsanta.utils.RestUrls;
+import com.sparrowsanta.utils.Templates;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -9,14 +10,24 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 @RestController
 @RequestMapping("meters")
 public class MetersController {
 
     @GetMapping(value = "/getAll/{flatId}", produces = "text/plain;charset=UTF-8")
-    public String getMeters(@PathVariable(name = "flatId") long flatId) {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(RestUrls.GET_METERS_BY_FLAT_ID+flatId, String.class);
+    public String getMeters(@PathVariable(name = "flatId") long flatId, @CookieValue("token") String token,
+                            HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
+        String response = Templates.getRequest(token, RestUrls.GET_METERS_BY_FLAT_ID + flatId);
+        if (!response.equals("401")) {
+            return response;
+        } else {
+            servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
+        }
+        return "401 - Unauthorized";
     }
 
     @GetMapping(value = "/{meterId}", produces = "text/plain;charset=UTF-8")
@@ -24,6 +35,7 @@ public class MetersController {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(RestUrls.GET_METER_BY_ID + meterId, String.class);
     }
+
 
     @GetMapping(value = "/reading/{readingId}", produces = "text/plain;charset=UTF-8")
     public String getMeterReadingById(@PathVariable(name = "readingId") long readingId) {

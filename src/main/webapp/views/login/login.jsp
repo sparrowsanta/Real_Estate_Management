@@ -63,7 +63,7 @@
                                     <input
                                             type="text"
                                             id="userName"
-                                            name="userName"
+                                            name="username"
                                             class="white-text form-control"
                                             autofocus
                                             autocomplete="off"
@@ -77,7 +77,7 @@
                                     <input
                                             type="password"
                                             id="userPassword"
-                                            name="userPassword"
+                                            name="password"
                                             class="white-text form-control"
                                     />
                                     <label for="userPassword"><spring:message code="login.label.password"/></label>
