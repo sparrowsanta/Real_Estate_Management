@@ -386,8 +386,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: {},
             })
                 .done(function (data) {
-                    let readingDate = data.meterReadingDate.replace("-/g", ".");
-                    $('#readingDate').val(readingDate);
+                    $('#readingDate').val(data.meterReadingDate);
                     $('#readingValue').val(data.readingValue);
                     currentReading = data.id;
                     buttonSaveReading.prop("onclick", null).off("click");

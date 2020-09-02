@@ -2,8 +2,6 @@ package com.sparrowsanta.controllers.meters;
 
 import com.google.gson.Gson;
 import com.sparrowsanta.utils.RestUrls;
-import com.sparrowsanta.utils.TestData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -14,31 +12,29 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping("meters")
 public class MetersController {
-    @Autowired
-    private TestData testData;
 
     @GetMapping(value = "/getAll/{flatId}", produces = "text/plain;charset=UTF-8")
     public String getMeters(@PathVariable(name = "flatId") long flatId) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(RestUrls.getGetMetersByFlatId() + flatId, String.class);
+        return restTemplate.getForObject(RestUrls.GET_METERS_BY_FLAT_ID+flatId, String.class);
     }
 
     @GetMapping(value = "/{meterId}", produces = "text/plain;charset=UTF-8")
     public String getMeterById(@PathVariable(name = "meterId") long meterId) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(RestUrls.getGetMeterById() + meterId, String.class);
+        return restTemplate.getForObject(RestUrls.GET_METER_BY_ID + meterId, String.class);
     }
 
     @GetMapping(value = "/reading/{readingId}", produces = "text/plain;charset=UTF-8")
     public String getMeterReadingById(@PathVariable(name = "readingId") long readingId) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(RestUrls.getGetMeterReadingByReadingId() + readingId, String.class);
+        return restTemplate.getForObject(RestUrls.GET_METER_READING_BY_READING_ID + readingId, String.class);
     }
 
     @DeleteMapping(value = "/delete/{meterId}", produces = "text/plain;charset=UTF-8")
     public String delMeter(@PathVariable(name = "meterId") long meterId) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(RestUrls.getDeleteMeterByMeterId()+meterId);
+        restTemplate.delete(RestUrls.DELETE_METER_BY_METER_ID + meterId);
         return new Gson().toJson("Ok");
     }
 
@@ -48,8 +44,9 @@ public class MetersController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> request = new HttpEntity<String>(meter, headers);
-        restTemplate.exchange(RestUrls.getEditMeterByMeterId() + meterId, HttpMethod.PUT, request, Void.class);
+        restTemplate.exchange(RestUrls.EDIT_METER_BY_METER_ID + meterId, HttpMethod.PUT, request, Void.class);
         return new Gson().toJson("Ok");
+
     }
 
     @PutMapping(value = "/reading/edit/{readingId}", produces = "text/plain;charset=UTF-8")
@@ -58,7 +55,7 @@ public class MetersController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> request = new HttpEntity<String>(reading, headers);
-        restTemplate.exchange(RestUrls.getEditMeterReadingByReadingId() + readingId, HttpMethod.PUT, request, Void.class);
+        restTemplate.exchange(RestUrls.EDIT_METER_READING_BY_READING_ID + readingId, HttpMethod.PUT, request, Void.class);
         return new Gson().toJson("Ok");
     }
 
@@ -68,20 +65,20 @@ public class MetersController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> request = new HttpEntity<String>(meter, headers);
-        restTemplate.postForEntity(RestUrls.getAddMeter(), request, String.class);
+        restTemplate.postForEntity(RestUrls.ADD_METER, request, String.class);
         return new Gson().toJson("Ok");
     }
 
     @GetMapping(value = "/history/{meterId}", produces = "text/plain;charset=UTF-8")
     public String getMeterHistory(@PathVariable(name = "meterId") long meterId) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(RestUrls.getGetMeterReadingsByMeterId() + meterId, String.class);
+        return restTemplate.getForObject(RestUrls.GET_METER_READINGS_BY_METER_ID + meterId, String.class);
     }
 
     @DeleteMapping(value = "/history/delete/{readingId}", produces = "text/plain;charset=UTF-8")
     public String delMeterReading(@PathVariable(name = "readingId") long readingId) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(RestUrls.getDeleteMeterReadingByReadingId()+readingId);
+        restTemplate.delete(RestUrls.DELETE_METER_READING_BY_READING_ID + readingId);
         return new Gson().toJson("Ok");
     }
 
@@ -91,7 +88,7 @@ public class MetersController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> request = new HttpEntity<String>(reading, headers);
-        restTemplate.postForEntity(RestUrls.getAddMeterReadingByMeterId(), request, String.class);
+        restTemplate.postForEntity(RestUrls.ADD_METER_READING_BY_METER_ID, request, String.class);
         return new Gson().toJson("Ok");
 
     }

@@ -6,7 +6,7 @@
 <div class="container text-center">
     <div class="modal fade " id="modalBills" tabindex="-1" role="dialog" aria-labelledby="modalBills"
          data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg mw-75 w-75" role="document">
+        <div class="modal-dialog mw-100 w-75" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-dark-blue">
                     <h4 class="modal-title" id="modalBillsTitle"><span><em class="fas fa-credit-card"> </em></span>
@@ -16,17 +16,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
-
                     <div id="billsListForm">
                         <h4><spring:message code="bills.header.history"/></h4>
                         <div class="form-group row">
-                            <div class="col-sm-6">
-
-                                <div class="input-group mb-3">
-                                    <label class="control-label" for="billsType"><strong><spring:message
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <label class="control-label" for="billsType" style="width: 100%"><strong><spring:message
                                             code='bills.label.filter.paid'/></strong></label>
-                                    <select class="form-control is-valid input-white " style="width: 100%;"
+                                    <select class="form-control is-valid input-white "
                                             id="billsType">
                                         <option value="all" selected="selected"><spring:message
                                                 code='bills.filer.all'/></option>
@@ -37,25 +34,50 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
-
-                                <div class="input-group mb-3">
-                                    <label class="control-label" for="billsIncomeOutcome"><strong><spring:message
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <label class="control-label" for="billsIncomeOutcome" style="width: 100%"><strong><spring:message
                                             code='bills.label.filter.incomeType'/></strong></label>
-                                    <select class="form-control is-valid input-white " style="width: 100%;"
+                                    <select class="form-control is-valid input-white "
                                             id="billsIncomeOutcome">
                                         <option value="all" selected="selected"><spring:message
                                                 code='bills.filer.incomeOutcome.all'/></option>
-                                        <option value="paid"><spring:message
+                                        <option value="income"><spring:message
                                                 code='bills.filer.incomeOutcome.income'/></option>
-                                        <option value="notPaid"><spring:message
+                                        <option value="outcome"><spring:message
                                                 code='bills.filer.incomeOutcome.outcome'/></option>
-
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <label class="control-label" for="dateFrom" style="width: 100%"><strong><spring:message
+                                            code='bills.label.filter.dateFrom'/></strong></label>
 
+                                    <input class="form-control input-white" id="dateFrom" type="date"
+                                           autocomplete="off"/>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-dark-blue-outline btn-sm" id="clearDateFrom">
+                                            <em class="fas fa-times"></em></button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <label class="control-label" for="dateTo" style="width: 100%"><strong><spring:message
+                                            code='bills.label.filter.dateTo'/></strong></label>
+                                    <input class="form-control input-white" id="dateTo" type="date"
+                                           autocomplete="off"/>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-dark-blue-outline btn-sm" id="clearDateTo">
+                                            <em class="fas fa-times"></em></button>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="custom-scrollbar-blue p-2"
                              style="text-align: left;  height: 500px">
@@ -114,10 +136,14 @@
     <input id="paymentLedWhiteTooltip" type="hidden" value="<spring:message code='bills.filer.paymentLED.white'/>"/>
     <input id="paymentLedRedTooltip" type="hidden" value="<spring:message code='bills.filer.paymentLED.red'/>"/>
 
-    <input id="billsDefinitionFrequencyLabel" type="hidden" value="<spring:message code='bills.definition.label.frequency'/>"/>
-    <input id="billsDefinitionPaymentTillLabel" type="hidden" value="<spring:message code='bills.definition.label.paymentTill'/>"/>
+    <input id="billsDefinitionFrequencyLabel" type="hidden"
+           value="<spring:message code='bills.definition.label.frequency'/>"/>
+    <input id="billsDefinitionPaymentTillLabel" type="hidden"
+           value="<spring:message code='bills.definition.label.paymentTill'/>"/>
 
 
 </div>
+
+<jsp:include page="../bills/billsPaymentData.jsp"/>
 
 <script type="text/javascript" src="js/bills/billsModal.js"></script>

@@ -29,7 +29,7 @@
                         <h4 id="meterHistoryTitle"></h4>
 
                         <div class="custom-scrollbar-blue p-2"
-                             style="text-align: left;  height: 600px">
+                             style="text-align: left;  height: 550px">
                         <ul class="timeline" id="meterHistoryList">
 
                         </ul>

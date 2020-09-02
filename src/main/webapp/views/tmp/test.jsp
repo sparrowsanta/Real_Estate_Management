@@ -44,6 +44,9 @@
 <button type="button" id="btnModalMeters2" class="btn btn-orange btn-lg openBills" value="1">
     <spring:message code="meters.button.view.meters"/> Bills 1
 </button>
+<button type="button" id="btnaaaa" class="btn btn-orange btn-lg" value="1">
+   Bills data test
+</button>
 <br><br><br>
 
 <button type="button" class="btn btn-orange-outline">
@@ -55,6 +58,7 @@
 <button type="button" id="btnModalRoom" class="btn btn-orange btn-lg addRoom" value="">
     <spring:message code="meters.button.view.meters"/> ADD ROOM
 </button>
+
 
 <div id="dataRoomFeed">
     <p>Add rooms to flat</p>
@@ -80,6 +84,7 @@
 <jsp:include page="../meters/metersModal.jsp"/>
 <jsp:include page="../rooms/roomsModal.jsp"/>
 <jsp:include page="../bills/billsModal.jsp"/>
+
 <footer class="page-footer font-small blue">
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>
