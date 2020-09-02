@@ -5,14 +5,22 @@ document.addEventListener("DOMContentLoaded", function () {
     function showFlatsInformation(flats) {
         containerDiv.empty();
 
-        let figureGeneric = $("<figure ><a href='#'></a></figure>")
-        let imgGeneric = $("<img class='img-fluid' src='#'/>")
+        let figureGeneric = $("<figure><a href='#' ></a></figure>")
+        let imgGeneric = $("<img class='img-fluid' src='#'>")
         for (let i = 0; i < flats.length; i++) {
+
             let figureMainFlat = figureGeneric.clone(true).attr("id", "pictureFor" + flats[i].id)
             let imgMainFlat = imgGeneric.clone(true)
             let flatPicture = getPictureForFlat(flats[i].id);
             imgMainFlat.attr("src", "data:image/png;base64," + flatPicture);
             figureMainFlat.children().append(imgMainFlat)
+
+            if (flatPicture === null) {
+                uploadFlatPicIfDoesNotHave(figureMainFlat.children(), flats[i].id)
+            } else {
+                imgMainFlat.attr("src", "data:image/png;base64," + flatPicture);
+                figureMainFlat.children().append(imgMainFlat)
+            }
 
             let row = $("<div class='row'>");
             let rowForPic = $("<div class = 'col-sm-3 col3 pr-0'>")
@@ -419,6 +427,21 @@ document.addEventListener("DOMContentLoaded", function () {
         return pictureUrl;
     }
 
+    function uploadFlatPicIfDoesNotHave(data, flatId) {
+        let formUpload = $("<form method='post' enctype='multipart/form-data' action='#'></form>")
+        formUpload.attr("action", "flats/flatPicture/" + flatId)
+        let tableUpload = $("<table></table>")
+        let inputUpload = $("<input class='btn-dark-blue mt-4 ml-5' style='display: none' type='file' name='flatFilePic'>")
+        inputUpload.attr("id", "fileuploadFlat")
+        let labelForUpload = $("<tr><td><label class='btn-dark-blue mt-4 ml-5' style='width: 100px; text-align: center'  for='fileuploadFlat'>Select file</label></tr></td>")
+        let inputSubmit = $("<tr><td><input class='btn-dark-blue mt-4 ml-5' style='width: 100px' type='submit'/></tr></td>")
+
+        data.append(formUpload.append(tableUpload.append(labelForUpload).append(inputUpload).append(inputSubmit)))
+        labelForUpload.on("click", function () {
+            inputUpload.click();
+            return false;
+        })
+    }
 
     getAllFlats();
 })

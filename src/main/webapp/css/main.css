@@ -289,8 +289,17 @@ main div {
 
 
 .submitFixed {
-    bottom: 300px;
+    bottom: 250px;
     position: fixed;
+}
+
+/*.custom-control-label:before {
+    width: 40px;
+    height: 30px;
+
+}*/
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #16697A;
 }
 
 
