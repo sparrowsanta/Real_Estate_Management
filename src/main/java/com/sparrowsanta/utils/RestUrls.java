@@ -1,20 +1,32 @@
 package com.sparrowsanta.utils;
 
+import lombok.Getter;
+@Getter
 public class RestUrls {
-        private static final String SERVER_URL = "http://realestatemanagementrest-env.eba-u4wqr2f3.eu-central-1.elasticbeanstalk.com/";
-//    private static final String SERVER_URL = "http://localhost:8081/";
+//        private static final String SERVER_URL = "http://realestatemanagementrest-env.eba-u4wqr2f3.eu-central-1.elasticbeanstalk.com/";
+    private static final String SERVER_URL = "http://localhost:8081/";
 
-    private static final String GET_METERS_BY_FLAT_ID = SERVER_URL + "meters/getAll/";
-    private static final String ADD_METER = SERVER_URL + "meters/add";
-    private static final String GET_METER_READINGS_BY_METER_ID = SERVER_URL + "meters/history/";
-    private static final String GET_METER_READING_BY_READING_ID = SERVER_URL + "meters/reading/";
-    private static final String GET_METER_BY_ID = SERVER_URL + "meters/";
-    private static final String EDIT_METER_BY_METER_ID = SERVER_URL + "meters/edit/";
-    private static final String DELETE_METER_BY_METER_ID = SERVER_URL + "meters/delete/";
+    //Meters and Meters history
 
-    private static final String ADD_METER_READING_BY_METER_ID = SERVER_URL + "meters/reading/add";
-    private static final String EDIT_METER_READING_BY_READING_ID = SERVER_URL + "meters/reading/edit/";
-    private static final String DELETE_METER_READING_BY_READING_ID = SERVER_URL + "meters/history/delete/";
+    public static final String GET_METERS_BY_FLAT_ID = SERVER_URL + "meters/getAll/";
+    public static final String ADD_METER = SERVER_URL + "meters/add";
+    public static final String GET_METER_READINGS_BY_METER_ID = SERVER_URL + "meters/history/";
+    public static final String GET_METER_READING_BY_READING_ID = SERVER_URL + "meters/reading/";
+    public static final String GET_METER_BY_ID = SERVER_URL + "meters/";
+    public static final String EDIT_METER_BY_METER_ID = SERVER_URL + "meters/edit/";
+    public static final String DELETE_METER_BY_METER_ID = SERVER_URL + "meters/delete/";
+    public static final String ADD_METER_READING_BY_METER_ID = SERVER_URL + "meters/reading/add";
+    public static final String EDIT_METER_READING_BY_READING_ID = SERVER_URL + "meters/reading/edit/";
+    public static final String DELETE_METER_READING_BY_READING_ID = SERVER_URL + "meters/history/delete/";
+
+    //Bills definitions and FlatBills
+    public static final String GET_BILLS_DEFINITIONS_BY_FLAT_ID = SERVER_URL + "bills/getAll/";
+    public static final String GET_BILL_DEFINITIONS_BY_BILL_DEFINITION_ID = SERVER_URL + "bills/";
+    public static final String GET_BILLS_BY_FLAT_ID_AND_FILTER = SERVER_URL + "bills/payment/all/";
+    public static final String GET_BILLS_BY_BILL_ID = SERVER_URL + "bills/payment/";
+    public static final String ADD_PAYMENT = SERVER_URL + "bills/payment/add";
+    public static final String EDIT_PAYMENT = SERVER_URL + "bills/payment/edit/";
+    public static final String DELETE_PAYMENT_BY_PAYMENT_ID = SERVER_URL + "bills/payment/delete/";
 
     //Flats
     private static final String GET_ALL_FLATS = SERVER_URL + "getAllFlats";
@@ -24,19 +36,6 @@ public class RestUrls {
     private static final String GET_ALL_CLIENTS = SERVER_URL + "clients/showClientsAll/";
     private static final String GET_CLIENT = SERVER_URL + "clients/getClient/";
     private static final String DELETE_CLIENT = SERVER_URL + "clients/deleteClient/";
-
-
-    public static String getGetAllClients() {
-        return GET_ALL_CLIENTS;
-    }
-
-    public static String getGetClient() {
-        return GET_CLIENT;
-    }
-
-    public static String getDeleteClient() {
-        return DELETE_CLIENT;
-    }
 
     public static String getGetAllFlats() {
         return GET_ALL_FLATS;
@@ -50,36 +49,16 @@ public class RestUrls {
         return ADD_CLIENT;
     }
 
-    public static String getGetMetersByFlatId() {
-        return GET_METERS_BY_FLAT_ID;
+    public static String getGetAllClients() {
+        return GET_ALL_CLIENTS;
     }
 
-    public static String getGetMeterReadingsByMeterId() {
-        return GET_METER_READINGS_BY_METER_ID;
+    public static String getGetClient() {
+        return GET_CLIENT;
     }
 
-    public static String getGetMeterReadingByReadingId() {
-        return GET_METER_READING_BY_READING_ID;
+    public static String getDeleteClient() {
+        return DELETE_CLIENT;
     }
-
-    public static String getAddMeterReadingByMeterId() {
-        return ADD_METER_READING_BY_METER_ID;
-    }
-
-    public static String getEditMeterReadingByReadingId() {
-        return EDIT_METER_READING_BY_READING_ID;
-    }
-
-    public static String getDeleteMeterReadingByReadingId() {
-        return DELETE_METER_READING_BY_READING_ID;
-    }
-
-    public static String getGetMeterById() { return GET_METER_BY_ID; }
-
-    public static String getEditMeterByMeterId() { return EDIT_METER_BY_METER_ID; }
-
-    public static String getAddMeter() { return ADD_METER; }
-
-    public static String getDeleteMeterByMeterId() { return DELETE_METER_BY_METER_ID; }
 }
 

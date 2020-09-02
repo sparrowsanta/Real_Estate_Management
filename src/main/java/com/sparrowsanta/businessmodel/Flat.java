@@ -21,7 +21,6 @@ public class Flat {
     private int yearOfConstruction;
     private double flatPrice;
     private double expectedIncome;
-    private List<Meters> meters;
     private String picUrl;
 
 //    Replacing picUrl

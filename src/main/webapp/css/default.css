@@ -104,16 +104,16 @@
     color: #fff !important;
 }
 
-/* Not used yet - may be useful for custom checkboxes*/
-/*.custom-control-label::before,*/
-/*.custom-control-label::after {*/
-/*    width: 2rem;*/
-/*    height: 2rem;*/
-/*}*/
+ /*Not used yet - may be useful for custom checkboxes*/
+.custom-control-label::before,
+.custom-control-label::after {
+    width: 2rem;
+    height: 2rem;
+}
 
-/*.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {*/
-/*    background-color: #FFA62B;*/
-/*}*/
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #FFA62B;
+}
 
 
 /*Custom scrollbar orange*/

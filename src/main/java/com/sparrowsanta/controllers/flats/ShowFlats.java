@@ -32,7 +32,7 @@ public class ShowFlats {
 
 
     public static final List<Flat> flats = new ArrayList<>();
-    private final Flat flat3 = new Flat(2, "Trzecie", "Gdańsk", "Olejna", "4", "01-020", 2, null, 10, "Moje trzecie mieszkanie", 23.1, 2019, 355000.00, 1500.0, null, "", null);
+    private final Flat flat3 = new Flat(2, "Trzecie", "Gdańsk", "Olejna", "4", "01-020", 2, null, 10, "Moje trzecie mieszkanie", 23.1, 2019, 355000.00, 1500.0, "", null);
 
 
     @GetMapping("/flatPicture/{id}")
@@ -65,11 +65,11 @@ public class ShowFlats {
         List<Room> rooms = Arrays.asList(new Room(1, "myFirst", 30.20, 1000, ROOM, 1),
                 new Room(2, "mySec", 40.20, 2000, ROOM, 1), new Room(3, "Kitchen", 9.20, 0.00, KITCHEN, 0));
         Flat flat1 = new Flat(1, "Pierwsze", "Kraków", "Złota Podkowa", "5", "31-322", 2, null, 3, "Moje pierwsze mieszkanie",
-                34.4, 2010, 305000.00, 2000.0, null, "", null);
+                34.4, 2010, 305000.00, 2000.0, "", null);
         flat1.setRooms(rooms);
 
         Flat flat2 = new Flat(3, "Drugie", "Oświęcim", "Stawowa", "1", "11-322", 4, null, 1, "Moje drugie mieszkanie",
-                66.1, 2014, 255000.00, 1000.0, null, "", null);
+                66.1, 2014, 255000.00, 1000.0, "", null);
 
         flats.add(flat1);
         flats.add(flat2);

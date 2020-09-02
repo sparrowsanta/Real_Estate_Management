@@ -3,7 +3,12 @@ document.addEventListener("DOMContentLoaded", function () {
     let buttonAddBillDefinition = $("#btnAddBillDefinition");
     let buttonShowBillDefinition = $("#btnShowBillsDefinition");
     let buttonAddManualPayment = $("#btnAddManualPayment");
-    let filterSelect = $("#billsType");
+    let buttonClearDateFrom = $("#clearDateFrom");
+    let buttonClearDateTo = $("#clearDateTo");
+    let filterPaid = $("#billsType");
+    let filterType = $("#billsIncomeOutcome");
+    let filterDateFrom = $("#dateFrom");
+    let filterDateTo = $("#dateTo");
 
 
     let currentFlat = -1;
@@ -14,10 +19,29 @@ document.addEventListener("DOMContentLoaded", function () {
     let billsDefinitionForm = $("#billsDefinitionForm");
     let billsList = $('#billsList');
     let paymentsList = $('#paymentsList');
+    let btnaaaa = $('#btnaaaa');
+
+    btnaaaa.on("click", addNewPayment);
+
+    buttonClearDateFrom.on("click", function () {
+        filterDateFrom.val("")
+        filterPayments();
+    });
+    buttonClearDateTo.on("click", function () {
+        filterDateTo.val("")
+        filterPayments();
+    });
+
 
     buttonBack.on("click", backToPaymentsList);
     buttonShowBillDefinition.on("click", showBillsDefinition);
-    filterSelect.on("change", filterPayments);
+    buttonAddManualPayment.on("click", addNewPayment);
+    let buttonSavePayment = $("#btnSavePayment");
+    filterPaid.on("change", filterPayments);
+    filterType.on("change", filterPayments);
+    filterDateFrom.on("change", filterPayments);
+    filterDateTo.on("change", filterPayments);
+
 
     initModalOpenButtons();
 
@@ -40,10 +64,39 @@ document.addEventListener("DOMContentLoaded", function () {
         $('#modalBills').modal();
         currentFlat = $(this).attr("value");
         getBills(currentFlat);
-        getPayments(currentFlat, "all")
+        filterPaid.val("all");
+        filterType.val("all");
+        filterDateFrom.val("");
+        filterDateTo.val("");
+
+        filterPayments();
         backToPaymentsList();
+    }
 
+    function addNewPayment() {
+        // resetErrorsPayment();
+        $('#billsPaymentDataTitle').text($('#paymentDataTitleNew').val());
+        let currentDate = new Date();
+        let currentDateString = currentDate.getFullYear()
+            + "-" + (currentDate.getMonth() + 1 < 10 ? "0" + (currentDate.getMonth() + 1) : (currentDate.getMonth() + 1))
+            + "-" + (currentDate.getDate() < 10 ? "0" + currentDate.getDate() : currentDate.getDate());
+        $('#paymentDate').val(currentDateString);
+        $('#paymentAmount').val('');
+        $("#paymentType").val('income').trigger('change');
+        $('#paymentDescription').val('');
+        $('#paymentCurrency').val('');
+        document.getElementById("paymentPaid").checked = false
+        buttonSavePayment.prop("onclick", null).off("click");
+        buttonSavePayment.on("click", saveNewPayment);
 
+        $('#billsPaymentDataModal').modal();
+    }
+
+    function editPayment() {
+        resetErrorsPayment();
+        $('#billsPaymentDataTitle').text($('#paymentDataTitleEdit').val());
+        let paymentId = $(this).attr("value");
+        getPaymentById(paymentId);
     }
 
     function backToPaymentsList() {
@@ -66,15 +119,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function filterPayments() {
-        getPayments(currentFlat, filterSelect.val());
+        getPayments(currentFlat, filterPaid.val(), filterType.val(),
+            filterDateFrom.val().length === 0 ? "-" : filterDateFrom.val(),
+            filterDateTo.val().length === 0 ? "-" : filterDateTo.val());
 
     }
 
     //  ---------------  Create and display list of Payments History  for flat
-
     function createPaymentsList(data) {
         paymentsList.empty();
-
         if (data.length > 0) {
             for (let i = 0; i < data.length; i++) {
                 let newLi = $("<li>");
@@ -82,6 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 let newDiv2 = $("<div>");
                 let newH2 = $("<h2>");
                 let newEm = $("<em>");
+                let newEm2 = $("<em>");
                 let newP = $("<p>");
                 let newP2 = $("<p>");
                 let btnDelete = $("<a>");
@@ -96,27 +150,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 newLi.addClass("timeline-item bg-main-theme rounded ml-3 p-4 shadow");
                 divLedBox.addClass("led-box float-right inline-block");
-
+                let paymentDate = data[i].paymentDate.replace("-/g", ".")
                 divLedBox.append(divLed);
-                divLed.addClass(data[i].paid ? "led-green" :
-                    getLedForNotPayedPayment(parseInt(data[i].paymentDate.year), parseInt(data[i].paymentDate.month), parseInt(data[i].paymentDate.day)));
+                divLed.addClass(data[i].paid ? "led-green" : getLedForNotPayedPayment(paymentDate));
                 divLed.attr("data-toggle", "tooltip").prop('title', getLedTooltipText(divLed))
 
 
                 newDiv.addClass("timeline-arrow");
                 newH2.addClass("h5 mb-0");
                 newEm.addClass("far fa-calendar-check mr-3");
+                newEm2.addClass(data[i].incomeOutcome===("income") ?
+                    "fas fa-plus mr-3 text-success" : "fas fa-minus mr-3 text-danger");
                 newP.addClass("text-small mt-2 font-weight-light");
                 newP2.addClass("text-small mt-2 font-weight-light");
                 newH2.append(newEm);
-                let readingDate = data[i].paymentDate.year + "." +
-                    (data[i].paymentDate.month > 9 ? data[i].paymentDate.month : "0" + data[i].paymentDate.month) + "." +
-                    (data[i].paymentDate.day > 9 ? data[i].paymentDate.day : "0" + data[i].paymentDate.day);
 
-                newH2.append("Payment date" + ": " + readingDate);
-                newP.text("Payment amount" + ": " + data[i].amount + " " + data[i].currency);
+                newH2.append($("#paymentDateLabel").val() + ": " + paymentDate);
+                newP.append(newEm2);
+                newP.append($("#paymentAmountLabel").val() + ": " + data[i].amount + " " + data[i].currency);
                 newP2.text(data[i].description);
 
+                btnDeleteEm.addClass("fas fa-trash-alt");
                 btnDeleteEm.addClass("fas fa-trash-alt");
                 btnEditEm.addClass("fas fa-pencil-alt");
 
@@ -128,14 +182,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 btnDelete.addClass("btn btn-xs float-right btn-mixed-outline mr-2").attr("data-toggle", "tooltip")
                     .attr("value", data[i].id).prop('title', $("#paymentDeleteTooltip").val())
-                //     .on("click", function () {
-                //     deleteEntity($("#readDeleteMessage").val() + " " + readingDate, deleteReading, data[i].id)
-                // });
+                    .on("click", function () {
+                        deleteEntity($("#paymentDeleteMessage").val() + " " + data[i].description + " - " +
+                            data[i].amount + data[i].currency, deletePayment, data[i].id)
+                    });
                 btnEdit.addClass("btn btn-xs float-right btn-mixed-outline mr-2").attr("data-toggle", "tooltip")
                     .attr("value", data[i].id).prop('title', $("#paymentEditTooltip").val())
-
-
-                // .on("click", editReading);
+                    .on("click", editPayment);
                 btnEdit.append(btnEditEm);
                 btnDelete.append(btnDeleteEm);
 
@@ -249,13 +302,13 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    function getPayments(flatId, filter) {
+    function getPayments(flatId, filterPaid, filterType, fiterDateFrom, filterDateTo) {
+        let filters = {};
         $.ajax({
             type: 'get',
-
-            url: 'bills/payment/all/' + flatId + "/" + filter,
+            url: 'bills/payment/all/' + flatId + "/" + filterPaid + "/" + filterType + "/" + fiterDateFrom + "/" + filterDateTo,
             dataType: 'json',
-            data: {},
+
         })
             .done(function (data) {
                 createPaymentsList(data);
@@ -265,9 +318,113 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    function getLedForNotPayedPayment(year, month, day) {
+    function getPaymentById(paymentId) {
+        $.ajax({
+            type: 'get',
+            url: 'bills/payment/' + paymentId,
+            dataType: "json",
+            data: {},
+        })
+            .done(function (data) {
+                $('#paymentDate').val(data.paymentDate);
+                $('#paymentAmount').val(data.amount);
+                $('#paymentType').val(data.incomeOutcome);
+                $('#paymentDescription').val(data.description);
+                $('#paymentCurrency').val(data.currency);
+                document.getElementById("paymentPaid").checked = data.paid;
+                currentPayment = data.id;
+                buttonSavePayment.prop("onclick", null).off("click");
+                buttonSavePayment.on("click", function () {
+                    savePaymentChanges(currentPayment)
+                });
+
+                $('#billsPaymentDataModal').modal();
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
+
+    function saveNewPayment() {
+        if (checkRequiredFieldsPayment() !== true) return;
+        let payment = {};
+        payment.flatId = currentFlat;
+        payment.amount = $('#paymentAmount').val();
+        payment.paymentDate = $('#paymentDate').val();
+        payment.incomeOutcome = $('#paymentType').val();
+        payment.description = $('#paymentDescription').val();
+        payment.currency = $('#paymentCurrency').val();
+        payment.paid = document.getElementById("paymentPaid").checked ? true : false;
+        $.ajax({
+            type: 'post',
+            url: 'bills/payment/add/',
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(payment),
+        })
+            .done(function (data) {
+                $('#billsPaymentDataModal').modal('hide');
+                filterPayments();
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
+
+    function savePaymentChanges(paymentId) {
+        if (checkRequiredFieldsPayment() !== true) return;
+        let payment = {};
+        payment.id = paymentId;
+        payment.flatId = currentFlat;
+        payment.amount = $('#paymentAmount').val();
+        payment.paymentDate = $('#paymentDate').val();
+        payment.incomeOutcome = $('#paymentType').val();
+        payment.description = $('#paymentDescription').val();
+        payment.currency = $('#paymentCurrency').val();
+        payment.paid = document.getElementById("paymentPaid").checked ? true : false;
+        $.ajax({
+            type: 'put',
+            url: 'bills/payment/edit/' + paymentId,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(payment),
+        })
+            .done(function (data) {
+                $('#billsPaymentDataModal').modal('hide');
+                filterPayments();
+            })
+            .fail(function (xhr, status, err) {
+                logFailedAjax(xhr, status, err)
+            });
+    }
+
+    function deletePayment(paymentId) {
+        $.ajax({
+            type: "DELETE",
+            url: 'bills/payment/delete/' + paymentId,
+        })
+            .done(function (data) {
+                filterPayments();
+            })
+            .fail(function (xhr, status, err) {
+                logFailedAjax(xhr, status, err)
+            });
+    }
+
+    function logFailedAjax(xhr, status, err) {
+        console.log(xhr.statusText);
+        console.log(status);
+        console.log(err);
+    }
+
+    function getLedForNotPayedPayment(paymentDateString) {
         const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-        let paymentDate = new Date(year, month - 1, day, 0, 0, 0, 0);
+        let dateArray = paymentDateString.split("-");
+        let paymentDate = new Date(parseInt(dateArray[0]), parseInt(dateArray[1]) - 1, parseInt(dateArray[2]), 0, 0, 0, 0);
         let tempDate = new Date();
         let today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, 0, 0, 0);
         let diffDays = (today - paymentDate) / oneDay;
@@ -298,5 +455,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
+    }
+
+    function checkRequiredFieldsPayment() {
+        let passedValidation = true;
+        let paymentDate = $('#paymentDate');
+        let paymentAmount = $('#paymentAmount');
+        let paymentDescription = $('#paymentDescription');
+        resetErrorsPayment();
+        if (paymentDate.val() === "") {
+            paymentDate.removeClass("is-valid").addClass("is-invalid");
+            passedValidation = false;
+        }
+        if (paymentAmount.val().length === 0) {
+            paymentAmount.removeClass("is-valid").addClass("is-invalid");
+            passedValidation = false;
+        }
+        if (paymentDescription.val().length === 0) {
+            paymentDescription.removeClass("is-valid").addClass("is-invalid");
+            passedValidation = false;
+        }
+        return passedValidation;
+    }
+
+
+    function resetErrorsPayment() {
+        let paymentDate = $('#paymentDate');
+        let paymentAmount = $('#paymentAmount');
+        let paymentDescription = $('#paymentDescription');
+        paymentDate.addClass("is-valid").removeClass("is-invalid");
+        paymentAmount.addClass("is-valid").removeClass("is-invalid");
+        paymentDescription.addClass("is-valid").removeClass("is-invalid");
     }
 });

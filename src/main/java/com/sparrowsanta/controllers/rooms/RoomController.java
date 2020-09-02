@@ -82,7 +82,7 @@ public class RoomController {
         System.out.println(id);
 
         Flat flat1 = new Flat(1, "Pierwsze", "Kraków", "Złota Podkowa", "5", "31-322", 2, null, 3, "Moje pierwsze mieszkanie",
-                34.4, 2010, 305000.00, 2000.0, null, "", null);
+                34.4, 2010, 305000.00, 2000.0, "", null);
         flat1.setRooms(rooms);
         model.addAttribute("flat", new Gson().toJson(flat1));
 
