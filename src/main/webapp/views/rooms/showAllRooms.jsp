@@ -45,7 +45,7 @@
         <p class="infoP" id="infoNotOccupable" type="hidden"><spring:message code="rooms.show.all"/></p>
         <p class="infoP" id="infoTenant" type="hidden"><spring:message code="rooms.show.tenant"/></p>
         <p class="infoP" id="infoShowRents" type="hidden"><spring:message code="rent.show.rent"/></p>
-        <p class="infoPs" id="flatToShow">${flat}</p>
+        <p class="infoPs" id="flatToShow">${flatEdited}</p>
         <p class="infoPs" id="furnitureToShow">${furnitures}</p>
     </div>
 </main>

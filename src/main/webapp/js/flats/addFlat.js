@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let infoMissingCity = $("#infoMissingCity")
     let infoMissingStreet = $("#infoMissingStreet")
     let infoMissingFlatNumber = $("#infoMissingFlatNumber")
-    let infoMissingFoto = $("#infoMissingFoto")
+
     //Flat received
     let flatEditedParsed;
 
@@ -240,32 +240,13 @@ document.addEventListener("DOMContentLoaded", function () {
             let flatFormRowThird = flatFormRow.clone().empty();
             flatForm.append(flatFormRowThird)
             //PIC Url
-            let picUrlLabel = $("<h5 class='control-label'/>")
-            let picUrlInput = $("<input type='file' id='file' required name='file' required id='file' style='background-color: #c8c935' class='custom-file-input form-control is-valid'>")
-            let picUrlIcon = $("<span class='input-group-addon'><em style='vertical-align: middle' class='fas fa-image fa-2x em'></em></span>")
-            let flatFormRowGrouppicUrl = flatFormRowGroup.clone(true).empty().attr("id", "picUrl");
-            let labelForClass = $("<label class='custom-file-label' for='file' id='labelForFile'></label>")
-            let customDivForFile = $("<div class='custom-file ml-4' id='customFile'>")
 
-            flatFormRowThird.append(flatFormRowGrouppicUrl)
-            flatFormRowGrouppicUrl.prepend(picUrlLabel.attr("for", "picUrl").text(infoPicUrl.clone(true).html()))
-            picUrlLabel.prepend(picUrlIcon)
-            flatFormRowGrouppicUrl.append(customDivForFile)
-            customDivForFile.append(picUrlInput)
-            customDivForFile.append(labelForClass.text(infoChooseFile.clone(true).html()))
-
-            //Feedback
-            let feedbackPost = $("<span class='alert bg-dark-blue invalid-feedback p-1'><em style='vertical-align: center' class='fa fa-exclamation-triangle text-orange'></em>  Brak Pliku</span>")
-            let feedbackPicEm = $("<em style='vertical-align: center' class='fa fa-exclamation-triangle text-orange'></em>")
-            customDivForFile.append(feedbackPost)
-            feedbackPost.html(infoMissingFoto.html())
-            feedbackPost.prepend(feedbackPicEm)
 
             //FileName into the label function
-            $('input#file').on('change', function () {
-                let fileName = $(this).val().split('\\').pop();
-                $("#labelForFile").addClass("selected").html(fileName);
-            });
+            /*            $('input#file').on('change', function () {
+                            let fileName = $(this).val().split('\\').pop();
+                            $("#labelForFile").addClass("selected").html(fileName);
+                        });*/
 
             //flatDescription
             let flatDescriptionLabel = $("<h5 class='control-label'/>")
@@ -336,26 +317,27 @@ document.addEventListener("DOMContentLoaded", function () {
                         })
             */
             //Submit button
-            let nextBtn = $("<button  class='btn btn-orange mt-4' type='button' id='nextBtn'></button>")
-            let submitInput = $("<input class='btn btn-orange mt-4' type='submit' id='submitForm' value='Submit Request'>")
+            let saveFlatButton = $("<button  class='btn btn-orange mt-4' type='button' id='saveFlatButton'></button>")
+            let submitInput = $("<input class='btn btn-orange mt-4' type='submit' id='submitForm' value='Save Rooms'>")
 
             let flatFormRowFifth = flatFormRow.clone().empty();
             flatForm.append(flatFormRowFifth)
             let flatFormRowGroupSubmit = flatFormRowGroup.clone(true).empty().attr("id", "buttons").removeClass('firstPage').addClass('ml-4');
             flatFormRowFifth.append(flatFormRowGroupSubmit)
-            flatFormRowGroupSubmit.append(nextBtn.text(infoNext.clone(true).html()))
+            flatFormRowGroupSubmit.append(saveFlatButton.text(infoNext.clone(true).html()))
             flatFormRowGroupSubmit.append(submitInput)
 
 
-            let submitBtn = $("#submitForm")
-            submitBtn.on("click", saveFlat)
-
             checkThePage(currentTab)
 
+            let submitBtn = $("#submitForm")
+            submitBtn.on("click", function () {
+                saveRoomsForFlat()
+            })
+
             //Next button
-            nextBtn.on("click", function () {
-                currentTab++;
-                checkThePage(currentTab)
+            saveFlatButton.on("click", function () {
+                saveFlat()
             })
 
             //Previous button
@@ -378,7 +360,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     $("#btnModalRoom").hide()
                     $("#submitForm").hide()
                     $("#submitFormFlat").hide()
-                    $("#nextBtn").show()
+                    $("#saveFlatButton").show()
                     $("#rowAddFlatTable").hide()
                     insertValuesIfFlatToEdit();
                     fixStepIndicator(currentTab)
@@ -390,12 +372,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     $(".firstPage").hide()
                     $("#submitForm").show().addClass("submitFixed")
                     $("#btnModalRoom").show()
-                    $("#nextBtn").hide()
+                    $("#saveFlatButton").hide()
                     $("#prevBtn").show()
                     $("#rowAddFlatTable").show()
 
 
-                    addToShowTable()
+                    // addToShowTable()
 
                 }
 
@@ -403,17 +385,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
             function takeDataFromRoomsTable() {
                 let roomsTable = $("#flatTableAdd").children().children()
-                let roomToSendT = []
+                let roomToSendT = [];
                 for (let i = 1; i < roomsTable.length; i++) {
                     let roomToSendL = {}
                     roomToSendL.description = roomsTable.eq(i).find(':nth-child(2)').text();
                     roomToSendL.roomSquareMeters = roomsTable.eq(i).find(':nth-child(3)').text();
                     roomToSendL.expectedRentPrice = roomsTable.eq(i).find(':nth-child(4)').text()
-                    roomToSendL.roomType = roomsTable.eq(i).find(':nth-child(5)').text()
+      /*              if(roomsTable.eq(i).find(':nth-child(5)').text() == "true"){
+                        roomToSendL.occupiable = 1;
+                    }else {
+                        roomToSendL.occupiable = 0;
+                    }*/
+                    roomToSendL.occupiable = roomsTable.eq(i).find(':nth-child(5)').text()
+                    roomToSendL.roomType = roomsTable.eq(i).find(':nth-child(6)').text()
+                    roomToSendL.flatId = submitBtn.attr("data-flat")
                     roomToSendT.push(roomToSendL)
                 }
                 let string = JSON.stringify(roomToSendT)
-                $("#roomsNumber").val(string)
+
+                return roomToSendT;
 
             }
 
@@ -429,56 +419,73 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             //    SAVE METHOD
-            //https://stackoverflow.com/questions/43936372/upload-file-springboot-required-request-part-file-is-not-present
-            //https://www.legendblogs.com/how-to-send-additional-parameter-with-form-data-with-ajax
             function saveFlat() {
-                console.log("test")
-                // let selectFlatsVar = $('#flatSelect').select2('data')
-                // console.log(selectFlatsVar)
                 if (checkIfRequiredAreNotEmptyFirstPage() !== true) return false;
-                // $(this).prop('disabled', true);
-                let file = $("#file").first()
 
-                let data = new FormData()
-                // data.get(selectFlatsVar)
-                data.append("file", file)
-                data.append("test", "test")
-                takeDataFromRoomsTable();
-                // $("#roomsNumber").val(roomToSend)
-                // console.log(data)
-                // let jsonDataObj = {
-                //     "name": $("#name").val(),
-                // }
-                // data.append("jsonDataObj", JSON.stringify(jsonDataObj))
+                // takeDataFromRoomsTable();
+                data = {};
+                feedClientDataToSend(data)
                 $.ajax({
                     type: 'post',
-                    enctype: 'multipart/form-data',
                     url: 'addFlat',
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    cache: true,
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
                 })
                     .done(function (data) {
-                        // $(".alert-danger").show();
-                        $(".alert-success").show()
+                        currentTab++;
+                        checkThePage(currentTab)
+                        submitBtn.attr("data-flat", String(data))
+                        $(".alert-success").show();
+
+                    })
+            }
+
+            function saveRoomsForFlat() {
+                let flatId = submitBtn.attr("data-flat")
+                data = takeDataFromRoomsTable();
+                $.ajax({
+                    type: 'post',
+                    url: 'addRoomsForFlat/' + flatId,
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                })
+                    .done(function (data) {
+                        console.log(data)
                     })
 
             }
 
+            function feedClientDataToSend(dataToSend) {
+                dataToSend.name = $("#name").val()
+                dataToSend.city = $("#city").val()
+                dataToSend.street = $("#street").val()
+                dataToSend.flatNumber = $("#flatNumber").val()
+                dataToSend.zipCode = $("#zipCode").val()
+                dataToSend.floorNumber = $("#floorNumber").val()
+                dataToSend.expectedIncome = $("#expectedIncome").val()
+                dataToSend.flatPrice = $("#flatPrice").val()
+                dataToSend.flatDescription = $("#flatDescription").val()
+                dataToSend.flatSquareMeters = $("#flatSquareMeters").val()
+                dataToSend.yearOfConstruction = $("#yearOfConstruction").val()
+                // dataToSend.rooms = takeDataFromRoomsTable();
+
+                return dataToSend
+            }
 
             function checkIfRequiredAreNotEmptyFirstPage() {
                 // let file = $("#file").val()
 
                 let flag = true;
-                let file = $("#file")
+                // let file = $("#file")
                 let name = $("#name")
                 let city = $("#city")
                 let street = $("#street")
                 let flatNumber = $("#flatNumber")
 
                 let listToCheck = []
-                listToCheck.push(file)
+                // listToCheck.push(file)
                 listToCheck.push(name)
                 listToCheck.push(city)
                 listToCheck.push(street)
@@ -496,23 +503,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            function checkIfRequiredAreNotEmptySecPage() {
-                let flag = true;
-                let file = $("#file")
-                let listToCheck = []
-                listToCheck.push(file)
-
-                for (let i = 0; i < listToCheck.length; i++) {
-                    if (listToCheck[i].val() === "") {
-                        listToCheck[i].removeClass("is-valid").addClass("is-invalid")
-                        flag = false;
-                    }
-                }
-                if (!flag) {
-                    currentTab--;
-                }
-                return flag;
-            }
         }
     }
 

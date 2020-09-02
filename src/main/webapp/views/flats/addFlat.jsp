@@ -31,10 +31,10 @@
             <div class="containerDiv"></div>
         </div>
         <div class="alert alert-success">
-            File Uploaded Successfully
+            <spring:message code="flat.add.info.success"/>
         </div>
         <div class="alert alert-danger">
-            File is not uploaded
+            <spring:message code="flat.add.info.fail"/>
         </div>
         <div class="form-row" id="rowAddFlatTable">
 
@@ -47,6 +47,7 @@
                         <th scope="col"><spring:message code="common.general.description"/></th>
                         <th scope="col"><spring:message code="rooms.add.roomSQM"/></th>
                         <th scope="col"><spring:message code="common.general.income"/></th>
+                        <th scope="col"><spring:message code="rooms.show.all.occupiable"/></th>
                         <th scope="col"><spring:message code="rooms.add.roomType"/></th>
                         <th scope="col"><spring:message code="common.button.delete"/></th>
 
@@ -106,7 +107,7 @@
     <p class="infoP" id="infoMissingStreet" type="hidden"><spring:message code="flats.show.missing.street"/></p>
     <p class="infoP" id="infoMissingFlatNumber" type="hidden"><spring:message code="flats.show.missing.flatNumber"/></p>
     <p class="infoP" id="infoMissingFoto" type="hidden"><spring:message code="flats.show.missing.foto"/></p>
-    <p class="infoP" id="infoNext" type="hidden"><spring:message code="common.button.next"/></p>
+    <p class="infoP" id="infoNext" type="hidden"><spring:message code="flats.add.save"/></p>
     <p class="infoP" id="flatToEdit" type="hidden">${flatEdited}</p>
 </div>
 </body>

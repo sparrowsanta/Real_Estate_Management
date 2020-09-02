@@ -2,13 +2,27 @@ package com.sparrowsanta.controllers.rooms;
 
 import com.google.gson.Gson;
 import com.sparrowsanta.businessmodel.*;
+import com.sparrowsanta.utils.BasicRestTemplate;
+import com.sparrowsanta.utils.MultiPartFileConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.*;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -16,7 +30,6 @@ import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.sparrowsanta.businessmodel.Room.RoomType.ROOM;
 
 @Controller
 @RequestMapping("rooms")
@@ -28,6 +41,8 @@ public class RoomController {
     private Client client = new Client(1L, "Jakub", "Wróbel", 30, "jakubw.rrw@wm.pl", "Krakow", "Zlota", 73893987L);
     private List<Furniture> furnitureList = new ArrayList<>();
     private Room room;
+    @Autowired
+    private MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter;
 
     public RoomController() {
         Furniture furniture = new Furniture(1, "Szafa", 1, LocalDate.now(), 350);
@@ -35,39 +50,42 @@ public class RoomController {
 
         furnitureList.add(furniture);
         furnitureList.add(furniture2);
-        room = new Room(1, "myFirstChanged", 30.20, 1000, ROOM, 1, 1);
         rooms.add(room);
     }
 
     @GetMapping("/roomPicture/{id}")
     @ResponseBody
-    public String getRoomPictures(Model model, @PathVariable(name = "id") String id) {
+    public String getRoomPictures(@PathVariable(name = "id") long id) {
+        String url = "http://localhost:8081/rooms/roomPicture/" + id;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
-        Room myFirstChanged = new Room(1, "myFirstChanged", 30.20, 1000, ROOM, 1, 1);
-
-        byte[] file = null;
-        String image = "";
-        if (file != null && file.length > 0) {
-            image = Base64.getEncoder().encodeToString(file);
-        }
-
-        return new Gson().toJson(image);
+        return new Gson().toJson(response.getBody());
     }
 
 
     @PostMapping("/roomPicture/{id}")
-    public String postRoomPictures(@RequestParam("roomFilePic") MultipartFile roomFilePic, Model model, @PathVariable(name = "id") String id) {
+    public String postRoomPictures(@RequestParam("roomFilePic") MultipartFile roomFilePic, @PathVariable(name = "id") long id) {
+/*
 
-        Room myFirstChanged = new Room(1, "myFirstChanged", 30.20, 1000, ROOM, 1, 1);
         String fileName = StringUtils.cleanPath(roomFilePic.getOriginalFilename());
-        try {
-            myFirstChanged.setRoomPicture(roomFilePic.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println(roomFilePic);
+*/
+        String url = "http://localhost:8081/rooms/roomPicture/" + id;
+        MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<>();
+        bodyMap.add("roomFilePic", new FileSystemResource(MultiPartFileConverter.convert(roomFilePic)));
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(bodyMap, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
 
-        return "redirect:/flats/showAllRooms/" + id;
+        return "redirect:/flats/showAllRooms/" + response.getBody();
     }
+
+
 
     @GetMapping
     public String showRooms(Model model) {
@@ -93,7 +111,6 @@ public class RoomController {
     @ResponseBody
     public String getRoomById(@PathVariable(name = "id") long id, Model model) {
 //        only for testing:
-        Room room = new Room(1, "myFirstChanged", 30.20, 1000, ROOM, 1);
 
         return new Gson().toJson(room);
     }
@@ -150,22 +167,7 @@ public class RoomController {
     }
 
 
-    @GetMapping(value = "/roomRentHistory/{roomId}", produces = "text/plain;charset=UTF-8")
-    @ResponseBody
-    public String getRentHistoryByRoomId(@PathVariable(name = "roomId") long roomId, Model model) {
-        rents.clear();
-        Client client = new Client(1L, "Jakub", "Wróbel", 30, "jakubw.rrw@wm.pl", "Krakow", "Zlota", 73893987L);
-        Client client2 = new Client(2L, "Marek", "Mikołaczyk", 30, "Mikołaj.rrw@wm.pl", "Zabierzów", "Srebrna", 2323222L);
-        Room room = new Room(1, "myFirstChanged", 30.20, 1000, ROOM, 1, 1);
 
-        Rent rent = new Rent(1, LocalDate.now().minus(Period.ofMonths(5)), LocalDate.now().minus(Period.ofMonths(3)), 1000, client, room);
-        Rent rent2 = new Rent(2, LocalDate.now().minus(Period.ofMonths(3)), LocalDate.now(), 1200, client2, room);
-
-        rents.add(rent);
-        rents.add(rent2);
-
-        return new Gson().toJson(rents);
-    }
 
     @DeleteMapping("/rentHistory/{rentId}")
     @ResponseBody
@@ -177,10 +179,8 @@ public class RoomController {
     @GetMapping("/roomsForFlat/{flatId}")
     @ResponseBody
     public String getAllRoomsForFlat(@PathVariable(name = "flatId") long flatId) {
-        List<Room> roomsList = rooms.stream()
-                .filter(r -> r.getFlatId() == flatId)
-                .collect(Collectors.toList());
-        return new Gson().toJson(roomsList);
+        ResponseEntity<String> forEntity = BasicRestTemplate.getForEntity("http://localhost:8081/rooms/roomsForFlat/" + flatId);
+        return forEntity.getBody();
     }
 
 
