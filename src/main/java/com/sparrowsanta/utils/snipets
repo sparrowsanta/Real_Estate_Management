@@ -1,0 +1,34 @@
+       String fileName = StringUtils.cleanPath(roomFilePic.getOriginalFilename());
+               Room room = rooms.stream()
+                       .filter(r -> r.getId() == roomId)
+                       .findFirst()
+                       .orElse(null);
+
+#FILE MATCH
+/*        File convertFile = new File("/home/kuba/JAVA_COURSE/JAVA_1/Real_Estate_Management/src/main/webapp/dump/" + file.getOriginalFilename());
+        convertFile.createNewFile();
+        FileOutputStream fout = new FileOutputStream(convertFile);
+        fout.write(file.getBytes());
+        fout.close();*/
+
+/*        byte[] fileToSend = file.getBytes();
+        String image = "";
+        if (fileToSend != null && fileToSend.length > 0) {
+            image = Base64.getEncoder().encodeToString(fileToSend);
+        }*/
+/*        Gson gson = new Gson();
+        String stringOfRooms = mrequest.getParameter("roomsNumber");
+        String[] tableOfRooms = stringOfRooms.split("},\\{");
+        String[] tableOfRoomsReplaced = Arrays.stream(tableOfRooms)
+                .map(s -> s.replaceAll("(\\[)|(\\])|(\\{)|(\\})", ""))
+                .toArray(size -> new String[size]);
+        Room room1 = gson.fromJson("{" + tableOfRoomsReplaced[1] + "}", Room.class);*/
+/*        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+#All PARAM
+/*        Map<String, String[]> parameterMap = mrequest.getParameterMap();
+        Map<String, List<String>> collect = parameterMap.entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getKey(), entry -> Arrays.asList(entry.getValue())));*/
+/*                for (int i = 0; i < collect.size(); i++) {
+            System.out.println(collect.keySet());

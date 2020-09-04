@@ -1,31 +1,16 @@
 package com.sparrowsanta.controllers.client;
 
 import com.google.gson.Gson;
-import com.sparrowsanta.businessmodel.Client;
 import com.sparrowsanta.utils.BasicRestTemplate;
 import com.sparrowsanta.utils.RestUrls;
-import org.springframework.http.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("clients")
 public class ClientController {
-
-    private List<Client> clientList = new ArrayList<>();
-
-    public ClientController() {
-        Client client = new Client(1L, "Jakub", "Wróbel", 30, "jakubw.rrw@wm.pl", "Krakow", "Zlota", 73893987L);
-        Client client2 = new Client(2L, "Marek", "Mikołajczak", 30, "Mikołaj.rrw@wm.pl", "Zabierzów", "Srebrna", 2323222L);
-
-        clientList.add(client);
-        clientList.add(client2);
-    }
 
     @GetMapping("/addClient")
     public String addClient() {

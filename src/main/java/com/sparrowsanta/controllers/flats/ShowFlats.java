@@ -69,8 +69,6 @@ public class ShowFlats {
         ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
 
 
-
-
 //            myFirstChanged.setRoomPicture(flatFilePic.getBytes());
 
 
@@ -124,49 +122,8 @@ public class ShowFlats {
     @PostMapping(value = "/addFlat", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String addFlatPost(Model model, @RequestBody String data) {
-/*        File convertFile = new File("/home/kuba/JAVA_COURSE/JAVA_1/Real_Estate_Management/src/main/webapp/dump/" + file.getOriginalFilename());
-        convertFile.createNewFile();
-        FileOutputStream fout = new FileOutputStream(convertFile);
-        fout.write(file.getBytes());
-        fout.close();*/
-
-/*        byte[] fileToSend = file.getBytes();
-        String image = "";
-        if (fileToSend != null && fileToSend.length > 0) {
-            image = Base64.getEncoder().encodeToString(fileToSend);
-        }*/
-
-
-//        ALL PARAMETERS FROM FORM instead of Select and File
-
-/*        Map<String, String[]> parameterMap = mrequest.getParameterMap();
-        Map<String, List<String>> collect = parameterMap.entrySet().stream()
-                .collect(Collectors.toMap(entry -> entry.getKey(), entry -> Arrays.asList(entry.getValue())));*/
-/*                for (int i = 0; i < collect.size(); i++) {
-            System.out.println(collect.keySet());
-        }*/
-
-//        restTemplate.postForEntity(RestUrls.getAddFlat(), request, String.class);
-//
-        System.out.println(data);
         model.addAttribute("flatEdited", 0);
         ResponseEntity<String> stringResponseEntity = BasicRestTemplate.postForEntity(data, "http://localhost:8081/flats/addFlat");
-
-/*        Gson gson = new Gson();
-        String stringOfRooms = mrequest.getParameter("roomsNumber");
-        String[] tableOfRooms = stringOfRooms.split("},\\{");
-        String[] tableOfRoomsReplaced = Arrays.stream(tableOfRooms)
-                .map(s -> s.replaceAll("(\\[)|(\\])|(\\{)|(\\})", ""))
-                .toArray(size -> new String[size]);
-        Room room1 = gson.fromJson("{" + tableOfRoomsReplaced[1] + "}", Room.class);*/
-/*        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-
-        HttpEntity<Map<String, List<String>>> request2 = new HttpEntity<>(collect, headers);
-
-        ResponseEntity<String> response = restTemplate.postForEntity(RestUrls.getAddFlat(), request2, String.class);*/
-
 
         return new Gson().toJson(stringResponseEntity.getBody());
 
@@ -175,9 +132,7 @@ public class ShowFlats {
     @PostMapping(value = "/addRoomsForFlat/{flatId}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String addRoomForFlats(@PathVariable(name = "flatId") Long flatId, @RequestBody String data) {
-        System.out.println(data);
         ResponseEntity<String> stringResponseEntity = BasicRestTemplate.postForEntity(data, "http://localhost:8081/rooms/addRoomsForFlat/" + flatId);
-
         return new Gson().toJson("OK");
     }
 
@@ -185,10 +140,8 @@ public class ShowFlats {
     @DeleteMapping(value = "/delete/{id}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String deleteFlat(@PathVariable(name = "id") long id) {
-/*        System.out.println(id);
-        flats.removeIf(s -> s.getId() == id);*/
         BasicRestTemplate.deleteForEntity("http://localhost:8081/flats/delete/", id);
-        return new Gson().toJson("OK");
+        return "OK";
     }
 
 
@@ -238,8 +191,7 @@ public class ShowFlats {
     @RequestMapping(value = "/showAllRooms/{flatId}", produces = "text/plain;charset=UTF-8")
     public String showAllRoomsForFlat(Model model, @PathVariable(name = "flatId") long flatId) {
 //        ResponseEntity<String> forEntity = BasicRestTemplate.getForEntity("http://localhost:8081/flats/getFlatById/" + flatId);
-
-            model.addAttribute("flatEdited", flatId);
+        model.addAttribute("flatEdited", flatId);
         return "rooms/showAllRooms";
     }
 
