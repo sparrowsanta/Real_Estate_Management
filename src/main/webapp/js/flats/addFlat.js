@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     let mainContainer = $(".mainContainer")
     let currentTab = 0;
-    $(".alert-success").hide();
+    $("#alert-success-rooms").hide();
+    $("#alert-success-flat").hide();
     $(".alert-danger").hide();
 
 
@@ -391,11 +392,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     roomToSendL.description = roomsTable.eq(i).find(':nth-child(2)').text();
                     roomToSendL.roomSquareMeters = roomsTable.eq(i).find(':nth-child(3)').text();
                     roomToSendL.expectedRentPrice = roomsTable.eq(i).find(':nth-child(4)').text()
-      /*              if(roomsTable.eq(i).find(':nth-child(5)').text() == "true"){
-                        roomToSendL.occupiable = 1;
-                    }else {
-                        roomToSendL.occupiable = 0;
-                    }*/
+                    /*              if(roomsTable.eq(i).find(':nth-child(5)').text() == "true"){
+                                      roomToSendL.occupiable = 1;
+                                  }else {
+                                      roomToSendL.occupiable = 0;
+                                  }*/
                     roomToSendL.occupiable = roomsTable.eq(i).find(':nth-child(5)').text()
                     roomToSendL.roomType = roomsTable.eq(i).find(':nth-child(6)').text()
                     roomToSendL.flatId = submitBtn.attr("data-flat")
@@ -436,7 +437,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         currentTab++;
                         checkThePage(currentTab)
                         submitBtn.attr("data-flat", String(data))
-                        $(".alert-success").show();
+                        $("#alert-success-flat").show();
 
                     })
             }
@@ -453,7 +454,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                     .done(function (data) {
                         console.log(data)
-                    })
+                        $("#alert-success-rooms").show();
+                    }).fail(function () {
+                    $(".alert-danger").show();
+                })
 
             }
 
