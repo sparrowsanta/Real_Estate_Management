@@ -30,14 +30,14 @@
             </header>
             <div class="containerDiv"></div>
         </div>
-        <div id='alert-success-flat' class="alert alert-success">
+        <div id='alert-success-flat' class="alert alert-success ml-4">
             <spring:message code="flat.add.info.success"/>
         </div>
-        <div id='alert-success-rooms' class="alert alert-success">
+        <div id='alert-success-rooms' class="alert alert-success ml-4">
             <spring:message code="rooms.add.info.success"/>
         </div>
         <div class="alert alert-danger">
-            <spring:message code="flat.add.info.fail"/>
+            <spring:message code="rooms.add.info.fail"/>
         </div>
         <div class="form-row" id="rowAddFlatTable">
 

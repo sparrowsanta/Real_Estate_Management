@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
     let containerDiv = $(".containerDiv")
     containerDiv.empty();
-
+    let months = [];
+    let billsDef = [];
+    let bills = [];
+    let expectedIncome = [];
     function showFlatsInformation(flats) {
         containerDiv.empty();
 
@@ -133,78 +136,71 @@ document.addEventListener("DOMContentLoaded", function () {
             let chartRowCol = $("<div class = 'col-sm-3'>")
             let p8 = $("<canvas id='lineChart' class='lineCharts' width='400' height='200'></canvas>")
 
-            let additionalDiv2 = $("<div class='additionalForGraph  mt-4 mb-3'>");
+            let additionalDiv2 = $("<div class='additionalForGraph  mt-2 mb-3'>");
             row.append(chartRowCol)
             chartRowCol.append(additionalDiv2)
             additionalDiv2.prepend(chartCol)
             chartCol.append(p8)
 
 
+            for (let j = 0; j < 5; j++) {
+                expectedIncome.push(flats[i].expectedIncome)
+            }
+
+            getLastMonths(flats[i].id)
             let myLineChart = $(".lineCharts")
             for (let i = 0; i < myLineChart.length; i++) {
                 let lineChart = new Chart(myLineChart[i], {
                     type: 'line',
                     data: {
-                        labels: ['June', 'July', 'August', 'September', 'October', 'November'],
+                        labels: months,
                         datasets: [{
                             label: 'Bills Def',
-                            data: [800, 900, 850, 780, 920, 800],
+                            data: billsDef,
                             backgroundColor: [
-                                'rgba(2, 99, 132, 0.2)',
-                                'rgba(2, 162, 235, 0.2)',
-                                'rgba(2, 206, 86, 0.2)',
-                                'rgba(2, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(2, 159, 64, 0.2)'
+                                'rgba(5,159,215,0.4)',
+                                'rgba(2, 1, 235, 0.4)',
+                                'rgba(2, 1, 86, 0.4)',
+                                'rgba(2, 1, 64, 0.4)'
                             ],
                             borderColor: [
                                 'rgba(2, 99, 132, 1)',
                                 'rgba(2, 162, 235, 1)',
                                 'rgba(2, 206, 86, 1)',
-                                'rgba(2, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
                                 'rgba(2, 159, 64, 1)'
                             ],
                             borderWidth: 1
                         },
                             {
                                 label: 'Bills Paid',
-                                data: [700, 800, 850, 780, 900, 800],
+                                data: bills,
                                 backgroundColor: [
-                                    'rgba(2, 99, 132, 0.2)',
+                                    'rgba(2, 99, 1, 0.3)',
                                     'rgba(2, 162, 235, 0.2)',
                                     'rgba(2, 206, 86, 0.2)',
-                                    'rgba(2, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)',
                                     'rgba(2, 159, 64, 0.2)'
                                 ],
                                 borderColor: [
                                     'rgba(2, 99, 132, 1)',
                                     'rgba(2, 162, 235, 1)',
                                     'rgba(2, 206, 86, 1)',
-                                    'rgba(2, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
                                     'rgba(2, 159, 64, 1)'
                                 ],
                                 borderWidth: 2
                             },
                             {
                                 label: 'Expected Flat Profit',
-                                data: [1000, 1000, 1000, 1000, 1000, 1000],
+                                data: expectedIncome,
                                 backgroundColor: [
                                     'rgba(2, 99, 132, 0.2)',
                                     'rgba(2, 162, 235, 0.2)',
                                     'rgba(2, 206, 86, 0.2)',
-                                    'rgba(2, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)',
                                     'rgba(2, 159, 64, 0.2)'
                                 ],
                                 borderColor: [
                                     'rgba(2, 99, 132, 1)',
                                     'rgba(2, 162, 235, 1)',
                                     'rgba(2, 206, 86, 1)',
-                                    'rgba(2, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
                                     'rgba(2, 159, 64, 1)'
                                 ],
                                 borderWidth: 3
@@ -215,7 +211,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         scales: {
                             yAxes: [{
                                 ticks: {
-                                    beginAtZero: false
+                                    beginAtZero: true,
+                                    suggestedMax: 1200,
                                 }
                             }]
                         },
@@ -382,7 +379,6 @@ document.addEventListener("DOMContentLoaded", function () {
             data: {},
         })
             .done(function (flats) {
-                console.log("success");
                 showFlatsInformation(flats);
             })
             .fail(function (xhr, status, err) {
@@ -461,6 +457,20 @@ document.addEventListener("DOMContentLoaded", function () {
         labelForUpload.on("click", function () {
             inputUpload.click();
             return false;
+        })
+    }
+
+    function getLastMonths(flatId) {
+        $.ajax({
+            url: "bills/billDefinitionsPerMonth/" + flatId,
+            data: {},
+            dataType: "json",
+            type: "get",
+            async: false
+        }).done(function (data) {
+            months = data[0]
+            billsDef = data[1]
+            bills = data[2]
         })
     }
 
