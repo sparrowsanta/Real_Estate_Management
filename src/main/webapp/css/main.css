@@ -300,6 +300,7 @@ main div {
 }*/
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
     background-color: #16697A;
+    padding: 20px;
 }
 
 
