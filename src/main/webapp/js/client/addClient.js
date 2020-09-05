@@ -39,6 +39,7 @@ function feedClientDataToSend(dataToSend) {
     dataToSend.email = $("#clientEmail").val()
     dataToSend.city = $("#city").val()
     dataToSend.street = $("#street").val()
+    dataToSend.telNumber = $("#telNumber").val()
 
     return dataToSend
 }

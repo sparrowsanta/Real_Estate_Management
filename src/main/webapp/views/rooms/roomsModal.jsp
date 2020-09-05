@@ -63,7 +63,7 @@
                                         <div class="custom-control form-control-lg custom-checkbox" id="customOccupiable">
                                             <input readonly type="checkbox" name="occupiable" id="roomOccupiable"
                                                    class="form-control custom-control-input">
-                                            <label class="custom-control-label ml-3" for="roomOccupiable"><spring:message code="common.button.yes"></spring:message></label>
+                                            <label class="custom-control-label ml-3" for="roomOccupiable"><label class="ml-4 mb-0 mt-1"><spring:message code="common.button.yes"></spring:message></label></label>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">

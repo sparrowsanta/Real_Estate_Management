@@ -166,10 +166,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     let lineChart = new Chart(myLineChart[i], {
                         type: 'bar',
                         data: {
-                            labels: ['June', 'July', 'August', 'September', 'October', 'November'],
+                            labels: ['June', 'July', 'August', 'September'],
                             datasets: [{
                                 label: 'Income',
-                                data: [20, 19, 22, 15, 20, 23],
+                                data: [1200, 100, 200, 150, 200, 1300],
                                 backgroundColor:
                                     'rgba(2, 99, 132, 0.4)',
                                 borderColor:
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             },
                                 {
                                     label: 'Media',
-                                    data: [3, 19, 3, 5, 2, 3],
+                                    data: [300, 400, 400, 350],
                                     backgroundColor:
                                         'rgb(94,215,219, 0.4)',
                                     borderColor:
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 },
                                 {
                                     label: 'Additional Cost',
-                                    data: [4, 19, 3, 5, 2, 3],
+                                    data: [0, 100, 30, 50, 20, 30],
                                     backgroundColor:
                                         'rgb(215,94,156, 0.4)',
                                     borderColor:
