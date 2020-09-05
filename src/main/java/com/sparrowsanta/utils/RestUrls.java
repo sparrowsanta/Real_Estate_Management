@@ -1,10 +1,11 @@
 package com.sparrowsanta.utils;
 
 import lombok.Getter;
+
 @Getter
 public class RestUrls {
-//        private static final String SERVER_URL = "http://realestatemanagementrest-env.eba-u4wqr2f3.eu-central-1.elasticbeanstalk.com/";
-    private static final String SERVER_URL = "http://localhost:8081/";
+                private static final String SERVER_URL = "http://realestatemanagementrest-env.eba-u4wqr2f3.eu-central-1.elasticbeanstalk.com/";
+//    private static final String SERVER_URL = "http://localhost:8081/";
 
     //Meters and Meters history
 
@@ -29,13 +30,37 @@ public class RestUrls {
     public static final String DELETE_PAYMENT_BY_PAYMENT_ID = SERVER_URL + "bills/payment/delete/";
 
     //Flats
-    private static final String GET_ALL_FLATS = SERVER_URL + "getAllFlats";
-    private static final String ADD_FLAT = SERVER_URL + "flats/addFlat";
+    public static final String ADD_FLAT = SERVER_URL + "flats/addFlat";
+    public static final String ADD_PICTURE_FLAT = SERVER_URL + "flats/flatPicture/";
+    public static final String GET_ALL_FLATS = SERVER_URL + "flats/getAllFlats";
+    public static final String DELETE_FLAT = SERVER_URL + "flats/delete/";
+
     //Clients
-    private static final String ADD_CLIENT = SERVER_URL + "clients/addClient/";
-    private static final String GET_ALL_CLIENTS = SERVER_URL + "clients/showClientsAll/";
-    private static final String GET_CLIENT = SERVER_URL + "clients/getClient/";
-    private static final String DELETE_CLIENT = SERVER_URL + "clients/deleteClient/";
+    public static final String ADD_CLIENT = SERVER_URL + "clients/addClient/";
+    public static final String GET_ALL_CLIENTS = SERVER_URL + "clients/showClientsAll/";
+    public static final String GET_CLIENT = SERVER_URL + "clients/getClient/";
+    public static final String DELETE_CLIENT = SERVER_URL + "clients/deleteClient/";
+
+    //Rents
+    public static final String SAVE_RENT_FOR_ROOM = SERVER_URL + "rents/";
+    public static final String GET_RENT_HISTORY_BY_ID = SERVER_URL + "rents/rentHistory/";
+    public static final String GET_RENT_HISTORY_BY_ROOM_ID = SERVER_URL + "rents/roomRentHistory/";
+    public static final String GET_MOST_RECENT_RENT = SERVER_URL + "rents/getMostRecentRent/";
+
+    //Rooms
+    public static final String ADD_PICTURE_ROOM = SERVER_URL + "rooms/roomPicture/";
+    public static final String SAVE_ROOM = SERVER_URL + "rooms/";
+    public static final String DELETE_ROOM = SERVER_URL + "rooms/delete/";
+    public static final String GET_ALL_ROOMS_FOR_FLAT = SERVER_URL + "rooms/roomsForFlat/";
+    public static final String ADD_ROOMS_FOR_FLAT = SERVER_URL + "rooms/addRoomsForFlat/";
+
+
+    //Furniture
+    public static final String ADD_FURNITURE = SERVER_URL + "furnitures/";
+    public static final String GET_FURNITURE = SERVER_URL + "furnitures/furniture/";
+    public static final String UPDATE_FURNITURE = SERVER_URL + "furnitures/update/";
+    public static final String GET_FURNITURE_BY_ID = SERVER_URL + "furnitures/furnitureById/";
+
 
     public static String getGetAllFlats() {
         return GET_ALL_FLATS;

@@ -447,7 +447,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 data = takeDataFromRoomsTable();
                 $.ajax({
                     type: 'post',
-                    url: 'addRoomsForFlat/' + flatId,
+                    url: '../rooms/addRoomsForFlat/' + flatId,
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),

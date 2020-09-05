@@ -38,14 +38,10 @@ import static com.sparrowsanta.businessmodel.Room.RoomType.ROOM;
 public class ShowFlats {
 
 
-    public static final List<Flat> flats = new ArrayList<>();
-    private final Flat flat3 = new Flat(2, "Trzecie", "Gdańsk", "Olejna", "4", "01-020", 2, null, 10, "Moje trzecie mieszkanie", 23.1, 2019, 355000.00, 1500.0, "", null);
-
-
     @GetMapping("/flatPicture/{id}")
     @ResponseBody
     public String getFlatPictures(Model model, @PathVariable(name = "id") long id) {
-        String url = "http://localhost:8081/flats/flatPicture/" + id;
+        String url = RestUrls.ADD_PICTURE_FLAT + id;
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         RestTemplate restTemplate = new RestTemplate();
@@ -59,7 +55,8 @@ public class ShowFlats {
 
         String fileName = StringUtils.cleanPath(flatFilePic.getOriginalFilename());
 
-        String url = "http://localhost:8081/flats/flatPicture/" + id;
+        String url = RestUrls.ADD_PICTURE_FLAT + id;
+
         MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<>();
         bodyMap.add("flatFilePic", new FileSystemResource(MultiPartFileConverter.convert(flatFilePic)));
         HttpHeaders headers = new HttpHeaders();
@@ -77,38 +74,15 @@ public class ShowFlats {
 
 
     @GetMapping
-    public String showFlats(Model model) {
-        byte[] file = flats.get(2).getPic();
-        String image = "";
-        if (file != null && file.length > 0) {
-            image = Base64.getEncoder().encodeToString(file);
-        }
-        model.addAttribute("image", image);
-
+    public String showFlats() {
         return "flats/showFlats";
-    }
-
-
-    private ShowFlats() {
-        List<Room> rooms = Arrays.asList(new Room(1, "myFirst", 30.20, 1000, ROOM, 1),
-                new Room(2, "mySec", 40.20, 2000, ROOM, 1), new Room(3, "Kitchen", 9.20, 0.00, KITCHEN, 0));
-        Flat flat1 = new Flat(1, "Pierwsze", "Kraków", "Złota Podkowa", "5", "31-322", 2, null, 3, "Moje pierwsze mieszkanie",
-                34.4, 2010, 305000.00, 2000.0, "", null);
-        flat1.setRooms(rooms);
-
-        Flat flat2 = new Flat(3, "Drugie", "Oświęcim", "Stawowa", "1", "11-322", 4, null, 1, "Moje drugie mieszkanie",
-                66.1, 2014, 255000.00, 1000.0, "", null);
-
-        flats.add(flat1);
-        flats.add(flat2);
-        flats.add(flat3);
     }
 
 
     @GetMapping(value = "/allFlats", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getAllFlats() {
-        ResponseEntity<String> forEntity = BasicRestTemplate.getForEntity("http://localhost:8081/flats/getAllFlats");
+        ResponseEntity<String> forEntity = BasicRestTemplate.getForEntity(RestUrls.GET_ALL_FLATS);
         return forEntity.getBody();
     }
 
@@ -123,61 +97,35 @@ public class ShowFlats {
     @ResponseBody
     public String addFlatPost(Model model, @RequestBody String data) {
         model.addAttribute("flatEdited", 0);
-        ResponseEntity<String> stringResponseEntity = BasicRestTemplate.postForEntity(data, "http://localhost:8081/flats/addFlat");
+        ResponseEntity<String> stringResponseEntity = BasicRestTemplate.postForEntity(data, RestUrls.ADD_FLAT);
 
         return new Gson().toJson(stringResponseEntity.getBody());
 
     }
 
-    @PostMapping(value = "/addRoomsForFlat/{flatId}", produces = "text/plain;charset=UTF-8")
-    @ResponseBody
-    public String addRoomForFlats(@PathVariable(name = "flatId") Long flatId, @RequestBody String data) {
-        ResponseEntity<String> stringResponseEntity = BasicRestTemplate.postForEntity(data, "http://localhost:8081/rooms/addRoomsForFlat/" + flatId);
-        return new Gson().toJson("OK");
-    }
 
 
     @DeleteMapping(value = "/delete/{id}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String deleteFlat(@PathVariable(name = "id") long id) {
-        BasicRestTemplate.deleteForEntity("http://localhost:8081/flats/delete/", id);
+        BasicRestTemplate.deleteForEntity(RestUrls.DELETE_FLAT, id);
         return "OK";
     }
 
 
     @RequestMapping(value = "/addFlat/{id}")
     public String getFlatById(Model model, @PathVariable(name = "id") long id) {
-        Flat flat = flats.stream()
-                .filter(s -> s.getId() == id)
-                .findFirst()
-                .orElse(null);
-        model.addAttribute("flatEdited", new Gson().toJson(flat));
-
         return "flats/addFlat";
     }
 
     @GetMapping(value = "/getRooms/{flatId}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getRoomsFromFlat(@PathVariable(name = "flatId") long flatId) {
-        String s = "";
-        Flat flat = flats.stream()
-                .filter(d -> d.getId() == flatId)
-                .findFirst()
-                .orElse(null);
-//        new Gson().toJson(flat);"forward:addFlat";
-        s = new Gson().toJson(flat.getRooms());
-        System.out.println();
-        return s;
+        return "";
     }
 
     @PostMapping(value = "/updateRooms/{flatId}", produces = "text/plain;charset=UTF-8")
     public String updateRoomsForFlat(@PathVariable(name = "flatId") long flatId, @RequestBody String data) {
-        Flat flat = flats.stream()
-                .filter(s -> s.getId() == flatId)
-                .findFirst()
-                .orElse(null);
-        System.out.println(data);
-
         return new Gson().toJson("OK");
     }
 
