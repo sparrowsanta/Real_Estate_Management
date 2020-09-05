@@ -1,9 +1,10 @@
 package com.sparrowsanta.utils;
 
 import lombok.Getter;
+
 @Getter
 public class RestUrls {
-                private static final String SERVER_URL = "http://realestatemanagementrest-env.eba-u4wqr2f3.eu-central-1.elasticbeanstalk.com/";
+    private static final String SERVER_URL = "http://realestatemanagementrest-env.eba-u4wqr2f3.eu-central-1.elasticbeanstalk.com/";
 //    private static final String SERVER_URL = "http://localhost:8081/";
 
     //Meters and Meters history
@@ -18,6 +19,7 @@ public class RestUrls {
     public static final String ADD_METER_READING_BY_METER_ID = SERVER_URL + "meters/reading/add";
     public static final String EDIT_METER_READING_BY_READING_ID = SERVER_URL + "meters/reading/edit/";
     public static final String DELETE_METER_READING_BY_READING_ID = SERVER_URL + "meters/history/delete/";
+    public static final String AUTHENTICATE = SERVER_URL + "authenticate";
 
     //Bills definitions and FlatBills
     public static final String GET_BILLS_DEFINITIONS_BY_FLAT_ID = SERVER_URL + "bills/getAll/";
