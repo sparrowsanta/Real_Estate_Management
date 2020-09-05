@@ -147,8 +147,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     data: {
                         labels: ['June', 'July', 'August', 'September', 'October', 'November'],
                         datasets: [{
-                            label: 'Paid',
-                            data: [12, 19, 3, 5, 2, 3],
+                            label: 'Bills Def',
+                            data: [800, 900, 850, 780, 920, 800],
                             backgroundColor: [
                                 'rgba(2, 99, 132, 0.2)',
                                 'rgba(2, 162, 235, 0.2)',
@@ -168,8 +168,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             borderWidth: 1
                         },
                             {
-                                label: 'Expected Incomes',
-                                data: [, 1, 7, 2, 8, 5],
+                                label: 'Bills Paid',
+                                data: [700, 800, 850, 780, 900, 800],
                                 backgroundColor: [
                                     'rgba(2, 99, 132, 0.2)',
                                     'rgba(2, 162, 235, 0.2)',
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 borderWidth: 2
                             },
                             {
-                                label: 'Expected Total Profit',
+                                label: 'Expected Flat Profit',
                                 data: [1000, 1000, 1000, 1000, 1000, 1000],
                                 backgroundColor: [
                                     'rgba(2, 99, 132, 0.2)',
@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     'rgba(153, 102, 255, 1)',
                                     'rgba(2, 159, 64, 1)'
                                 ],
-                                borderWidth: 2
+                                borderWidth: 3
                             }]
                     },
                     options: {
@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         scales: {
                             yAxes: [{
                                 ticks: {
-                                    beginAtZero: true
+                                    beginAtZero: false
                                 }
                             }]
                         },
