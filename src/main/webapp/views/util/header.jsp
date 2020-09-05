@@ -40,10 +40,10 @@
 <%--<link href="css/FA/css/all.css" rel="stylesheet">--%>
 
 <nav class="navbar navbar-custom  navbar-expand-lg" id="mainNavbar">
-    <a class="navbar-brand mx-4 p-0" href="main.html"><img
-            src="${pageContext.request.contextPath}/img/home-sign.jpg" width="55" height="55"
+    <a class="navbar-brand mx-4 p-0" href="${pageContext.request.contextPath}/flats"><img
+            src="${pageContext.request.contextPath}/img/FF_White_full_back.png" width="55" height="55"
             class="d-inline-block float-left mr-2 align-bottom p-0"
-            alt=""> Real Estate<br>Management
+            alt="">Flat<br>Flats
     </a>
     <button class="navbar-toggler btn-orange" type="button" data-toggle="collapse" data-target="#mainmenu"
             aria-controls="mainmenu" aria-expanded="false">
@@ -52,7 +52,7 @@
     <div class="collapse navbar-collapse" id="mainmenu">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="../main/mainpage.jsp">Start</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/flats">Start</a>
             </li>
             <li class="nav-item dropdown" id="flatsNav">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button"

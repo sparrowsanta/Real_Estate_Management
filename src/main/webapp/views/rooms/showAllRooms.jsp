@@ -41,10 +41,11 @@
         <p class="infoP" id="infoRoomType" type="hidden"><spring:message code="rooms.add.roomType"/></p>
         <p class="infoP" id="infoDescription" type="hidden"><spring:message code="common.general.description"/></p>
         <p class="infoP" id="infoRoomSquareMeters" type="hidden"><spring:message code="rooms.add.roomSQM"/></p>
-        <p class="infoP" id="infoExpectedRentPrice" type="hidden"><spring:message code="common.general.income"/></p>
+        <p class="infoP" id="infoExpectedRentPrice" type="hidden"><spring:message code="flats.show.info.expectedIncome"/></p>
         <p class="infoP" id="infoNotOccupable" type="hidden"><spring:message code="rooms.show.all"/></p>
         <p class="infoP" id="infoTenant" type="hidden"><spring:message code="rooms.show.tenant"/></p>
         <p class="infoP" id="infoShowRents" type="hidden"><spring:message code="rent.show.rent"/></p>
+        <p class="infoP" id="infoRendDateTo" type="hidden"><spring:message code="rent.add.rentDateTo"/></p>
         <p class="infoPs" id="flatToShow">${flatEdited}</p>
         <p class="infoPs" id="furnitureToShow">${furnitures}</p>
     </div>

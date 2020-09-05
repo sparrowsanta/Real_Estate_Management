@@ -30,8 +30,11 @@
             </header>
             <div class="containerDiv"></div>
         </div>
-        <div class="alert alert-success">
+        <div id='alert-success-flat' class="alert alert-success">
             <spring:message code="flat.add.info.success"/>
+        </div>
+        <div id='alert-success-rooms' class="alert alert-success">
+            <spring:message code="rooms.add.info.success"/>
         </div>
         <div class="alert alert-danger">
             <spring:message code="flat.add.info.fail"/>
