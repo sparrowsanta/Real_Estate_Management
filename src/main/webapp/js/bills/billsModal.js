@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 newDiv.addClass("timeline-arrow");
                 newH2.addClass("h5 mb-0");
                 newEm.addClass("far fa-calendar-check mr-3");
-                newEm2.addClass(data[i].incomeOutcome===("income") ?
+                newEm2.addClass(data[i].incomeOutcome === ("income") ?
                     "fas fa-plus mr-3 text-success" : "fas fa-minus mr-3 text-danger");
                 newP.addClass("text-small mt-2 font-weight-light");
                 newP2.addClass("text-small mt-2 font-weight-light");
@@ -295,7 +295,11 @@ document.addEventListener("DOMContentLoaded", function () {
             data: {},
         })
             .done(function (data) {
-                createBillsList(data);
+                if (data.message === "Authentication needed") {
+                    window.location.replace(data.redirectUrl);
+                } else {
+                    createBillsList(data);
+                }
             })
             .fail(function (xhr, status, err) {
                 // logFailedAjax(xhr, status, err)
@@ -311,7 +315,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         })
             .done(function (data) {
-                createPaymentsList(data);
+                if (data.message === "Authentication needed") {
+                    window.location.replace(data.redirectUrl);
+                } else {
+                    createPaymentsList(data);
+                }
             })
             .fail(function (xhr, status, err) {
                 // logFailedAjax(xhr, status, err)
@@ -326,19 +334,23 @@ document.addEventListener("DOMContentLoaded", function () {
             data: {},
         })
             .done(function (data) {
-                $('#paymentDate').val(data.paymentDate);
-                $('#paymentAmount').val(data.amount);
-                $('#paymentType').val(data.incomeOutcome);
-                $('#paymentDescription').val(data.description);
-                $('#paymentCurrency').val(data.currency);
-                document.getElementById("paymentPaid").checked = data.paid;
-                currentPayment = data.id;
-                buttonSavePayment.prop("onclick", null).off("click");
-                buttonSavePayment.on("click", function () {
-                    savePaymentChanges(currentPayment)
-                });
+                if (data.message === "Authentication needed") {
+                    window.location.replace(data.redirectUrl);
+                } else {
+                    $('#paymentDate').val(data.paymentDate);
+                    $('#paymentAmount').val(data.amount);
+                    $('#paymentType').val(data.incomeOutcome);
+                    $('#paymentDescription').val(data.description);
+                    $('#paymentCurrency').val(data.currency);
+                    document.getElementById("paymentPaid").checked = data.paid;
+                    currentPayment = data.id;
+                    buttonSavePayment.prop("onclick", null).off("click");
+                    buttonSavePayment.on("click", function () {
+                        savePaymentChanges(currentPayment)
+                    });
 
-                $('#billsPaymentDataModal').modal();
+                    $('#billsPaymentDataModal').modal();
+                }
             })
             .fail(function (xhr, status, err) {
                 console.log(xhr.statusText);
@@ -365,8 +377,12 @@ document.addEventListener("DOMContentLoaded", function () {
             data: JSON.stringify(payment),
         })
             .done(function (data) {
-                $('#billsPaymentDataModal').modal('hide');
-                filterPayments();
+                if (data.message === "Authentication needed") {
+                    window.location.replace(data.redirectUrl);
+                } else {
+                    $('#billsPaymentDataModal').modal('hide');
+                    filterPayments();
+                }
             })
             .fail(function (xhr, status, err) {
                 console.log(xhr.statusText);
@@ -394,8 +410,12 @@ document.addEventListener("DOMContentLoaded", function () {
             data: JSON.stringify(payment),
         })
             .done(function (data) {
-                $('#billsPaymentDataModal').modal('hide');
-                filterPayments();
+                if (data.message === "Authentication needed") {
+                    window.location.replace(data.redirectUrl);
+                } else {
+                    $('#billsPaymentDataModal').modal('hide');
+                    filterPayments();
+                }
             })
             .fail(function (xhr, status, err) {
                 logFailedAjax(xhr, status, err)
@@ -408,7 +428,11 @@ document.addEventListener("DOMContentLoaded", function () {
             url: 'bills/payment/delete/' + paymentId,
         })
             .done(function (data) {
-                filterPayments();
+                if (data.message === "Authentication needed") {
+                    window.location.replace(data.redirectUrl);
+                } else {
+                    filterPayments();
+                }
             })
             .fail(function (xhr, status, err) {
                 logFailedAjax(xhr, status, err)
