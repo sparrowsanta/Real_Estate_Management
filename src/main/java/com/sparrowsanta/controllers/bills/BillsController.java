@@ -100,6 +100,12 @@ public class BillsController {
         return new Gson().toJson("Ok");
     }
 
+/*    @GetMapping(value = "/billDefinitionsPerMonth", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Object[]> billDefinitionsPerMonth(){
+
+        return flatBillsService.getAllBillsDefinitionPerMonth();
+    }*/
+
 
 
 }
