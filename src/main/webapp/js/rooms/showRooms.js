@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 let chartRowCol = $("<div class = 'col-sm-3'>")
                 let p8 = $("<canvas id='lineChart' class='lineCharts' width='400' height='200'></canvas>")
 
-                let additionalDiv2 = $("<div class='additionalForGraph  mt-4 mb-3'>");
+                let additionalDiv2 = $("<div class='additionalForGraph  mt-2 mb-3'>");
                 row.append(chartRowCol)
                 chartRowCol.append(additionalDiv2)
                 additionalDiv2.prepend(chartCol)
@@ -220,9 +220,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 addEditAndDeleteButtons(rooms[i].id, row)
 
             } else {
-                let figureRoom = figureGeneric.clone(true)
+                let figureRoom = figureGeneric.clone(true).attr("id", "pictureFor" + rooms[i].id)
+                let roomPicture = getPictureForRoom(rooms[i].id);
                 let imgRoom = imgGeneric.clone(true)
-                figureRoom.children().append(imgRoom)
+                if (roomPicture === null) {
+                    let uploadBtnRoom = $("<input id='fileid' type='file'/>")
+                    uploadRoomPicIfDoesNotHave(figureRoom.children(), rooms[i].id)
+
+                } else {
+                    imgRoom.attr("src", "data:image/png;base64," + roomPicture);
+                    figureRoom.children().append(imgRoom)
+                }
 
                 let row = $("<div class='row'>");
                 let rowForPic = $("<div class = 'col-sm-3 col3'>")
