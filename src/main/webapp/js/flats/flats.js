@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     data: {
                         labels: ['June', 'July', 'August', 'September', 'October', 'November'],
                         datasets: [{
-                            label: 'Income',
+                            label: 'Paid',
                             data: [12, 19, 3, 5, 2, 3],
                             backgroundColor: [
                                 'rgba(2, 99, 132, 0.2)',
@@ -168,8 +168,29 @@ document.addEventListener("DOMContentLoaded", function () {
                             borderWidth: 1
                         },
                             {
-                                label: 'Expectation',
-                                data: [5, 1, 7, 2, 8, 5],
+                                label: 'Expected Incomes',
+                                data: [, 1, 7, 2, 8, 5],
+                                backgroundColor: [
+                                    'rgba(2, 99, 132, 0.2)',
+                                    'rgba(2, 162, 235, 0.2)',
+                                    'rgba(2, 206, 86, 0.2)',
+                                    'rgba(2, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(2, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(2, 99, 132, 1)',
+                                    'rgba(2, 162, 235, 1)',
+                                    'rgba(2, 206, 86, 1)',
+                                    'rgba(2, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(2, 159, 64, 1)'
+                                ],
+                                borderWidth: 2
+                            },
+                            {
+                                label: 'Expected Total Profit',
+                                data: [1000, 1000, 1000, 1000, 1000, 1000],
                                 backgroundColor: [
                                     'rgba(2, 99, 132, 0.2)',
                                     'rgba(2, 162, 235, 0.2)',
