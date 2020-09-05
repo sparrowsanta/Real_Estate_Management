@@ -41,7 +41,7 @@
 
 <nav class="navbar navbar-custom  navbar-expand-lg" id="mainNavbar">
     <a class="navbar-brand mx-4 p-0" href="${pageContext.request.contextPath}/flats"><img
-            src="${pageContext.request.contextPath}/img/logoNo1.png" width="55" height="55"
+            src="${pageContext.request.contextPath}/img/FF_White_full_back.png" width="55" height="55"
             class="d-inline-block float-left mr-2 align-bottom p-0"
             alt="">Flat<br>Flats
     </a>
