@@ -39,7 +39,7 @@ public class LoginController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String gson = new Gson().toJson(user);
-        HttpEntity<String> authenticationRequest = new HttpEntity<String>(gson, headers);
+        HttpEntity<String> authenticationRequest = new HttpEntity<>(gson, headers);
 
         try {
             ResponseEntity<?> response = restTemplate.postForEntity(RestUrls.AUTHENTICATE, authenticationRequest, String.class);

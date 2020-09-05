@@ -27,81 +27,131 @@ public class MetersController {
         } else {
             servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
         }
-        return "401 - Unauthorized";
+        return new Gson().toJson("Ok");
     }
 
     @GetMapping(value = "/{meterId}", produces = "text/plain;charset=UTF-8")
-    public String getMeterById(@PathVariable(name = "meterId") long meterId) {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(RestUrls.GET_METER_BY_ID + meterId, String.class);
+    public String getMeterById(@PathVariable(name = "meterId") long meterId, @CookieValue("token") String token,
+                               HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
+
+        String response = Templates.getRequest(token, RestUrls.GET_METER_BY_ID + meterId);
+        if (!response.equals("401")) {
+            return response;
+        } else {
+            servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
+        }
+        return new Gson().toJson("Ok");
     }
 
 
     @GetMapping(value = "/reading/{readingId}", produces = "text/plain;charset=UTF-8")
-    public String getMeterReadingById(@PathVariable(name = "readingId") long readingId) {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(RestUrls.GET_METER_READING_BY_READING_ID + readingId, String.class);
+    public String getMeterReadingById(@PathVariable(name = "readingId") long readingId, @CookieValue("token") String token,
+                                      HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
+
+        String response = Templates.getRequest(token, RestUrls.GET_METER_READING_BY_READING_ID + readingId);
+        if (!response.equals("401")) {
+            return response;
+        } else {
+            servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
+        }
+        return new Gson().toJson("Ok");
     }
 
     @DeleteMapping(value = "/delete/{meterId}", produces = "text/plain;charset=UTF-8")
-    public String delMeter(@PathVariable(name = "meterId") long meterId) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(RestUrls.DELETE_METER_BY_METER_ID + meterId);
+    public String delMeter(@PathVariable(name = "meterId") long meterId, @CookieValue("token") String token,
+                           HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
+        String response = Templates.delRequest(token, RestUrls.DELETE_METER_BY_METER_ID + meterId);
+        if (!response.equals("401")) {
+            return response;
+        } else {
+            servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
+        }
         return new Gson().toJson("Ok");
     }
 
     @PutMapping(value = "/edit/{meterId}", produces = "text/plain;charset=UTF-8")
-    public String editMeter(@RequestBody String meter, @PathVariable(name = "meterId") long meterId) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> request = new HttpEntity<String>(meter, headers);
-        restTemplate.exchange(RestUrls.EDIT_METER_BY_METER_ID + meterId, HttpMethod.PUT, request, Void.class);
+    public String editMeter(@RequestBody String meter, @PathVariable(name = "meterId") long meterId, @CookieValue("token") String token,
+                            HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
+
+        String response = Templates.putRequest(token, RestUrls.EDIT_METER_BY_METER_ID + meterId, meter);
+        if (!response.equals("401")) {
+            return new Gson().toJson("Ok");
+        } else {
+            servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
+        }
         return new Gson().toJson("Ok");
 
     }
 
     @PutMapping(value = "/reading/edit/{readingId}", produces = "text/plain;charset=UTF-8")
-    public String editMeterReading(@RequestBody String reading, @PathVariable(name = "readingId") long readingId) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> request = new HttpEntity<String>(reading, headers);
-        restTemplate.exchange(RestUrls.EDIT_METER_READING_BY_READING_ID + readingId, HttpMethod.PUT, request, Void.class);
+    public String editMeterReading(@RequestBody String reading, @PathVariable(name = "readingId") long readingId, @CookieValue("token") String token,
+                                   HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
+
+        String response = Templates.putRequest(token, RestUrls.EDIT_METER_READING_BY_READING_ID + readingId, reading);
+        if (!response.equals("401")) {
+            return new Gson().toJson("Ok");
+        } else {
+            servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
+        }
         return new Gson().toJson("Ok");
     }
 
     @PostMapping(value = "/add", produces = "text/plain;charset=UTF-8")
-    public String addMeter(@RequestBody String meter) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> request = new HttpEntity<String>(meter, headers);
-        restTemplate.postForEntity(RestUrls.ADD_METER, request, String.class);
+    public String addMeter(@RequestBody String meter, @CookieValue("token") String token,
+                           HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
+        String response = Templates.postRequest(token, RestUrls.ADD_METER, meter);
+        if (!response.equals("401")) {
+            return new Gson().toJson("Ok");
+        } else {
+            servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
+        }
         return new Gson().toJson("Ok");
+
     }
 
     @GetMapping(value = "/history/{meterId}", produces = "text/plain;charset=UTF-8")
-    public String getMeterHistory(@PathVariable(name = "meterId") long meterId) {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(RestUrls.GET_METER_READINGS_BY_METER_ID + meterId, String.class);
+    public String getMeterHistory(@PathVariable(name = "meterId") long meterId, @CookieValue("token") String token,
+                                  HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
+
+        String response = Templates.getRequest(token, RestUrls.GET_METER_READINGS_BY_METER_ID + meterId);
+        if (!response.equals("401")) {
+            return response;
+        } else {
+            servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
+        }
+        return new Gson().toJson("Ok");
     }
 
     @DeleteMapping(value = "/history/delete/{readingId}", produces = "text/plain;charset=UTF-8")
-    public String delMeterReading(@PathVariable(name = "readingId") long readingId) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(RestUrls.DELETE_METER_READING_BY_READING_ID + readingId);
+    public String delMeterReading(@PathVariable(name = "readingId") long readingId, @CookieValue("token") String token,
+                                  HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
+
+        String response = Templates.delRequest(token, RestUrls.DELETE_METER_READING_BY_READING_ID + readingId);
+        if (!response.equals("401")) {
+            return response;
+        } else {
+            servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
+        }
         return new Gson().toJson("Ok");
     }
 
     @PostMapping(value = "/reading/add", produces = "text/plain;charset=UTF-8")
-    public String addMeterReading(@RequestBody String reading) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> request = new HttpEntity<String>(reading, headers);
-        restTemplate.postForEntity(RestUrls.ADD_METER_READING_BY_METER_ID, request, String.class);
+    public String addMeterReading(@RequestBody String reading, @CookieValue("token") String token,
+                                  HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
+        String response = Templates.postRequest(token, RestUrls.ADD_METER_READING_BY_METER_ID, reading);
+        if (!response.equals("401")) {
+            return new Gson().toJson("Ok");
+        } else {
+            servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
+        }
         return new Gson().toJson("Ok");
+
+//        RestTemplate restTemplate = new RestTemplate();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        HttpEntity<String> request = new HttpEntity<String>(reading, headers);
+//        restTemplate.postForEntity(RestUrls.ADD_METER_READING_BY_METER_ID, request, String.class);
+//        return new Gson().toJson("Ok");
 
     }
 }
