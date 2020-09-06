@@ -64,7 +64,7 @@
 </div>
 
 </div>
-<div id="meterForms">
+<div hidden="hidden">
     <jsp:include page="../util/deleteConfirm.jsp"/>
     <jsp:include page="../rooms/roomsModal.jsp"/>
     <jsp:include page="../rent/rentModal.jsp"/>
