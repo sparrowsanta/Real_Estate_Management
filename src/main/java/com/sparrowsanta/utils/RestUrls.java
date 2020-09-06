@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public class RestUrls {
-    private static final String SERVER_URL = "http://realestatemanagementrest-env.eba-u4wqr2f3.eu-central-1.elasticbeanstalk.com/";
-//    private static final String SERVER_URL = "http://localhost:8081/";
+//    private static final String SERVER_URL = "http://realestatemanagementrest-env.eba-u4wqr2f3.eu-central-1.elasticbeanstalk.com/";
+    private static final String SERVER_URL = "http://localhost:8081/";
 
     //Meters and Meters history
 

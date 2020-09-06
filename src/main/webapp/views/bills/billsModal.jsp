@@ -148,7 +148,7 @@
 
 
 </div>
-<div hidden="hidden">
+<div>
     <jsp:include page="../bills/billsPaymentData.jsp"/>
     <jsp:include page="../bills/billsDefinitionsData.jsp"/>
 </div>
