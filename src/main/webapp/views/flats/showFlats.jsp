@@ -46,14 +46,16 @@
 </main>
 
 </body>
+
+<footer>
+    <jsp:include page="/views/util/footer.jsp"></jsp:include>
+</footer>
+<div hidden="hidden">
 <jsp:include page="../meters/metersModal.jsp"/>
 <jsp:include page="../bills/billsModal.jsp"/>
 <jsp:include page="../rooms/showRooms.jsp"/>
 <jsp:include page="../util/deleteConfirm.jsp"/>
-<footer>
-    <jsp:include page="/views/util/footer.jsp"></jsp:include>
-</footer>
-
+</div>
 
 
 </html>

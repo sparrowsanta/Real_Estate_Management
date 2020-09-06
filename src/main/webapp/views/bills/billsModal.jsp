@@ -21,7 +21,8 @@
                         <div class="form-group row">
                             <div class="col-sm-3">
                                 <div class="input-group">
-                                    <label class="control-label" for="billsType" style="width: 100%"><strong><spring:message
+                                    <label class="control-label" for="billsType"
+                                           style="width: 100%"><strong><spring:message
                                             code='bills.label.filter.paid'/></strong></label>
                                     <select class="form-control is-valid input-white "
                                             id="billsType">
@@ -36,7 +37,8 @@
 
                             <div class="col-sm-3">
                                 <div class="input-group">
-                                    <label class="control-label" for="billsIncomeOutcome" style="width: 100%"><strong><spring:message
+                                    <label class="control-label" for="billsIncomeOutcome"
+                                           style="width: 100%"><strong><spring:message
                                             code='bills.label.filter.incomeType'/></strong></label>
                                     <select class="form-control is-valid input-white "
                                             id="billsIncomeOutcome">
@@ -51,13 +53,15 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group">
-                                    <label class="control-label" for="dateFrom" style="width: 100%"><strong><spring:message
+                                    <label class="control-label" for="dateFrom"
+                                           style="width: 100%"><strong><spring:message
                                             code='bills.label.filter.dateFrom'/></strong></label>
 
                                     <input class="form-control input-white" id="dateFrom" type="date"
                                            autocomplete="off"/>
                                     <div class="input-group-append">
-                                        <button type="button" class="btn btn-dark-blue-outline btn-sm" id="clearDateFrom">
+                                        <button type="button" class="btn btn-dark-blue-outline btn-sm"
+                                                id="clearDateFrom">
                                             <em class="fas fa-times"></em></button>
                                     </div>
 
@@ -65,7 +69,8 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group">
-                                    <label class="control-label" for="dateTo" style="width: 100%"><strong><spring:message
+                                    <label class="control-label" for="dateTo"
+                                           style="width: 100%"><strong><spring:message
                                             code='bills.label.filter.dateTo'/></strong></label>
                                     <input class="form-control input-white" id="dateTo" type="date"
                                            autocomplete="off"/>
@@ -143,8 +148,8 @@
 
 
 </div>
-
-<jsp:include page="../bills/billsPaymentData.jsp"/>
-<jsp:include page="../bills/billsDefinitionsData.jsp"/>
-
+<div hidden="hidden">
+    <jsp:include page="../bills/billsPaymentData.jsp"/>
+    <jsp:include page="../bills/billsDefinitionsData.jsp"/>
+</div>
 <script type="text/javascript" src="js/bills/billsModal.js"></script>
