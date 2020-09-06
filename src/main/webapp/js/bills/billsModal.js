@@ -36,7 +36,9 @@ document.addEventListener("DOMContentLoaded", function () {
     buttonBack.on("click", backToPaymentsList);
     buttonShowBillDefinition.on("click", showBillsDefinition);
     buttonAddManualPayment.on("click", addNewPayment);
+    buttonAddBillDefinition.on("click", addNewBillDef);
     let buttonSavePayment = $("#btnSavePayment");
+    let buttonSaveBillDef = $("#btnSaveBillDef");
     filterPaid.on("change", filterPayments);
     filterType.on("change", filterPayments);
     filterDateFrom.on("change", filterPayments);
@@ -60,6 +62,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    function opentmpDef() {
+        $('#billsDefinitionsDataModal').modal();
+
+    }
+
+
+
     function openBillsModal() {
         $('#modalBills').modal();
         currentFlat = $(this).attr("value");
@@ -73,8 +82,24 @@ document.addEventListener("DOMContentLoaded", function () {
         backToPaymentsList();
     }
 
+    function addNewBillDef() {
+        // resetErrorsDefinitions();
+        $('#billsDefinitionsDataTitle').text($('#billDataTitleNew').val());
+        $('#billDescription').val('');
+        $('#billCurrency').val('');
+        $("#billType").val('outcome').trigger('change');
+        $('#billAmount').val('');
+        $('#billFrequency').val('');
+        $('#billPayTill').val('');
+        buttonSaveBillDef.prop("onclick", null).off("click");
+        buttonSaveBillDef.on("click", saveNewDef);
+
+        $('#billsDefinitionsDataModal').modal();
+    }
+
+
     function addNewPayment() {
-        // resetErrorsPayment();
+        resetErrorsPayment();
         $('#billsPaymentDataTitle').text($('#paymentDataTitleNew').val());
         let currentDate = new Date();
         let currentDateString = currentDate.getFullYear()
@@ -97,6 +122,13 @@ document.addEventListener("DOMContentLoaded", function () {
         $('#billsPaymentDataTitle').text($('#paymentDataTitleEdit').val());
         let paymentId = $(this).attr("value");
         getPaymentById(paymentId);
+    }
+
+    function editDefinition() {
+        resetErrorsDefinitions()
+        $('#billsDefinitionsDataTitle').text($('#billDataTitleEdit').val());
+        let definitionId = $(this).attr("value");
+        getDefinitionById(definitionId);
     }
 
     function backToPaymentsList() {
@@ -249,14 +281,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 btnEditEm.addClass("fas fa-pencil-alt");
                 btnDeleteEm.addClass("fas fa-trash-alt");
                 newDiv2.addClass("buttonsHolder");
-
                 btnDeletePaymentDefinition.addClass("btn btn-xs pull-right btn-mixed-outline mr-2 btn-square").attr("data-toggle", "tooltip")
                     .attr("value", data[i].id).prop('title', $("#billDeleteTooltip").val())
-                // .on("click", function () {
-                // deleteEntity(data[i].description, deleteMeter, data[i].id)
-                // });
+                .on("click", function () {
+                deleteEntity(data[i].billDescription, deletePaymentDef, data[i].id)
+                });
                 btnEditPaymentDefinition.addClass("btn btn-xs pull-right btn-mixed-outline mr-2").attr("data-toggle", "tooltip")
-                    .attr("value", data[i].id).prop('title', $("#billEditTooltip").val()).on("click", null);
+                    .attr("value", data[i].id).prop('title', $("#billEditTooltip").val()).on("click", editDefinition);
 
 
                 btnDeletePaymentDefinition.append(btnDeleteEm);
@@ -359,6 +390,41 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
+    function getDefinitionById(definitionId) {
+        $.ajax({
+            type: 'get',
+            url: 'bills/' + definitionId,
+            dataType: "json",
+            data: {},
+        })
+            .done(function (data) {
+                if (data.message === "Authentication needed") {
+                    window.location.replace(data.redirectUrl);
+                } else {
+                    $('#billDescription').val(data.billDescription);
+                    $('#billAmount').val(data.billAmount);
+                    $('#billCurrency').val(data.currency);
+                    $('#billFrequency').val(data.billFrequencyInMonths);
+                    $('#billPayTill').val(data.paymentTillDayOfMonth);
+                    $('#billType').val(data.incomeOutcome);
+                    currentBill = data.id;
+                    buttonSaveBillDef.prop("onclick", null).off("click");
+                    buttonSaveBillDef.on("click", function () {
+                        saveDefinitionChanges(currentBill)
+                    });
+
+                    $('#billsDefinitionsDataModal').modal();
+                }
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
+
+
+
     function saveNewPayment() {
         if (checkRequiredFieldsPayment() !== true) return;
         let payment = {};
@@ -388,6 +454,70 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log(xhr.statusText);
                 console.log(status);
                 console.log(err);
+            });
+    }
+
+    function saveNewDef() {
+        if (checkRequiredFieldsDefinition() !== true) return;
+        let billDefinition = {};
+        billDefinition.flatId = currentFlat;
+        billDefinition.billDescription = $('#billDescription').val();
+        billDefinition.billAmount = $('#billAmount').val();
+        billDefinition.currency = $('#billCurrency').val();
+        billDefinition.billFrequencyInMonths = $('#billFrequency').val();
+        billDefinition.paymentTillDayOfMonth = $('#billPayTill').val();
+        billDefinition.incomeOutcome =  $('#billType').val();
+        $.ajax({
+            type: 'post',
+            url: 'bills/add/',
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(billDefinition),
+        })
+            .done(function (data) {
+                if (data.message === "Authentication needed") {
+                    window.location.replace(data.redirectUrl);
+                } else {
+                    $('#billsDefinitionsDataModal').modal('hide');
+                    getBills(currentFlat);
+                }
+            })
+            .fail(function (xhr, status, err) {
+                console.log(xhr.statusText);
+                console.log(status);
+                console.log(err);
+            });
+    }
+
+
+    function saveDefinitionChanges(definitionId) {
+        if (checkRequiredFieldsDefinition() !== true) return;
+        let billDefinition = {};
+        billDefinition.id = definitionId;
+        billDefinition.flatId = currentFlat;
+        billDefinition.billDescription = $('#billDescription').val();
+        billDefinition.billAmount = $('#billAmount').val();
+        billDefinition.currency = $('#billCurrency').val();
+        billDefinition.billFrequencyInMonths = $('#billFrequency').val();
+        billDefinition.paymentTillDayOfMonth = $('#billPayTill').val();
+        billDefinition.incomeOutcome =  $('#billType').val();
+        $.ajax({
+            type: 'put',
+            url: 'bills/edit/' + definitionId,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(billDefinition),
+        })
+            .done(function (data) {
+                if (data.message === "Authentication needed") {
+                    window.location.replace(data.redirectUrl);
+                } else {
+                    $('#billsDefinitionsDataModal').modal('hide');
+                    getBills(currentFlat);
+                }
+            })
+            .fail(function (xhr, status, err) {
+                logFailedAjax(xhr, status, err)
             });
     }
 
@@ -432,6 +562,23 @@ document.addEventListener("DOMContentLoaded", function () {
                     window.location.replace(data.redirectUrl);
                 } else {
                     filterPayments();
+                }
+            })
+            .fail(function (xhr, status, err) {
+                logFailedAjax(xhr, status, err)
+            });
+    }
+
+    function deletePaymentDef(paymentId) {
+        $.ajax({
+            type: "DELETE",
+            url: 'bills/delete/' + paymentId,
+        })
+            .done(function (data) {
+                if (data.message === "Authentication needed") {
+                    window.location.replace(data.redirectUrl);
+                } else {
+                    getBills(currentFlat);
                 }
             })
             .fail(function (xhr, status, err) {
@@ -503,6 +650,33 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+
+    function checkRequiredFieldsDefinition() {
+        let passedValidation = true;
+        let billDesc = $('#billDescription');
+        let billAmount = $('#billAmount');
+        let billFreq = $('#billFrequency');
+        let billPayTill = $('#billPayTill');
+        resetErrorsDefinitions();
+        if (billDesc.val() === "") {
+            billDesc.removeClass("is-valid").addClass("is-invalid");
+            passedValidation = false;
+        }
+        if (billAmount.val().length === 0) {
+            billAmount.removeClass("is-valid").addClass("is-invalid");
+            passedValidation = false;
+        }
+        if (billFreq.val().length === 0) {
+            billFreq.removeClass("is-valid").addClass("is-invalid");
+            passedValidation = false;
+        }
+        if (billPayTill.val().length === 0) {
+            billPayTill.removeClass("is-valid").addClass("is-invalid");
+            passedValidation = false;
+        }
+        return passedValidation;
+    }
+
     function resetErrorsPayment() {
         let paymentDate = $('#paymentDate');
         let paymentAmount = $('#paymentAmount');
@@ -510,5 +684,16 @@ document.addEventListener("DOMContentLoaded", function () {
         paymentDate.addClass("is-valid").removeClass("is-invalid");
         paymentAmount.addClass("is-valid").removeClass("is-invalid");
         paymentDescription.addClass("is-valid").removeClass("is-invalid");
+    }
+
+    function resetErrorsDefinitions() {
+        let billDesc = $('#billDescription');
+        let billAmount = $('#billAmount');
+        let billFreq = $('#billFrequency');
+        let billPayTill = $('#billPayTill');
+        billDesc.addClass("is-valid").removeClass("is-invalid");
+        billAmount.addClass("is-valid").removeClass("is-invalid");
+        billFreq.addClass("is-valid").removeClass("is-invalid");
+        billPayTill.addClass("is-valid").removeClass("is-invalid");
     }
 });

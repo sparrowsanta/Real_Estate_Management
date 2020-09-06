@@ -82,11 +82,13 @@
                                     />
                                     <label for="userPassword"><spring:message code="login.label.password"/></label>
                                 </div>
+                                <span><strong>${loginMessage}</strong></span>
                                 <div class="text-center mt-4">
                                     <button class="btn btn-dark" type="submit"><spring:message
                                             code="login.button.login"/></button>
                                     <hr class="hr-light mb-3 mt-4"/>
                                 </div>
+
                             </form>
                         </div>
                         <div class="md-form mr-4 mb-4">
