@@ -451,6 +451,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
+                    async: false,
                 })
                     .done(function (data) {
                         console.log(data)
