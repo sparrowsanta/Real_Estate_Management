@@ -3,11 +3,15 @@ package com.sparrowsanta.controllers.bills;
 import com.google.gson.Gson;
 import com.sparrowsanta.utils.RestUrls;
 import com.sparrowsanta.utils.Templates;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("bills")
@@ -87,12 +91,6 @@ public class BillsController {
     @PostMapping(value = "/add", produces = "text/plain;charset=UTF-8")
     public String addBill(@RequestBody String bill, @CookieValue("token") String token,
                           HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
-        String response = Templates.postRequest(token, RestUrls.ADD_BILL_DEFINITION, bill);
-        if (!response.equals("401")) {
-            return new Gson().toJson("Ok");
-        } else {
-            servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
-        }
         return new Gson().toJson("Ok");
     }
 //
@@ -138,6 +136,25 @@ public class BillsController {
             servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
         }
         return new Gson().toJson("Ok");
+    }
+
+    @GetMapping(value = "/billDefinitionsPerMonth/{flatId}", produces = "text/plain;charset=UTF-8")
+    public String billDefinitionsPerMonth(@PathVariable(name = "flatId") long flatId, @CookieValue("token") String token){
+//        List<Object> response = Templates.getRequest(token, RestUrls.GET_BILL_DEFINITIONS_PER_MONTH);
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.exchange(RestUrls.GET_BILL_DEFINITIONS_PER_MONTH + flatId, HttpMethod.GET, request, String.class);
+            return responseEntity.getBody();
+        } catch (HttpClientErrorException e) {
+            return "401";
+        }
+
+
     }
 
     @DeleteMapping(value = "/delete/{billId}", produces = "text/plain;charset=UTF-8")

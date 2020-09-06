@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
     let myLineChart = $("#lineChart")
+    var MyData = [{time:"10:00", number: "127"},
+        {time:"11:00", number: "140"},
+        {time:"12:00", number: "135"},
+        {time:"13:00", number: "122"}];
 
     let lineChart = new Chart(myLineChart, {
         type: 'line',
@@ -39,3 +43,5 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     })
 })
+
+

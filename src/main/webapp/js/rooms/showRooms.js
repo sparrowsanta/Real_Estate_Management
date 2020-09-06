@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 let chartRowCol = $("<div class = 'col-sm-3'>")
                 let p8 = $("<canvas id='lineChart' class='lineCharts' width='400' height='200'></canvas>")
 
-                let additionalDiv2 = $("<div class='additionalForGraph  mt-4 mb-3'>");
+                let additionalDiv2 = $("<div class='additionalForGraph  mt-2 mb-3'>");
                 row.append(chartRowCol)
                 chartRowCol.append(additionalDiv2)
                 additionalDiv2.prepend(chartCol)
@@ -166,10 +166,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     let lineChart = new Chart(myLineChart[i], {
                         type: 'bar',
                         data: {
-                            labels: ['June', 'July', 'August', 'September', 'October', 'November'],
+                            labels: ['June', 'July', 'August', 'September'],
                             datasets: [{
                                 label: 'Income',
-                                data: [20, 19, 22, 15, 20, 23],
+                                data: [1200, 100, 200, 150, 200, 1300],
                                 backgroundColor:
                                     'rgba(2, 99, 132, 0.4)',
                                 borderColor:
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             },
                                 {
                                     label: 'Media',
-                                    data: [3, 19, 3, 5, 2, 3],
+                                    data: [300, 400, 400, 350],
                                     backgroundColor:
                                         'rgb(94,215,219, 0.4)',
                                     borderColor:
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 },
                                 {
                                     label: 'Additional Cost',
-                                    data: [4, 19, 3, 5, 2, 3],
+                                    data: [0, 100, 30, 50, 20, 30],
                                     backgroundColor:
                                         'rgb(215,94,156, 0.4)',
                                     borderColor:
@@ -220,9 +220,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 addEditAndDeleteButtons(rooms[i].id, row)
 
             } else {
-                let figureRoom = figureGeneric.clone(true)
+                let figureRoom = figureGeneric.clone(true).attr("id", "pictureFor" + rooms[i].id)
+                let roomPicture = getPictureForRoom(rooms[i].id);
                 let imgRoom = imgGeneric.clone(true)
-                figureRoom.children().append(imgRoom)
+                if (roomPicture === null) {
+                    let uploadBtnRoom = $("<input id='fileid' type='file'/>")
+                    uploadRoomPicIfDoesNotHave(figureRoom.children(), rooms[i].id)
+
+                } else {
+                    imgRoom.attr("src", "data:image/png;base64," + roomPicture);
+                    figureRoom.children().append(imgRoom)
+                }
 
                 let row = $("<div class='row'>");
                 let rowForPic = $("<div class = 'col-sm-3 col3'>")
