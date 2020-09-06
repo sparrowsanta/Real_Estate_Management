@@ -74,15 +74,16 @@ public class BillsController {
 
     }
 
-    @DeleteMapping(value = "/delete/{billId}", produces = "text/plain;charset=UTF-8")
-    public String delBill(@PathVariable(name = "billId") long billId, @CookieValue("token") String token,
-                          HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
-        return new Gson().toJson("Ok");
-    }
 
     @PutMapping(value = "/edit/{billId}", produces = "text/plain;charset=UTF-8")
-    public String editBill(@RequestBody String bill, @CookieValue("token") String token,
+    public String editBill(@RequestBody String bill, @PathVariable(name = "billId") long billId, @CookieValue("token") String token,
                            HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
+        String response = Templates.putRequest(token, RestUrls.EDIT_BILL + billId, bill);
+        if (!response.equals("401")) {
+            return new Gson().toJson("Ok");
+        } else {
+            servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
+        }
         return new Gson().toJson("Ok");
     }
 
@@ -156,5 +157,16 @@ public class BillsController {
 
     }
 
+    @DeleteMapping(value = "/delete/{billId}", produces = "text/plain;charset=UTF-8")
+    public String deletePaymentDef(@PathVariable(name = "billId") long billId, @CookieValue("token") String token,
+                                HttpServletResponse servletResponse, HttpServletRequest httpServletRequest) throws IOException {
+        String response = Templates.delRequest(token, RestUrls.DELETE_BILL_BY_BILL_ID + billId);
+        if (!response.equals("401")) {
+            return response;
+        } else {
+            servletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login");
+        }
+        return new Gson().toJson("Ok");
+    }
 
 }

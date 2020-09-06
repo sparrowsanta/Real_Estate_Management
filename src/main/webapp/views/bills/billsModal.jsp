@@ -145,5 +145,6 @@
 </div>
 
 <jsp:include page="../bills/billsPaymentData.jsp"/>
+<jsp:include page="../bills/billsDefinitionsData.jsp"/>
 
 <script type="text/javascript" src="js/bills/billsModal.js"></script>

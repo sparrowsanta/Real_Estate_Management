@@ -28,8 +28,12 @@ public class RestUrls {
     public static final String GET_BILLS_BY_BILL_ID = SERVER_URL + "bills/payment/";
     public static final String ADD_PAYMENT = SERVER_URL + "bills/payment/add";
     public static final String EDIT_PAYMENT = SERVER_URL + "bills/payment/edit/";
+    public static final String EDIT_BILL = SERVER_URL + "bills/edit/";
     public static final String DELETE_PAYMENT_BY_PAYMENT_ID = SERVER_URL + "bills/payment/delete/";
     public static final String GET_BILL_DEFINITIONS_PER_MONTH = SERVER_URL + "bills/billDefinitionsPerMonth/";
+    public static final String DELETE_BILL_BY_BILL_ID = SERVER_URL + "bills/delete/";
+
+    public static final String ADD_BILL_DEFINITION = SERVER_URL + "bills/add/";
 
     //Flats
     public static final String ADD_FLAT = SERVER_URL + "flats/addFlat";
