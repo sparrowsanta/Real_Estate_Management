@@ -1,17 +1,14 @@
 package com.sparrowsanta.controllers.flats;
 
 import com.google.gson.Gson;
-import com.sparrowsanta.businessmodel.Flat;
-import com.sparrowsanta.businessmodel.Room;
 import com.sparrowsanta.utils.BasicRestTemplate;
 import com.sparrowsanta.utils.MultiPartFileConverter;
 import com.sparrowsanta.utils.RestUrls;
-import net.minidev.json.JSONValue;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.boot.Banner;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -20,22 +17,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static com.sparrowsanta.businessmodel.Room.RoomType.KITCHEN;
-import static com.sparrowsanta.businessmodel.Room.RoomType.ROOM;
 
 @Controller
 @SessionAttributes("flatEdited")
 @RequestMapping("flats")
-public class ShowFlats {
+public class FlatController {
 
 
     @GetMapping("/flatPicture/{id}")
