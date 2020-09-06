@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let billsDef = [];
     let bills = [];
     let expectedIncome = [];
+
     function showFlatsInformation(flats) {
         containerDiv.empty();
 
@@ -146,22 +147,38 @@ document.addEventListener("DOMContentLoaded", function () {
             for (let j = 0; j < 5; j++) {
                 expectedIncome.push(flats[i].expectedIncome)
             }
-
+            let expectedIncomeData = expectedIncome
             getLastMonths(flats[i].id)
             let myLineChart = $(".lineCharts")
-            for (let i = 0; i < myLineChart.length; i++) {
-                let lineChart = new Chart(myLineChart[i], {
-                    type: 'line',
-                    data: {
-                        labels: months,
-                        datasets: [{
-                            label: 'Bills Def',
-                            data: billsDef,
+            let lineChart = new Chart(myLineChart[i], {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Bills Def',
+                        data: billsDef,
+                        backgroundColor: [
+                            'rgba(5,159,215,0.4)',
+                            'rgba(2, 1, 235, 0.4)',
+                            'rgba(2, 1, 86, 0.4)',
+                            'rgba(2, 1, 64, 0.4)'
+                        ],
+                        borderColor: [
+                            'rgba(2, 99, 132, 1)',
+                            'rgba(2, 162, 235, 1)',
+                            'rgba(2, 206, 86, 1)',
+                            'rgba(2, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    },
+                        {
+                            label: 'Bills Paid',
+                            data: bills,
                             backgroundColor: [
-                                'rgba(5,159,215,0.4)',
-                                'rgba(2, 1, 235, 0.4)',
-                                'rgba(2, 1, 86, 0.4)',
-                                'rgba(2, 1, 64, 0.4)'
+                                'rgba(2, 99, 1, 0.3)',
+                                'rgba(2, 162, 235, 0.2)',
+                                'rgba(2, 206, 86, 0.2)',
+                                'rgba(2, 159, 64, 0.2)'
                             ],
                             borderColor: [
                                 'rgba(2, 99, 132, 1)',
@@ -169,60 +186,42 @@ document.addEventListener("DOMContentLoaded", function () {
                                 'rgba(2, 206, 86, 1)',
                                 'rgba(2, 159, 64, 1)'
                             ],
-                            borderWidth: 1
+                            borderWidth: 2
                         },
-                            {
-                                label: 'Bills Paid',
-                                data: bills,
-                                backgroundColor: [
-                                    'rgba(2, 99, 1, 0.3)',
-                                    'rgba(2, 162, 235, 0.2)',
-                                    'rgba(2, 206, 86, 0.2)',
-                                    'rgba(2, 159, 64, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(2, 99, 132, 1)',
-                                    'rgba(2, 162, 235, 1)',
-                                    'rgba(2, 206, 86, 1)',
-                                    'rgba(2, 159, 64, 1)'
-                                ],
-                                borderWidth: 2
-                            },
-                            {
-                                label: 'Expected Flat Profit',
-                                data: expectedIncome,
-                                backgroundColor: [
-                                    'rgba(2, 99, 132, 0.2)',
-                                    'rgba(2, 162, 235, 0.2)',
-                                    'rgba(2, 206, 86, 0.2)',
-                                    'rgba(2, 159, 64, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(2, 99, 132, 1)',
-                                    'rgba(2, 162, 235, 1)',
-                                    'rgba(2, 206, 86, 1)',
-                                    'rgba(2, 159, 64, 1)'
-                                ],
-                                borderWidth: 3
-                            }]
+                        {
+                            label: 'Expected Flat Profit',
+                            data: expectedIncomeData,
+                            backgroundColor: [
+                                'rgba(2, 99, 132, 0.2)',
+                                'rgba(2, 162, 235, 0.2)',
+                                'rgba(2, 206, 86, 0.2)',
+                                'rgba(2, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(2, 99, 132, 1)',
+                                'rgba(2, 162, 235, 1)',
+                                'rgba(2, 206, 86, 1)',
+                                'rgba(2, 159, 64, 1)'
+                            ],
+                            borderWidth: 3
+                        }]
+                },
+                options: {
+                    responsive: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                suggestedMax: 1200,
+                            }
+                        }]
                     },
-                    options: {
-                        responsive: false,
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    suggestedMax: 1200,
-                                }
-                            }]
-                        },
-                        tooltips: {
-                            mode: 'nearest'
-                        }
+                    tooltips: {
+                        mode: 'nearest'
                     }
-                })
+                }
+            })
 
-            }
 
             //Buttons
             let buttonCol = $("<div class = 'buttonCol mt-10'>")

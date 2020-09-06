@@ -86,7 +86,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-orange" id="btnAddFlat">
                         <em class="fas fa-plus"></em>
-                        <spring:message code="flats.add.addFlat"/></button>
+                        <spring:message code="rooms.add.header"/></button>
                     <button type="button" class="btn btn-orange" id="btnBackRooms">
                         <em class="fas fa-backward"></em>
                         <spring:message code="common.button.back"/></button>
