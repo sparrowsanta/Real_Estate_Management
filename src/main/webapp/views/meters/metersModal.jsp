@@ -66,7 +66,7 @@
     <input id="readValueLabel" type="hidden" value="<spring:message code='meters.history.readValue'/>"/>
     <input id="readDeleteMessage" type="hidden" value="<spring:message code='meters.history.delete.message'/>"/>
 </div>
-<div hidden="hidden">
+<div>
 <jsp:include page="../util/deleteConfirm.jsp"/>
 <jsp:include page="metersData.jsp"/>
 <jsp:include page="meterReadingData.jsp"/>

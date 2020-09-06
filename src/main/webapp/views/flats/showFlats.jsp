@@ -50,7 +50,7 @@
 <footer>
     <jsp:include page="/views/util/footer.jsp"></jsp:include>
 </footer>
-<div hidden="hidden">
+<div >
 <jsp:include page="../meters/metersModal.jsp"/>
 <jsp:include page="../bills/billsModal.jsp"/>
 <jsp:include page="../rooms/showRooms.jsp"/>

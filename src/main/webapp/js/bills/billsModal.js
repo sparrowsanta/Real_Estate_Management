@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function addNewBillDef() {
-        // resetErrorsDefinitions();
+        resetErrorsDefinitions();
         $('#billsDefinitionsDataTitle').text($('#billDataTitleNew').val());
         $('#billDescription').val('');
         $('#billCurrency').val('');
@@ -458,7 +458,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function saveNewDef() {
+        console.log("check errors")
         if (checkRequiredFieldsDefinition() !== true) return;
+        console.log("after check  errors")
         let billDefinition = {};
         billDefinition.flatId = currentFlat;
         billDefinition.billDescription = $('#billDescription').val();
@@ -467,6 +469,7 @@ document.addEventListener("DOMContentLoaded", function () {
         billDefinition.billFrequencyInMonths = $('#billFrequency').val();
         billDefinition.paymentTillDayOfMonth = $('#billPayTill').val();
         billDefinition.incomeOutcome =  $('#billType').val();
+        console.log(billDefinition)
         $.ajax({
             type: 'post',
             url: 'bills/add/',
